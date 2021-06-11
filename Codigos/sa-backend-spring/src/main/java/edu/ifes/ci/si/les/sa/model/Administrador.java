@@ -3,12 +3,15 @@ package edu.ifes.ci.si.les.sa.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
-@Entity
-public class Administrador extends Pessoa implements Serializable{
-	private static final long serialVersionUID = 1L;
-
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Entity 
 @Data 

@@ -1,8 +1,15 @@
 package edu.ifes.ci.si.les.sa.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import lombok.*;
+
 
 @Entity
 public class Pessoa implements Serializable{
