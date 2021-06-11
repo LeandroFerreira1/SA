@@ -1,17 +1,31 @@
 package edu.ifes.ci.si.les.sa.model;
 
 import java.io.Serializable;
-
-import javax.persistence.Entity;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import lombok.*;
 
 @Entity
-public class Bairro implements Serializable{
-	private static final long serialVersionUID = 1L;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(of = {"id"})
+public class Bairro implements Serializable {
 
-	private Integer id;
+    private static final long serialVersionUID = 1L;
 
-	private String nome;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	private Cidade cidade;
+    @Column(length = 50)
+	@NotBlank(message = "Nome do Bairro deve ser preenchido")
+	@Size(min = 2, max = 50, message = "Nome do Bairro deve ter entre 2 e 50 letras")
+    private String nome;
+
+    @NotNull(message = "Cidade do Bairro deve ser preenchida")
+    @ManyToOne
+    @JoinColumn(name = "cidade_id")
+    private Cidade cidade;
 
 }

@@ -1,11 +1,15 @@
 package edu.ifes.ci.si.les.sa.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+
 
 @Entity
 public class Aluno extends Pessoa{
@@ -22,8 +26,14 @@ public class Aluno extends Pessoa{
     @Size(min = 6, max = 10, message = "Senha do Aluno deve ter entre 6 e 20 caracteres")
 	private String senha;
 
+	@NotNull(message = "O Curso do Aluno deve ser preenchido")
+	@ManyToOne
+	@JoinColumn(name = "curso_id")
 	private Curso curso;
 
-	private Telefone[] telefone;
+	@NotNull(message = "O Aluno deve possuir pelo menos um Telefone")
+    @ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name="TELEFONE")
+	private Set<String> telefones = new HashSet<>();
 
 }

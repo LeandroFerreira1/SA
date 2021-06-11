@@ -5,6 +5,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.*;
+
 
 @Entity
 public class Professor extends Pessoa {
@@ -19,6 +23,8 @@ public class Professor extends Pessoa {
     @Size(min = 6, max = 10, message = "Senha do Professor deve ter entre 6 e 20 caracteres")
 	private String senha;
 
-	private Telefone[] telefone;
+    @ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name="TELEFONE")
+	private Set<String> telefones = new HashSet<>();
 
 }
