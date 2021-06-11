@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
@@ -22,6 +23,10 @@ public class Administrador extends Pessoa {
 	
 	private static final long serialVersionUID = 1L;
 	
+	@Column(length = 50)
+    @NotBlank(message = "E-mail do Administrador deve ser preenchido")
+    @Size(min = 2, max = 50, message = "E-mail do Administrador deve ter entre 2 e 50 letras")
+    @Pattern(regexp="\\\\b[A-Z0-9._%-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,4}\\\\b", message = "O E-mail do Administrador deve seguir o padrão NNNNN-NN")
 	private String email;
 	
 	@Column(length = 20)
