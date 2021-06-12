@@ -4,7 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 import lombok.*;
 
-//Classe criada para representar a chave primária composta do objeto ItemDeEmprestimo
+//Classe criada para representar a chave primária composta do objeto AlunoTurma
 @Embeddable
 @Data
 @EqualsAndHashCode(of = {"aluno", "turma"})
