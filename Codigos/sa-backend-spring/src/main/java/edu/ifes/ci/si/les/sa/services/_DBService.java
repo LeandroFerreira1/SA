@@ -18,7 +18,6 @@ import edu.ifes.ci.si.les.sa.repositories.DisciplinaRepository;
 import edu.ifes.ci.si.les.sa.repositories.PeriodoLetivoRepository;
 import edu.ifes.ci.si.les.sa.repositories.PresencaAlunoRepository;
 import edu.ifes.ci.si.les.sa.repositories.ProfessorRepository;
-import edu.ifes.ci.si.les.sa.repositories.TelefoneRepository;
 import edu.ifes.ci.si.les.sa.repositories.TurmaRepository;
 import edu.ifes.ci.si.les.sa.repositories.UfRepository;
 
@@ -50,8 +49,6 @@ public class _DBService {
 	private PresencaAlunoRepository presencaAlunoRepository;
 	@Autowired
 	private ProfessorRepository professorRepository;
-	@Autowired
-	private TelefoneRepository telefoneRepository;
 	@Autowired
 	private TurmaRepository turmaRepository;
 	@Autowired

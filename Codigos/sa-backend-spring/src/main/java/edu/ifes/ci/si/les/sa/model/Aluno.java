@@ -14,7 +14,7 @@ public class Aluno extends Pessoa{
 	private static final long serialVersionUID = 1L;
 	
 	@Column(length = 50)
-    @NotBlank(message = "A matricula do aluno deve ser preenchido")
+    @NotBlank(message = "A matricula do aluno deve ser preenchida")
     @Size(min = 2, max = 50, message = "A matricula do aluno deve ter entre 2 e 50 letras")
 	private String matricula;
 	
