@@ -19,5 +19,25 @@ public class AlunoTurmaPK implements Serializable {
     @ManyToOne
     @JoinColumn(name = "turma_id")
     private Turma turma;
+
+	public void setTurma(Turma turma2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Aluno getAluno() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Turma getTurma() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setAluno(Aluno aluno2) {
+		// TODO Auto-generated method stub
+		
+	}
     
 }

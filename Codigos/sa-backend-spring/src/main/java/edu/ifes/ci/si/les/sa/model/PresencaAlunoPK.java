@@ -27,5 +27,24 @@ public class PresencaAlunoPK implements Serializable{
     	@JoinColumn(name = "aluno_id", referencedColumnName = "aluno_id"),
     	@JoinColumn(name = "turma_id", referencedColumnName = "turma_id")
     })
-	private AlunoTurma alunoTurma = new AlunoTurma();
+
+	public void setTurma(Turma turma) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setAluno(Aluno aluno) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Turma getTurma() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Aluno getAluno() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
