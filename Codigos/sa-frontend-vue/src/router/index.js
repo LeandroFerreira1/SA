@@ -19,7 +19,17 @@ const routes = [
     path: '/professor',
     name: 'Professor',
     component: () => import(/* webpackChunkName: "professor" */ '../views/Professor.vue')
-  }
+  },
+  {
+    path: '/curso',
+    name: 'Curso',
+    component: () => import(/* webpackChunkName: "Curso" */ '../views/Curso.vue')
+  },
+  {
+    path: '/disciplina',
+    name: 'Disciplina',
+    component: () => import(/* webpackChunkName: "Curso" */ '../views/Disciplina.vue')
+  },
 ]
 
 const router = new VueRouter({

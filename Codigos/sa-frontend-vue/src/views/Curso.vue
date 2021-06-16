@@ -1,13 +1,13 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="lProfessor"
+    :items="lCurso"
     sort-by="id"
     class="elevation-1"
   >
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>Cadastro de Professor</v-toolbar-title>
+        <v-toolbar-title>Cadastro de Curso</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="800px">
           <template v-slot:activator="{ on, attrs }">
@@ -31,77 +31,39 @@
                         outlined
                         required
                         :counter="200"
-                        :rules="professorRulesNome"
+                        :rules="cursoRulesNome"
                       ></v-text-field>
                     </v-col>              
+                  
                     <v-col cols="12" sm="6" md="6">
-                      <v-date-picker
-                        v-model="editedItem.datanascimento"
-                        label="Data de Nascimento"
+                      <v-combobox
+                        v-model="editedItem.tipo"
+                        label="Tipo"
                         outlined
                         required
-                        :rules="professorRulesDataNascimento"
-                      ></v-date-picker>
+                        :rules="cursoRulesTipo"
+                      ></v-combobox>
                     </v-col>
-                    <v-col cols="12" sm="6" md="6">
+
+                    <v-col cols="12" sm="6" md="4">
                       <v-text-field
-                        v-model="editedItem.sexo"
-                        label="Sexo"
+                        v-model="editedItem.cargaHoraria"
+                        label="Carga Horaria"
                         outlined
                         required
-                        :rules="professorRulesSexo"
+                        :rules="cursoRulesCargaHoraria"
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12" sm="6" md="6">
+
+                    <v-col cols="12" sm="6" md="2">
                       <v-text-field
-                        v-mask="{ mask: '###.###.###-##' }"
-                        v-model="editedItem.cpf"
-                        label="CPF"
+                        v-model="editedItem.duracao"
+                        label="Duração"
                         outlined
                         required
-                        :rules="professorRulesCpf"
+                        :rules="cursoRulesDuracao"
                       ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="6">
-                      <v-text-field
-                        v-mask="{ mask: '#.###.###' }"
-                        v-model="editedItem.rg"
-                        label="RG"
-                        outlined
-                        required
-                        :rules="professorRulesRG"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="12">
-                      <v-text-field
-                        v-model="editedItem.endereco"
-                        label="Endereço"
-                        outlined
-                        required
-                        :counter="200"
-                        :rules="professorRulesNomeEndereco"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="6">
-                      <v-text-field
-                        v-mask="{ mask: '(##) #####-####' }"
-                        v-model="editedItem.telefone"
-                        label="Telefone"
-                        outlined
-                        required
-                        :rules="professorRulesTelefone"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="6">
-                      <v-text-field
-                        v-model="editedItem.email"
-                        label="Email"
-                        outlined
-                        required
-                        :counter="35"
-                        :rules="professorRulesEmail"
-                      ></v-text-field>
-                    </v-col>
+                   </v-col>
                   </v-row>
                 </v-container>
               </v-card-text>
@@ -152,35 +114,35 @@
 </template>
 
 <script>
-import ProfessorService from "../service/domain/ProfessorService";
+import CursoService from "../service/domain/CursoService";
 import { mask } from "@titou10/v-mask";
 
 const textos = {
-  novo: "Novo Professor",
-  edicao: "Edição de Professor",
-  exclusao: "Deseja mesmo remover este Professor?",
+  novo: "Novo Curso",
+  edicao: "Edição de Curso",
+  exclusao: "Deseja mesmo remover este Curso?",
 };
 
 export default {
   directives: { mask },
   data: () => ({
-    service: ProfessorService.build(),
+    service: CursoService.build(),
     dialog: false,
     dialogExcluir: false,
     valid: true,
-    professorRulesNomeEndereco: [
+    cursoRulesNomeEndereco: [
       (v) => !!v || "Preenchimento Necessário",
       (v) =>
         (v && v.length <= 200 && v.length >= 10) ||
         "O campo deve ter pelo menos 10 e no maximo 200 letras",
     ],
-    professorRulesCpf: [
+    cursoRulesCpf: [
       (v) => !!v || "Preenchimento Necessário",
       (v) =>
         (v && v.length <= 14 && v.length >= 14) ||
         "O campo deve ter 11 digitos",
     ],
-    professorRulesTelefone: [
+    cursoRulesTelefone: [
       (v) => !!v || "Preenchimento Necessário",
       (v) =>
         (v && v.length <= 14 && v.length >= 14) ||
@@ -189,16 +151,12 @@ export default {
     headers: [
       { text: "ID", value: "id" },
       { text: "Nome", align: "start", value: "nome" },
-      { text: "Data de Nascimento", value: "datanascimento" },
-      { text: "Sexo", value: "sexo" },
-      { text: "CPF", value: "cpf" },
-      { text: "RG", value: "rg" },
-      { text: "Telefone", value: "telefone" },
-      { text: "Endereço", value: "endereco" },
-      { text: "Email", value: "email" },
+      { text: "Tipo", value: "tipo" },
+      { text: "Carga Horária", value: "cargahoraria" },
+      { text: "Duração", value: "duracao" },
       { text: "Ações", align: "end", value: "actions", sortable: false },
     ],
-    lProfessor: [],
+    lCurso: [],
     editedIndex: -1,
     editedItem: {},
     defaultItem: {},
@@ -225,26 +183,26 @@ export default {
     },
     fetchRecodsSuccess(response) {
       if (Array.isArray(response.rows)) {
-        this.lProfessor = response.rows;
+        this.lCurso = response.rows;
         return;
       }
-      this.lProfessor = [];
+      this.lCurso = [];
     },
     editItem(item) {
-      this.editedIndex = this.lProfessor.indexOf(item);
+      this.editedIndex = this.lCurso.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
     deleteItem(item) {
-      this.editedIndex = this.lProfessor.indexOf(item);
+      this.editedIndex = this.lCurso.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogExcluir = true;
     },
     deleteItemComfirm() {
       //   this.service
       //     .destroy(this.editedItem)
-      //     .then(this.lProfessor.splice(this.editedIndex, 1));
-      this.lProfessor.splice(this.editedIndex, 1);
+      //     .then(this.lCurso.splice(this.editedIndex, 1));
+      this.lCurso.splice(this.editedIndex, 1);
       this.closeExcluir();
     },
     closeExcluir() {
@@ -266,15 +224,15 @@ export default {
         // this.service
         //   .update(this.editedItem)
         //   .then(
-        //     Object.assign(this.lProfessor[this.editedIndex], this.editedItem)
+        //     Object.assign(this.lCurso[this.editedIndex], this.editedItem)
         //   );
-        Object.assign(this.lProfessor[this.editedIndex], this.editedItem);
+        Object.assign(this.lCurso[this.editedIndex], this.editedItem);
       } else {
         // this.service
         //   .create(this.editedItem)
-        //   .then((response) => this.lProfessor.push(response));
-        //  this.lProfessor.push(response)editedItem
-        this.lProfessor.push(this.editedItem);
+        //   .then((response) => this.lCurso.push(response));
+        //  this.lCurso.push(response)editedItem
+        this.lCurso.push(this.editedItem);
       }
       this.close();
     },
