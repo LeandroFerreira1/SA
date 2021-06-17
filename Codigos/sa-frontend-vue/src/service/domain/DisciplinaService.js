@@ -7,5 +7,5 @@ export default class DisciplinaService extends Rest {
     /**
      * @type {String}
      */
-    static resource = '/Disciplina'
+    static resource = '/disciplinas'
 }

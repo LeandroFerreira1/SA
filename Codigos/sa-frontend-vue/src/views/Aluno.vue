@@ -26,14 +26,80 @@
                   <v-row>
                     <v-col cols="12" sm="6" md="12">
                       <v-text-field
+                        v-model="editedItem.matricula"
+                        label="Matricula"
+                        outlined
+                        required
+                        :counter="50"
+                        :rules="alunoRulesMatricula"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="12">
+                      <v-text-field
                         v-model="editedItem.nome"
                         label="Nome"
                         outlined
                         required
                         :counter="200"
-                        :rules="alunoRulesNomeEndereco"
+                        :rules="alunoRulesNome"
                       ></v-text-field>
                     </v-col>
+
+                    <!--INICIO CAMPO DE DATA-->
+                    <v-col cols="12" sm="6" md="6">
+                      <v-menu
+                        ref="menuEntrada"
+                        :close-on-content-click="false"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="290px"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="editedItem.dataNascimento"
+                            label="Data de Nascimento"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                            outlined
+                            required
+                            :rules="modeloRulesData"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="editedItem.dataNascimento"
+                          no-title
+                          scrollable
+                        >
+                          <v-spacer></v-spacer>
+                          <v-btn
+                            text
+                            color="primary"
+                            @click="menuEntrada = false"
+                            >Cancelar</v-btn
+                          >
+                          <v-btn
+                            text
+                            color="primary"
+                            @click="$refs.menuEntrada.save(dataNascimento)"
+                            >OK</v-btn
+                          >
+                        </v-date-picker>
+                      </v-menu>
+                    </v-col>
+
+                    <!--FIM CAMPO DE DATA-->
+
+                    <v-col cols="12" sm="6" md="6">
+                      <v-text-field
+                        v-model="editedItem.sexo"
+                        label="Sexo"
+                        outlined
+                        required
+                        :rules="alunoRulesSexo"
+                      ></v-text-field>
+                    </v-col>
+
                     <v-col cols="12" sm="6" md="6">
                       <v-text-field
                         v-mask="{ mask: '###.###.###-##' }"
@@ -46,7 +112,17 @@
                     </v-col>
                     <v-col cols="12" sm="6" md="6">
                       <v-text-field
-                        v-mask="{ mask: '(##) ####-####' }"
+                        v-mask="{ mask: '####.###' }"
+                        v-model="editedItem.rg"
+                        label="RG"
+                        outlined
+                        required
+                        :rules="alunoRulesRg"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="6">
+                      <v-text-field
+                        v-mask="{ mask: '(##) #####-####' }"
                         v-model="editedItem.telefone"
                         label="Telefone"
                         outlined
@@ -54,14 +130,67 @@
                         :rules="alunoRulesTelefone"
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12" sm="6" md="12">
+                    <v-col cols="12" sm="6" md="6">
                       <v-text-field
-                        v-model="editedItem.endereco"
-                        label="Endereço"
+                        v-model="editedItem.email"
+                        label="Email"
                         outlined
                         required
-                        :counter="200"
-                        :rules="alunoRulesNomeEndereco"
+                        :counter="35"
+                        :rules="alunoRulesEmail"
+                      ></v-text-field>
+                    </v-col>
+
+                    <!--Endereço-->
+
+                    <v-col cols="12" sm="4" md="4">
+                      <v-combobox
+                        v-model="editedItem.uf"
+                        label="UF"
+                        outlined
+                        required
+                        :rules="cursoRulesUf"
+                      ></v-combobox>
+                    </v-col>
+
+                    <v-col cols="12" sm="8" md="8">
+                      <v-combobox
+                        v-model="editedItem.cidade"
+                        label="Cidade"
+                        outlined
+                        required
+                        :rules="cursoRulesCidade"
+                      ></v-combobox>
+                    </v-col>
+
+                    <v-col cols="12" sm="12" md="12">
+                      <v-combobox
+                        v-model="editedItem.bairro"
+                        label="Bairro"
+                        outlined
+                        required
+                        :rules="cursoRulesBairro"
+                      ></v-combobox>
+                    </v-col>
+
+                    <v-col cols="12" sm="12" md="12">
+                      <v-text-field
+                        v-model="editedItem.rua"
+                        label="Rua"
+                        outlined
+                        required
+                        :counter="100"
+                        :rules="professorRulesRua"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6" md="6">
+                      <v-text-field
+                        v-model="editedItem.numero"
+                        label="Número"
+                        outlined
+                        required
+                        :rules="professorRulesNumero"
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -116,7 +245,6 @@
 <script>
 import AlunoService from "../service/domain/AlunoService";
 import { mask } from "@titou10/v-mask";
-
 
 const textos = {
   novo: "Novo Aluno",
