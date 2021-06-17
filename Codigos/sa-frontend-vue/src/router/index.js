@@ -72,12 +72,12 @@ const routes = [
   },
   {
     path: '/registroNotas',
-    name: 'RegistroNotas',
+    name: 'Registro de Notas',
     component: () => import(/* webpackChunkName: "registroNotas" */ '../views/RegistroNotas.vue')
   },
   {
     path: '/matriculaDisciplina',
-    name: 'MatriculaDisciplina',
+    name: 'Matricula em Disciplinas',
     component: () => import(/* webpackChunkName: "matriculaDisciplina" */ '../views/MatriculaDisciplina.vue')
   },
 ]
