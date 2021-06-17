@@ -8,11 +8,11 @@
     <template v-slot:top>
       <v-toolbar flat>
         <v-spacer>
-        <v-toolbar-title><center>Registro de Notas</center></v-toolbar-title>
-        </v-spacer>      
+          <v-toolbar-title><center>Registro de Notas</center></v-toolbar-title>
+        </v-spacer>
         <v-dialog v-model="dialog" max-width="800px">
           <template v-slot:activator="{ on, attrs }">
-             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on" 
+            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on"
               >Novo Item</v-btn
             >
           </template>
@@ -122,7 +122,7 @@ export default {
       { text: "Matrícula", value: "matricula" },
       { text: "Aluno", align: "start", value: "aluno" },
       { text: "Nota", align: "start", value: "nota" },
-     /* { text: "Ações", align: "end", value: "actions", sortable: false },*/
+      /* { text: "Ações", align: "end", value: "actions", sortable: false },*/
     ],
     lDisciplina: [],
     editedIndex: -1,
