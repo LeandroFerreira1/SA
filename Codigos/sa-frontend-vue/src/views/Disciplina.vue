@@ -119,9 +119,9 @@ import DisciplinaService from "../service/domain/DisciplinaService";
 import { mask } from "@titou10/v-mask";
 
 const textos = {
-  novo: "Novo Disciplina",
+  novo: "Nova Disciplina",
   edicao: "Edição de Disciplina",
-  exclusao: "Deseja mesmo remover este Disciplina?",
+  exclusao: "Deseja mesmo remover esta Disciplina?",
 };
 
 export default {
@@ -137,18 +137,7 @@ export default {
         (v && v.length <= 200 && v.length >= 10) ||
         "O campo deve ter pelo menos 10 e no maximo 200 letras",
     ],
-    disciplinaRulesCpf: [
-      (v) => !!v || "Preenchimento Necessário",
-      (v) =>
-        (v && v.length <= 14 && v.length >= 14) ||
-        "O campo deve ter 11 digitos",
-    ],
-    disciplinaRulesTelefone: [
-      (v) => !!v || "Preenchimento Necessário",
-      (v) =>
-        (v && v.length <= 14 && v.length >= 14) ||
-        "O campo deve ter 10 digitos",
-    ],
+
     headers: [
       { text: "ID", value: "id" },
       { text: "Curso", value: "curso" },

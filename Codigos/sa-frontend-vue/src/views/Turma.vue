@@ -1,13 +1,13 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="lProfessor"
+    :items="lTurma"
     sort-by="id"
     class="elevation-1"
   >
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>Cadastro de Professor</v-toolbar-title>
+        <v-toolbar-title>Cadastro de Turma</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="800px">
           <template v-slot:activator="{ on, attrs }">
@@ -31,33 +31,57 @@
                         outlined
                         required
                         :counter="200"
-                        :rules="professorRulesNome"
+                        :rules="TurmaRulesNome"
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="6">
-                      <v-text-field
-                        v-model="editedItem.titulacao"
-                        label="Titulação"
+                    <v-col cols="12" sm="4" md="6">
+                      <v-combobox
+                        v-model="editedItem.professor"
+                        label="Professor"
                         outlined
                         required
-                        :counter="100"
-                        :rules="professorRulesTitulacao"
-                      ></v-text-field>
+                        :rules="TurmaRulesProfessor"
+                      ></v-combobox>
                     </v-col>
-
-                    <v-col cols="12" sm="6" md="6">
-                      <v-text-field
-                        v-mask="{ mask: '###.###.###-##' }"
-                        v-model="editedItem.cpf"
-                        label="CPF"
+                    <v-col cols="12" sm="4" md="6">
+                      <v-combobox
+                        v-model="editedItem.curso"
+                        label="Curso"
                         outlined
                         required
-                        :rules="professorRulesCpf"
-                      ></v-text-field>
+                        :rules="TurmaRulesCurso"
+                      ></v-combobox>
                     </v-col>
 
-                    <!--INICIO CAMPO DE DATA-->
+                    <v-col cols="12" sm="4" md="6">
+                      <v-combobox
+                        v-model="editedItem.disciplina"
+                        label="Disciplina"
+                        outlined
+                        required
+                        :rules="TurmaRulesDisciplina"
+                      ></v-combobox>
+                    </v-col>
+
+                    <v-col cols="12" sm="4" md="3">
+                      <v-combobox
+                        v-model="editedItem.periodoletivo"
+                        label="Período Letivo"
+                        outlined
+                        required
+                        :rules="TurmaRulesPeriodoLetivo"
+                      ></v-combobox>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="3">
+                      <v-text-field
+                        v-model="editedItem.vagas"
+                        label="Vagas"
+                        outlined
+                        required
+                        :rules="turmaRulesVagas"
+                      ></v-text-field>
+                    </v-col>
                     <v-col cols="12" sm="6" md="6">
                       <v-menu
                         ref="menuEntrada"
@@ -68,18 +92,18 @@
                       >
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
-                            v-model="editedItem.dataNascimento"
-                            label="Data de Nascimento"
+                            v-model="editedItem.dataInicio"
+                            label="Data de Inicio"
                             readonly
                             v-bind="attrs"
                             v-on="on"
                             outlined
                             required
-                            :rules="modeloRulesData"
+                            :rules="modeloRulesDataInicio"
                           ></v-text-field>
                         </template>
                         <v-date-picker
-                          v-model="editedItem.dataNascimento"
+                          v-model="editedItem.dataInicio"
                           no-title
                           scrollable
                         >
@@ -93,97 +117,53 @@
                           <v-btn
                             text
                             color="primary"
-                            @click="$refs.menuEntrada.save(dataNascimento)"
+                            @click="$refs.menuEntrada.save(dataInicio)"
                             >OK</v-btn
                           >
                         </v-date-picker>
                       </v-menu>
                     </v-col>
 
-                    <!--FIM CAMPO DE DATA-->
-
                     <v-col cols="12" sm="6" md="6">
-                      <v-text-field
-                        v-model="editedItem.sexo"
-                        label="Sexo"
-                        outlined
-                        required
-                        :rules="professorRulesSexo"
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col cols="12" sm="6" md="6">
-                      <v-text-field
-                        v-mask="{ mask: '(##) #####-####' }"
-                        v-model="editedItem.telefone"
-                        label="Telefone"
-                        outlined
-                        required
-                        :rules="professorRulesTelefone"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="6">
-                      <v-text-field
-                        v-model="editedItem.email"
-                        label="Email"
-                        outlined
-                        required
-                        :counter="35"
-                        :rules="professorRulesEmail"
-                      ></v-text-field>
-                    </v-col>
-
-                    <!--Endereço-->
-
-                    <v-col cols="12" sm="4" md="4">
-                      <v-combobox
-                        v-model="editedItem.uf"
-                        label="UF"
-                        outlined
-                        required
-                        :rules="cursoRulesUf"
-                      ></v-combobox>
-                    </v-col>
-
-                    <v-col cols="12" sm="8" md="4">
-                      <v-combobox
-                        v-model="editedItem.cidade"
-                        label="Cidade"
-                        outlined
-                        required
-                        :rules="cursoRulesCidade"
-                      ></v-combobox>
-                    </v-col>
-
-                    <v-col cols="12" sm="12" md="4">
-                      <v-combobox
-                        v-model="editedItem.bairro"
-                        label="Bairro"
-                        outlined
-                        required
-                        :rules="cursoRulesBairro"
-                      ></v-combobox>
-                    </v-col>
-
-                    <v-col cols="12" sm="12" md="8">
-                      <v-text-field
-                        v-model="editedItem.rua"
-                        label="Rua"
-                        outlined
-                        required
-                        :counter="100"
-                        :rules="professorRulesRua"
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        v-model="editedItem.numero"
-                        label="Número"
-                        outlined
-                        required
-                        :rules="professorRulesNumero"
-                      ></v-text-field>
+                      <v-menu
+                        ref="menuEntrada"
+                        :close-on-content-click="false"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="290px"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="editedItem.dataFim"
+                            label="Data de Fim"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                            outlined
+                            required
+                            :rules="modeloRulesDataFim"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="editedItem.dataFim"
+                          no-title
+                          scrollable
+                        >
+                          <v-spacer></v-spacer>
+                          <v-btn
+                            text
+                            color="primary"
+                            @click="menuEntrada = false"
+                            >Cancelar</v-btn
+                          >
+                          <v-btn
+                            text
+                            color="primary"
+                            @click="$refs.menuEntrada.save(dataFim)"
+                            >OK</v-btn
+                          >
+                        </v-date-picker>
+                      </v-menu>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -235,57 +215,36 @@
 </template>
 
 <script>
-import ProfessorService from "../service/domain/ProfessorService";
+import TurmaService from "../service/domain/TurmaService";
 import { mask } from "@titou10/v-mask";
 
 const textos = {
-  novo: "Novo Professor",
-  edicao: "Edição de Professor",
-  exclusao: "Deseja mesmo remover este Professor?",
+  novo: "Nova Turma",
+  edicao: "Edição de Turma",
+  exclusao: "Deseja mesmo remover esta Turma?",
 };
 
 export default {
   directives: { mask },
   data: () => ({
-    service: ProfessorService.build(),
+    service: TurmaService.build(),
     dialog: false,
     dialogExcluir: false,
     valid: true,
-    professorRulesNome: [
-      (v) => !!v || "Preenchimento Necessário",
-      (v) =>
-        (v && v.length <= 200 && v.length >= 10) ||
-        "O campo deve ter pelo menos 10 e no maximo 200 letras",
-    ],
-    professorRulesCpf: [
-      (v) => !!v || "Preenchimento Necessário",
-      (v) =>
-        (v && v.length <= 14 && v.length >= 14) ||
-        "O campo deve ter 11 digitos",
-    ],
-    professorRulesTelefone: [
-      (v) => !!v || "Preenchimento Necessário",
-      (v) =>
-        (v && v.length <= 14 && v.length >= 14) ||
-        "O campo deve ter 10 digitos",
-    ],
+
     headers: [
       { text: "ID", value: "id" },
       { text: "Nome", align: "start", value: "nome" },
-      { text: "Titulação", value: "titulacao" },
-      { text: "CPF", value: "cpf" },
-      { text: "Data de Nascimento", value: "datanascimento" },
-      { text: "Sexo", value: "sexo" },
-      { text: "Email", value: "email" },
-      { text: "Telefone", value: "telefone" },
-      { text: "UF", value: "uf" },
-      { text: "Cidade", value: "cidade" },
-      { text: "Bairro", value: "bairro" },
-      { text: "Endereço", value: "endereco" },
-      { text: "Número", value: "numero" },
+      { text: "Professor", align: "start", value: "professor" },
+      { text: "Curso", align: "start", value: "curso" },
+      { text: "Disciplina", align: "start", value: "disciplina" },
+      { text: "Período Letivo", align: "start", value: "periodoletivo" },
+      { text: "Vagas", align: "start", value: "vagas" },
+      { text: "Data Inicio", value: "datainicio" },
+      { text: "Data Fim", value: "datafim" },
       { text: "Ações", align: "end", value: "actions", sortable: false },
     ],
-    lProfessor: [],
+    lTurma: [],
     editedIndex: -1,
     editedItem: {},
     defaultItem: {},
@@ -312,26 +271,26 @@ export default {
     },
     fetchRecodsSuccess(response) {
       if (Array.isArray(response.rows)) {
-        this.lProfessor = response.rows;
+        this.lTurma = response.rows;
         return;
       }
-      this.lProfessor = [];
+      this.lTurma = [];
     },
     editItem(item) {
-      this.editedIndex = this.lProfessor.indexOf(item);
+      this.editedIndex = this.lTurma.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
     deleteItem(item) {
-      this.editedIndex = this.lProfessor.indexOf(item);
+      this.editedIndex = this.lTurma.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogExcluir = true;
     },
     deleteItemComfirm() {
       //   this.service
       //     .destroy(this.editedItem)
-      //     .then(this.lProfessor.splice(this.editedIndex, 1));
-      this.lProfessor.splice(this.editedIndex, 1);
+      //     .then(this.lTurma.splice(this.editedIndex, 1));
+      this.lTurma.splice(this.editedIndex, 1);
       this.closeExcluir();
     },
     closeExcluir() {
@@ -353,15 +312,15 @@ export default {
         // this.service
         //   .update(this.editedItem)
         //   .then(
-        //     Object.assign(this.lProfessor[this.editedIndex], this.editedItem)
+        //     Object.assign(this.lTurma[this.editedIndex], this.editedItem)
         //   );
-        Object.assign(this.lProfessor[this.editedIndex], this.editedItem);
+        Object.assign(this.lTurma[this.editedIndex], this.editedItem);
       } else {
         // this.service
         //   .create(this.editedItem)
-        //   .then((response) => this.lProfessor.push(response));
-        //  this.lProfessor.push(response)editedItem
-        this.lProfessor.push(this.editedItem);
+        //   .then((response) => this.lTurma.push(response));
+        //  this.lTurma.push(response)editedItem
+        this.lTurma.push(this.editedItem);
       }
       this.close();
     },
