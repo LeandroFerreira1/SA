@@ -123,7 +123,7 @@ export default {
     headers: [
       { text: "ID", value: "id" },
       { text: "Nome", align: "start", value: "nome" },
-      { text: "Sigla", value: "sigla" },
+      { text: "Sigla", value: "uf" },
       { text: "Ações", align: "end", value: "actions", sortable: false },
     ],
     lUf: [],
