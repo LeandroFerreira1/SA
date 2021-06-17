@@ -75,6 +75,11 @@ const routes = [
     name: 'RegistroNotas',
     component: () => import(/* webpackChunkName: "registroNotas" */ '../views/RegistroNotas.vue')
   },
+  {
+    path: '/matriculaDisciplina',
+    name: 'MatriculaDisciplina',
+    component: () => import(/* webpackChunkName: "matriculaDisciplina" */ '../views/MatriculaDisciplina.vue')
+  },
 ]
 
 const router = new VueRouter({
