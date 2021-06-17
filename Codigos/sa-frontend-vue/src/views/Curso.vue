@@ -136,18 +136,6 @@ export default {
         (v && v.length <= 200 && v.length >= 10) ||
         "O campo deve ter pelo menos 10 e no maximo 200 letras",
     ],
-    cursoRulesCpf: [
-      (v) => !!v || "Preenchimento Necessário",
-      (v) =>
-        (v && v.length <= 14 && v.length >= 14) ||
-        "O campo deve ter 11 digitos",
-    ],
-    cursoRulesTelefone: [
-      (v) => !!v || "Preenchimento Necessário",
-      (v) =>
-        (v && v.length <= 14 && v.length >= 14) ||
-        "O campo deve ter 10 digitos",
-    ],
     headers: [
       { text: "ID", value: "id" },
       { text: "Nome", align: "start", value: "nome" },

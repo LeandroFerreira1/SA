@@ -1,13 +1,13 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="lDisciplina"
+    :items="lAvaliacao"
     sort-by="id"
     class="elevation-1"
   >
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>Cadastro de Disciplina</v-toolbar-title>
+        <v-toolbar-title>Cadastro de Avaliacao</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="800px">
           <template v-slot:activator="{ on, attrs }">
@@ -24,45 +24,83 @@
               <v-card-text>
                 <v-container>
                   <v-row>
-                    <v-col cols="12" sm="6" md="6">
+                    <v-col cols="12" sm="4" md="6">
                       <v-combobox
-                        v-model="editedItem.curso"
-                        label="Curso"
+                        v-model="editedItem.disciplina"
+                        label="Disciplina"
                         outlined
                         required
-                        :rules="cursoRulesCurso"
+                        :rules="AvaliacaoRulesDisciplina"
                       ></v-combobox>
                     </v-col>
 
                     <v-col cols="12" sm="6" md="6">
                       <v-text-field
-                        v-model="editedItem.nome"
-                        label="Nome"
+                        v-model="editedItem.avaliacao"
+                        label="Avaliação"
                         outlined
                         required
-                        :counter="200"
-                        :rules="disciplinaRulesNome"
+                        :rules="avaliacaoRulesAvaliacao"
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="6">
+                    <v-col cols="12" sm="6" md="3">
                       <v-text-field
-                        v-model="editedItem.nomereduzido"
-                        label="Nome Reduzido"
+                        v-model="editedItem.tipo"
+                        label="Tipo"
                         outlined
                         required
-                        :counter="200"
-                        :rules="disciplinaRulesNomeReduzido"
+                        :rules="avaliacaoRulesTipo"
                       ></v-text-field>
                     </v-col>
-
                     <v-col cols="12" sm="6" md="6">
+                      <v-menu
+                        ref="menuEntrada"
+                        :close-on-content-click="false"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="290px"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="editedItem.dataavaliacao"
+                            label="Data da Avaliação"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                            outlined
+                            required
+                            :rules="modeloRulesDataAvaliacao"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="editedItem.dataavaliacao"
+                          no-title
+                          scrollable
+                        >
+                          <v-spacer></v-spacer>
+                          <v-btn
+                            text
+                            color="primary"
+                            @click="menuEntrada = false"
+                            >Cancelar</v-btn
+                          >
+                          <v-btn
+                            text
+                            color="primary"
+                            @click="$refs.menuEntrada.save(dataavaliacao)"
+                            >OK</v-btn
+                          >
+                        </v-date-picker>
+                      </v-menu>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="3">
                       <v-text-field
-                        v-model="editedItem.cargaHoraria"
-                        label="Carga Horaria"
+                        v-model="editedItem.valor"
+                        label="Valor"
                         outlined
                         required
-                        :rules="disciplinaRulesCargaHoraria"
+                        :rules="avaliacaoRulesValor"
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -115,38 +153,33 @@
 </template>
 
 <script>
-import DisciplinaService from "../service/domain/DisciplinaService";
+import AvaliacaoService from "../service/domain/AvaliacaoService";
 import { mask } from "@titou10/v-mask";
 
 const textos = {
-  novo: "Nova Disciplina",
-  edicao: "Edição de Disciplina",
-  exclusao: "Deseja mesmo remover esta Disciplina?",
+  novo: "Nova Avaliação",
+  edicao: "Edição de Avaliacao",
+  exclusao: "Deseja mesmo remover esta Avaliacao?",
 };
 
 export default {
   directives: { mask },
   data: () => ({
-    service: DisciplinaService.build(),
+    service: AvaliacaoService.build(),
     dialog: false,
     dialogExcluir: false,
     valid: true,
-    disciplinaRulesNomeEndereco: [
-      (v) => !!v || "Preenchimento Necessário",
-      (v) =>
-        (v && v.length <= 200 && v.length >= 10) ||
-        "O campo deve ter pelo menos 10 e no maximo 200 letras",
-    ],
 
     headers: [
       { text: "ID", value: "id" },
-      { text: "Curso", value: "curso" },
-      { text: "Nome", align: "start", value: "nome" },
-      { text: "Nome Reduzido", align: "start", value: "nomereduzido" },
-      { text: "Carga Horária", value: "cargahoraria" },
+      { text: "Disciplina", align: "start", value: "disciplina" },
+      { text: "Avaliação", align: "start", value: "avaliação" },
+      { text: "Tipo", align: "start", value: "tipo" },
+      { text: "Data da Avaliação", value: "dataavaliacao" },
+      { text: "Valor", value: "valor" },
       { text: "Ações", align: "end", value: "actions", sortable: false },
     ],
-    lDisciplina: [],
+    lAvaliacao: [],
     editedIndex: -1,
     editedItem: {},
     defaultItem: {},
@@ -173,26 +206,26 @@ export default {
     },
     fetchRecodsSuccess(response) {
       if (Array.isArray(response.rows)) {
-        this.lDisciplina = response.rows;
+        this.lAvaliacao = response.rows;
         return;
       }
-      this.lDisciplina = [];
+      this.lAvaliacao = [];
     },
     editItem(item) {
-      this.editedIndex = this.lDisciplina.indexOf(item);
+      this.editedIndex = this.lAvaliacao.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
     deleteItem(item) {
-      this.editedIndex = this.lDisciplina.indexOf(item);
+      this.editedIndex = this.lAvaliacao.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogExcluir = true;
     },
     deleteItemComfirm() {
       //   this.service
       //     .destroy(this.editedItem)
-      //     .then(this.lDisciplina.splice(this.editedIndex, 1));
-      this.lDisciplina.splice(this.editedIndex, 1);
+      //     .then(this.lAvaliacao.splice(this.editedIndex, 1));
+      this.lAvaliacao.splice(this.editedIndex, 1);
       this.closeExcluir();
     },
     closeExcluir() {
@@ -214,15 +247,15 @@ export default {
         // this.service
         //   .update(this.editedItem)
         //   .then(
-        //     Object.assign(this.lDisciplina[this.editedIndex], this.editedItem)
+        //     Object.assign(this.lAvaliacao[this.editedIndex], this.editedItem)
         //   );
-        Object.assign(this.lDisciplina[this.editedIndex], this.editedItem);
+        Object.assign(this.lAvaliacao[this.editedIndex], this.editedItem);
       } else {
         // this.service
         //   .create(this.editedItem)
-        //   .then((response) => this.lDisciplina.push(response));
-        //  this.lDisciplina.push(response)editedItem
-        this.lDisciplina.push(this.editedItem);
+        //   .then((response) => this.lAvaliacao.push(response));
+        //  this.lAvaliacao.push(response)editedItem
+        this.lAvaliacao.push(this.editedItem);
       }
       this.close();
     },

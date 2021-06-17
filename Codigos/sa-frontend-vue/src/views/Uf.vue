@@ -24,7 +24,6 @@
               <v-card-text>
                 <v-container>
                   <v-row>
-
                     <v-col cols="12" sm="6" md="6">
                       <v-text-field
                         v-model="editedItem.nome"
@@ -34,7 +33,7 @@
                         :counter="200"
                         :rules="cursoRulesNome"
                       ></v-text-field>
-                    </v-col>      
+                    </v-col>
 
                     <v-col cols="12" sm="6" md="6">
                       <v-text-field
@@ -45,9 +44,7 @@
                         :counter="200"
                         :rules="cursoRulesSigla"
                       ></v-text-field>
-                    </v-col>         
-                  
-                    
+                    </v-col>
                   </v-row>
                 </v-container>
               </v-card-text>

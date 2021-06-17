@@ -7,7 +7,7 @@
   >
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>Cadastro de Alunos</v-toolbar-title>
+        <v-toolbar-title>Cadastro de Aluno</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="800px">
           <template v-slot:activator="{ on, attrs }">
@@ -26,22 +26,34 @@
                   <v-row>
                     <v-col cols="12" sm="6" md="12">
                       <v-text-field
-                        v-model="editedItem.matricula"
-                        label="Matricula"
-                        outlined
-                        required
-                        :counter="50"
-                        :rules="alunoRulesMatricula"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="12">
-                      <v-text-field
                         v-model="editedItem.nome"
                         label="Nome"
                         outlined
                         required
                         :counter="200"
                         :rules="alunoRulesNome"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6" md="6">
+                      <v-text-field
+                        v-model="editedItem.rg"
+                        label="RG"
+                        outlined
+                        required
+                        :counter="100"
+                        :rules="alunoRulesRg"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6" md="6">
+                      <v-text-field
+                        v-mask="{ mask: '###.###.###-##' }"
+                        v-model="editedItem.cpf"
+                        label="CPF"
+                        outlined
+                        required
+                        :rules="alunoRulesCpf"
                       ></v-text-field>
                     </v-col>
 
@@ -102,26 +114,6 @@
 
                     <v-col cols="12" sm="6" md="6">
                       <v-text-field
-                        v-mask="{ mask: '###.###.###-##' }"
-                        v-model="editedItem.cpf"
-                        label="CPF"
-                        outlined
-                        required
-                        :rules="alunoRulesCpf"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="6">
-                      <v-text-field
-                        v-mask="{ mask: '####.###' }"
-                        v-model="editedItem.rg"
-                        label="RG"
-                        outlined
-                        required
-                        :rules="alunoRulesRg"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="6">
-                      <v-text-field
                         v-mask="{ mask: '(##) #####-####' }"
                         v-model="editedItem.telefone"
                         label="Telefone"
@@ -153,7 +145,7 @@
                       ></v-combobox>
                     </v-col>
 
-                    <v-col cols="12" sm="8" md="8">
+                    <v-col cols="12" sm="8" md="4">
                       <v-combobox
                         v-model="editedItem.cidade"
                         label="Cidade"
@@ -163,7 +155,7 @@
                       ></v-combobox>
                     </v-col>
 
-                    <v-col cols="12" sm="12" md="12">
+                    <v-col cols="12" sm="12" md="4">
                       <v-combobox
                         v-model="editedItem.bairro"
                         label="Bairro"
@@ -173,24 +165,24 @@
                       ></v-combobox>
                     </v-col>
 
-                    <v-col cols="12" sm="12" md="12">
+                    <v-col cols="12" sm="12" md="8">
                       <v-text-field
                         v-model="editedItem.rua"
                         label="Rua"
                         outlined
                         required
                         :counter="100"
-                        :rules="professorRulesRua"
+                        :rules="alunoRulesRua"
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="6">
+                    <v-col cols="12" sm="6" md="4">
                       <v-text-field
                         v-model="editedItem.numero"
                         label="Número"
                         outlined
                         required
-                        :rules="professorRulesNumero"
+                        :rules="alunoRulesNumero"
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -259,7 +251,7 @@ export default {
     dialog: false,
     dialogExcluir: false,
     valid: true,
-    alunoRulesNomeEndereco: [
+    alunoRulesNome: [
       (v) => !!v || "Preenchimento Necessário",
       (v) =>
         (v && v.length <= 200 && v.length >= 10) ||
@@ -280,9 +272,18 @@ export default {
     headers: [
       { text: "ID", value: "id" },
       { text: "Nome", align: "start", value: "nome" },
+      { text: "Matrícula", value: "matricula" },
+      { text: "RG", value: "rg" },
       { text: "CPF", value: "cpf" },
+      { text: "Data de Nascimento", value: "datanascimento" },
+      { text: "Sexo", value: "sexo" },
+      { text: "Email", value: "email" },
       { text: "Telefone", value: "telefone" },
+      { text: "UF", value: "uf" },
+      { text: "Cidade", value: "cidade" },
+      { text: "Bairro", value: "bairro" },
       { text: "Endereço", value: "endereco" },
+      { text: "Número", value: "numero" },
       { text: "Ações", align: "end", value: "actions", sortable: false },
     ],
     lAluno: [],
