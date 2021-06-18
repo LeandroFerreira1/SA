@@ -149,6 +149,47 @@
     <template v-slot:no-data>
       <v-btn color="primary" @click="initialize">Resetar</v-btn>
     </template>
+
+    <!--COPIAR PARA ONDE TEM FILTROS-->
+    <template v-slot:body.append>
+      <tr>
+        <td></td>
+        <td>
+          <v-combobox
+            v-model="EscolherPLetivo"
+            item-text="periodo"
+            :items="periodos"
+            label="P. Letivo"
+            clearable
+          ></v-combobox>
+        </td>
+        <td>
+          <v-combobox
+            v-model="EscolherProfessor"
+            item-text="professor"
+            :items="professores"
+            label="Professor"
+            clearable
+          ></v-combobox>
+        </td>
+        <td>
+          <v-combobox
+            v-model="EscolherTurma"
+            item-text="turma"
+            :items="turmas"
+            label="Turma"
+            clearable
+          ></v-combobox>
+        </td>
+        <td></td>
+      </tr>
+    </template>
+
+    <template v-slot:no-data>
+      <v-btn color="primary" @click="initialize">Recarregar</v-btn>
+    </template>
+
+    <!--FIM FILTROS-->
   </v-data-table>
 </template>
 
