@@ -108,8 +108,23 @@
       <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
+       <template v-slot:body.append>
+      <tr>
+        <td></td>
+        <td>
+          <v-combobox
+            v-model="EscolherCurso"
+            item-text="curso"
+            :items="curso"
+            label="Curso"
+            clearable
+          ></v-combobox>
+        </td>
+        <td></td>
+      </tr>
+    </template>
     <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize">Resetar</v-btn>
+      <v-btn color="primary" @click="initialize">Alterar</v-btn>
     </template>
   </v-data-table>
 </template>
@@ -140,7 +155,6 @@ export default {
 
     headers: [
       { text: "ID", value: "id" },
-      { text: "Curso", value: "curso" },
       { text: "Nome", align: "start", value: "nome" },
       { text: "Nome Reduzido", align: "start", value: "nomereduzido" },
       { text: "Carga Horária", value: "cargahoraria" },

@@ -4,11 +4,7 @@
       <v-toolbar flat>
         <v-toolbar-title>Boletim</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-combobox
-              item-text="periodo"
-              label="Período"
-              clearable
-            ></v-combobox>
+        <v-combobox item-text="periodo" label="Período" clearable></v-combobox>
       </v-toolbar>
     </v-container>
     <v-container>

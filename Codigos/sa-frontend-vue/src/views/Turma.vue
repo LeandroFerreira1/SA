@@ -208,8 +208,41 @@
       <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
+        <template v-slot:body.append>
+      <tr>
+        <td></td>
+        <td>
+          <v-combobox
+            v-model="EscolherCurso"
+            item-text="curso"
+            :items="curso"
+            label="Curso"
+            clearable
+          ></v-combobox>
+        </td>
+        <td>
+          <v-combobox
+            v-model="EscolherPLetivo"
+            item-text="periodo"
+            :items="periodos"
+            label="P. Letivo"
+            clearable
+          ></v-combobox>
+        </td>
+        <td>
+          <v-combobox
+            v-model="EscolherProfessor"
+            item-text="professor"
+            :items="turmas"
+            label="Professor"
+            clearable
+          ></v-combobox>
+        </td>
+        <td></td>
+      </tr>
+    </template>
     <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize">Resetar</v-btn>
+      <v-btn color="primary" @click="initialize">Alterar</v-btn>
     </template>
   </v-data-table>
 </template>
@@ -236,12 +269,9 @@ export default {
       { text: "ID", value: "id" },
       { text: "Nome", align: "start", value: "nome" },
       { text: "Professor", align: "start", value: "professor" },
-      { text: "Curso", align: "start", value: "curso" },
       { text: "Disciplina", align: "start", value: "disciplina" },
       { text: "Período Letivo", align: "start", value: "periodoletivo" },
       { text: "Vagas", align: "start", value: "vagas" },
-      { text: "Data Inicio", value: "datainicio" },
-      { text: "Data Fim", value: "datafim" },
       { text: "Ações", align: "end", value: "actions", sortable: false },
     ],
     lTurma: [],

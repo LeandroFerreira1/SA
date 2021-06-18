@@ -173,7 +173,7 @@
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
     <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize">Resetar</v-btn>
+      <v-btn color="primary" @click="initialize">Alterar</v-btn>
     </template>
   </v-data-table>
 </template>
@@ -198,10 +198,9 @@ export default {
 
     headers: [
       { text: "ID", value: "id" },
-      { text: "Período Letivo", align: "start", value: "periodoletivo" },
+      { text: "Nome", align: "start", value: "nome" },
       { text: "Data Inicio", value: "datainicio" },
       { text: "Data Fim", value: "datafim" },
-      { text: "Nº de Dias Letivos", value: "numerodiasletivos" },
       { text: "Ações", align: "end", value: "actions", sortable: false },
     ],
     lPeriodoLetivo: [],

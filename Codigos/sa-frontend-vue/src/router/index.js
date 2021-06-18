@@ -85,6 +85,12 @@ const routes = [
     name: 'Boletim',
     component: () => import(/* webpackChunkName: "boletin" */ '../views/Boletim.vue')
   },
+  {
+    path: '/listagemNotas',
+    name: 'ListagemNotas',
+    component: () => import(/* webpackChunkName: "boletin" */ '../views/ListagemNotas.vue')
+  },
+
 ]
 
 const router = new VueRouter({

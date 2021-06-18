@@ -1,209 +1,97 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="lDisciplina"
-    sort-by="id"
-    class="elevation-1"
-  >
-    <template v-slot:top>
+  <div>
+    <v-container>
       <v-toolbar flat>
         <v-spacer>
           <v-toolbar-title><center>Registro de Notas</center></v-toolbar-title>
         </v-spacer>
-        <v-dialog v-model="dialog" max-width="800px">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on"
-              >Novo Item</v-btn
-            >
-          </template>
-          <v-card>
-            <v-form ref="form" v-model="valid">
-              <v-card-title>
-                <span class="headline">{{ formTitle }}</span>
-              </v-card-title>
-              <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-col cols="12" sm="6" md="6">
-                      <v-combobox
-                        v-model="editedItem.registroNotas"
-                        label="RegistroNotas"
-                        outlined
-                        required
-                        :rules="registroNotasRulesRegistroNotas"
-                      ></v-combobox>
-                    </v-col>
-
-                    <v-col cols="12" sm="6" md="6">
-                      <v-text-field
-                        v-model="editedItem.nome"
-                        label="Nome"
-                        outlined
-                        required
-                        :counter="200"
-                        :rules="disciplinaRulesNome"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-card-text>
-
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="close"
-                  >Cancelar</v-btn
-                >
-                <v-btn
-                  :disabled="!valid"
-                  color="blue darken-1"
-                  text
-                  @click="save"
-                  >Salvar</v-btn
-                >
-              </v-card-actions>
-            </v-form>
-          </v-card>
-        </v-dialog>
-        <v-dialog v-model="dialogExcluir" max-width="430px">
-          <v-card>
-            <v-card-title class="headline"
-              >Deseja mesmo remover este Item?</v-card-title
-            >
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeExcluir"
-                >Cancelar</v-btn
-              >
-              <v-btn color="blue darken-1" text @click="deleteItemComfirm"
-                >Sim</v-btn
-              >
-              <v-spacer></v-spacer>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
       </v-toolbar>
-    </template>
-    <template v-slot:item.actions="{ item }">
-      <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-      <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
-    </template>
-    <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize">Resetar</v-btn>
-    </template>
-  </v-data-table>
+    </v-container>
+
+    <v-container>
+      <v-toolbar>
+        <v-spacer>
+          <br />
+          <v-row>
+            <v-combobox
+              item-text="disciplina"
+              label="Disciplina"
+              clearable
+              outlined
+              required
+            >
+            </v-combobox>
+
+            <v-combobox
+              item-text="avaliacao"
+              label="Avaliação"
+              clearable
+              outlined
+              required
+            >
+            </v-combobox>
+          </v-row>
+        </v-spacer>
+      </v-toolbar>
+    </v-container>
+
+    <v-container>
+      <v-toolbar flat>
+        <v-spacer>
+          <br />
+          <div class="d-flex justify-center mb-6">
+            <div>
+              <v-btn block color="primary">Listar Alunos</v-btn>
+            </div>
+          </div>
+        </v-spacer>
+      </v-toolbar>
+    </v-container>
+
+    <v-container>
+      <v-data-table
+        :headers="headers"
+        :items="alunos"
+        class="elevation-1"
+        :hide-default-footer="true"
+      >
+      </v-data-table>
+    </v-container>
+  </div>
 </template>
 
 <script>
-import DisciplinaService from "../service/domain/DisciplinaService";
-import { mask } from "@titou10/v-mask";
-
-const textos = {
-  novo: "Nova Disciplina",
-  edicao: "Edição de Disciplina",
-  exclusao: "Deseja mesmo remover esta Disciplina?",
-};
-
 export default {
-  directives: { mask },
-  data: () => ({
-    service: DisciplinaService.build(),
-    dialog: false,
-    dialogExcluir: false,
-    valid: true,
-    disciplinaRulesNomeEndereco: [
-      (v) => !!v || "Preenchimento Necessário",
-      (v) =>
-        (v && v.length <= 200 && v.length >= 10) ||
-        "O campo deve ter pelo menos 10 e no maximo 200 letras",
-    ],
-
-    headers: [
-      { text: "ID", value: "id" },
-      { text: "Matrícula", value: "matricula" },
-      { text: "Aluno", align: "start", value: "aluno" },
-      { text: "Nota", align: "start", value: "nota" },
-      /* { text: "Ações", align: "end", value: "actions", sortable: false },*/
-    ],
-    lDisciplina: [],
-    editedIndex: -1,
-    editedItem: {},
-    defaultItem: {},
-  }),
-  computed: {
-    formTitle() {
-      return this.editedIndex === -1 ? textos.novo : textos.edicao;
-    },
-  },
-  watch: {
-    dialog(val) {
-      val || this.close();
-    },
-    dialogExcluir(val) {
-      val || this.closeExcluir();
-    },
-  },
-  created() {
-    // this.fetchRecords();
-  },
-  methods: {
-    fetchRecords() {
-      //this.service.search({}).then(this.fetchRecodsSuccess);
-    },
-    fetchRecodsSuccess(response) {
-      if (Array.isArray(response.rows)) {
-        this.lDisciplina = response.rows;
-        return;
-      }
-      this.lDisciplina = [];
-    },
-    editItem(item) {
-      this.editedIndex = this.lDisciplina.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialog = true;
-    },
-    deleteItem(item) {
-      this.editedIndex = this.lDisciplina.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialogExcluir = true;
-    },
-    deleteItemComfirm() {
-      //   this.service
-      //     .destroy(this.editedItem)
-      //     .then(this.lDisciplina.splice(this.editedIndex, 1));
-      this.lDisciplina.splice(this.editedIndex, 1);
-      this.closeExcluir();
-    },
-    closeExcluir() {
-      this.dialogExcluir = false;
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      });
-    },
-    close() {
-      this.dialog = false;
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      });
-    },
-    save() {
-      if (this.editedIndex > -1) {
-        // this.service
-        //   .update(this.editedItem)
-        //   .then(
-        //     Object.assign(this.lDisciplina[this.editedIndex], this.editedItem)
-        //   );
-        Object.assign(this.lDisciplina[this.editedIndex], this.editedItem);
-      } else {
-        // this.service
-        //   .create(this.editedItem)
-        //   .then((response) => this.lDisciplina.push(response));
-        //  this.lDisciplina.push(response)editedItem
-        this.lDisciplina.push(this.editedItem);
-      }
-      this.close();
-    },
+  data() {
+    return {
+      alunos: [
+        {
+          aluno: "Marcio",
+          matricula: "20181SI",
+          nota: 10,
+        },
+        {
+          aluno: "Joãozinho",
+          matricula: "2020SI60",
+          nota: 60,
+        },
+        {
+          aluno: "Juquinha",
+          matricula: "2019SI30",
+          nota: 90,
+        },
+      ],
+      headers: [
+        {
+          text: "Aluno",
+          align: "start",
+          value: "aluno",
+          width: "45%",
+        },
+        { text: "Matrícula", value: "matricula" },
+        { text: "Nota", value: "nota" },
+      ],
+    };
   },
 };
 </script>

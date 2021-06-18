@@ -228,8 +228,41 @@
       <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
+    <template v-slot:body.append>
+      <tr>
+        <td></td>
+        <td>
+          <v-combobox
+            v-model="EscolherCurso"
+            item-text="curso"
+            :items="curso"
+            label="Curso"
+            clearable
+          ></v-combobox>
+        </td>
+        <td>
+          <v-combobox
+            v-model="EscolherPLetivo"
+            item-text="periodo"
+            :items="periodos"
+            label="P. Letivo"
+            clearable
+          ></v-combobox>
+        </td>
+        <td>
+          <v-combobox
+            v-model="EscolherTurma"
+            item-text="turma"
+            :items="turmas"
+            label="Turma"
+            clearable
+          ></v-combobox>
+        </td>
+        <td></td>
+      </tr>
+    </template>
     <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize">Resetar</v-btn>
+      <v-btn color="primary" @click="initialize">Alterar</v-btn>
     </template>
   </v-data-table>
 </template>
