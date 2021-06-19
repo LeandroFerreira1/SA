@@ -81,6 +81,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "matriculaDisciplina" */ '../views/MatriculaDisciplina.vue')
   },
   {
+    path: '/registroDePresenca',
+    name: 'Registro de presenca',
+    component: () => import(/* webpackChunkName: "registroDePresenca" */ '../views/RegistroDePresenca.vue')
+  },
+  {
     path: '/boletim',
     name: 'Boletim',
     component: () => import(/* webpackChunkName: "boletin" */ '../views/Boletim.vue')
@@ -89,6 +94,11 @@ const routes = [
     path: '/listagemNotas',
     name: 'ListagemNotas',
     component: () => import(/* webpackChunkName: "boletin" */ '../views/ListagemNotas.vue')
+  },
+  {
+    path: '/listagemFaltas',
+    name: 'Listagem de Faltas',
+    component: () => import(/* webpackChunkName: "listagemDeFaltas" */ '../views/ListagemDeFaltas.vue')
   },
 
 ]
