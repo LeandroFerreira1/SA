@@ -7,5 +7,5 @@ export default class CidadeService extends Rest {
     /**
      * @type {String}
      */
-    static resource = '/cidades'
+    static resource = '/cidade'
 }

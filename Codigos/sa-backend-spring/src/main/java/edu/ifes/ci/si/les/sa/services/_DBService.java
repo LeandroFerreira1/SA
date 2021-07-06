@@ -7,6 +7,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.ifes.ci.si.les.sa.model.Cidade;
 import edu.ifes.ci.si.les.sa.model.Uf;
 import edu.ifes.ci.si.les.sa.repositories.AdministradorRepository;
 import edu.ifes.ci.si.les.sa.repositories.AlunoRepository;
@@ -78,6 +79,11 @@ public class _DBService {
 		Uf uf1 = new Uf(null,"ES", "Espirito Santo");
 		Uf uf2 = new Uf(null,"RJ", "Rio de Janeiro");
 		ufRepository.saveAll(Arrays.asList(uf1,uf2));
+		
+		Cidade cidade1 = new Cidade(null, "Vitoria",uf1);
+		Cidade cidade2 = new Cidade(null,"Osasco", uf2); 
+		cidadeRepository.saveAll(Arrays.asList(cidade1,cidade2));
+	
 		
 	}
 }

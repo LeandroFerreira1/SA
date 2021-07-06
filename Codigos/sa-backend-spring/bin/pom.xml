@@ -9,7 +9,7 @@
 		<version>2.5.0</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>edu.ifes.ci.si.les.sa-backend-spring</groupId>
+	<groupId>edu.ifes.ci.si.les.sa</groupId>
 	<artifactId>sa-backend-spring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>sa-backend-spring</name>

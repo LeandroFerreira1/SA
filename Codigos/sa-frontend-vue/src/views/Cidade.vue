@@ -30,7 +30,7 @@
                         label="UF"
                         outlined
                         required
-                        :rules="cursoRulesUf"
+                        :rules="cidadeRulesUf"
                       ></v-combobox>
                     </v-col>
 
@@ -41,7 +41,7 @@
                         outlined
                         required
                         :counter="200"
-                        :rules="cursoRulesNome"
+                        :rules="cidadeRulesNome"
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -98,9 +98,9 @@ import CidadeService from "../service/domain/CidadeService";
 import { mask } from "@titou10/v-mask";
 
 const textos = {
-  novo: "Novo Cidade",
+  novo: "Nova Cidade",
   edicao: "Edição de Cidade",
-  exclusao: "Deseja mesmo remover este Cidade?",
+  exclusao: "Deseja mesmo remover esta Cidade?",
 };
 
 export default {
@@ -141,11 +141,11 @@ export default {
     },
   },
   created() {
-    // this.fetchRecords();
+    this.fetchRecords();
   },
   methods: {
     fetchRecords() {
-      //this.service.search({}).then(this.fetchRecodsSuccess);
+      this.service.search({}).then(this.fetchRecodsSuccess);
     },
     fetchRecodsSuccess(response) {
       if (Array.isArray(response.rows)) {
@@ -165,9 +165,9 @@ export default {
       this.dialogExcluir = true;
     },
     deleteItemComfirm() {
-      //   this.service
-      //     .destroy(this.editedItem)
-      //     .then(this.lCidade.splice(this.editedIndex, 1));
+      this.service
+        .destroy(this.editedItem)
+        .then(this.lCidade.splice(this.editedIndex, 1));
       this.lCidade.splice(this.editedIndex, 1);
       this.closeExcluir();
     },
@@ -187,18 +187,16 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-        // this.service
-        //   .update(this.editedItem)
-        //   .then(
-        //     Object.assign(this.lCidade[this.editedIndex], this.editedItem)
-        //   );
-        Object.assign(this.lCidade[this.editedIndex], this.editedItem);
+        this.service
+          .update(this.editedItem)
+          .then(Object.assign(this.lCidade[this.editedIndex], this.editedItem));
+        //  Object.assign(this.lCidade[this.editedIndex], this.editedItem);
       } else {
-        // this.service
-        //   .create(this.editedItem)
-        //   .then((response) => this.lCidade.push(response));
-        //  this.lCidade.push(response)editedItem
-        this.lCidade.push(this.editedItem);
+        this.service
+          .create(this.editedItem)
+          .then((response) => this.lCidade.push(response));
+        //    this.lCidade.push(response)editedItem
+        //  this.lCidade.push(this.editedItem);
       }
       this.close();
     },

@@ -148,7 +148,7 @@ export default {
     },
   },
   created() {
-     this.fetchRecords();
+    this.fetchRecords();
   },
   methods: {
     fetchRecords() {
@@ -172,9 +172,9 @@ export default {
       this.dialogExcluir = true;
     },
     deleteItemComfirm() {
-         this.service
-           .destroy(this.editedItem)
-           .then(this.lUf.splice(this.editedIndex, 1));
+      this.service
+        .destroy(this.editedItem)
+        .then(this.lUf.splice(this.editedIndex, 1));
       this.closeExcluir();
     },
     closeExcluir() {
@@ -195,10 +195,7 @@ export default {
       if (this.editedIndex > -1) {
         this.service
           .update(this.editedItem)
-          .then(
-            Object.assign(this.lUf[this.editedIndex], this.editedItem)
-          );
-
+          .then(Object.assign(this.lUf[this.editedIndex], this.editedItem));
       } else {
         this.service
           .create(this.editedItem)
