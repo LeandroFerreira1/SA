@@ -32,7 +32,7 @@
                         outlined
                         required
                         :counter="200"
-                        :rules="cursoRulesNome"
+                        :rules="administradorRulesNome"
                       ></v-text-field>
                     </v-col>
 
@@ -44,7 +44,7 @@
                         outlined
                         required
                         :counter="200"
-                        :rules="cursoRulesSenha"
+                        :rules="administradorRulesSenha"
                       ></v-text-field>
                     </v-col>
 
@@ -56,7 +56,7 @@
                         outlined
                         required
                         :counter="200"
-                        :rules="cursoRulesEmail"
+                        :rules="administradorRulesEmail"
                       ></v-text-field>
                     </v-col>
                   </v-row>

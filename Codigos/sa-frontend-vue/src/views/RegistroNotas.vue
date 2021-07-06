@@ -57,8 +57,23 @@
       >
       </v-data-table>
     </v-container>
+
+    <v-container>
+      <div class="d-flex justify-center mb-6">
+        <div class="mr-2">
+          <v-btn block color="success">Salvar</v-btn>
+        </div>
+        <div class="mr-2">
+          <v-btn block color="primary">Limpar</v-btn>
+        </div>
+        <div class="mr-2">
+          <v-btn block color="gray">Cancelar</v-btn>
+        </div>
+      </div>
+    </v-container>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -81,6 +96,7 @@ export default {
           nota: 90,
         },
       ],
+
       headers: [
         {
           text: "Aluno",
