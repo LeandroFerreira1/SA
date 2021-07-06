@@ -28,18 +28,12 @@ public class PresencaAluno implements Serializable{
 	@NotNull(message = "O atributo presença deve ser preenchido")
 	private boolean presenca;
 
-	private Aula aula;
-	
-	@NotNull(message = "")
-	@ManyToOne
-	@JoinColumn(name = "alunoTurma_id")
-	private AlunoTurma alunoTurma;
 	
 	@Builder
     public void PresencaAluno(Turma turma, Aluno aluno, Aula aula,  Integer qtdAula, boolean presenca) {
     	this.id.setTurma(turma);
     	this.id.setAluno(aluno);
-    	this.aula = aula;
+    	this.id.setAula(aula);
         this.qtdAula = qtdAula;
         this.presenca = presenca;
     }
@@ -59,6 +53,14 @@ public class PresencaAluno implements Serializable{
 
 	    public void setAluno(Aluno aluno) {
 	        id.setAluno(aluno);
+	    }
+	    
+	    public Aula getAula() {
+	        return id.getAula();
+	    }
+
+	    public void setAula(Aula aula) {
+	        id.setAula(aula);
 	    }
 
 }

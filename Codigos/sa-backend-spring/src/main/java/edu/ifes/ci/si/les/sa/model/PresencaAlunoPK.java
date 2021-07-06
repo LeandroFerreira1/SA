@@ -10,11 +10,13 @@ import javax.persistence.OneToOne;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 //Classe criada para representar a chave primária composta do objeto PresencaAluno
 @Embeddable
 @Data
-@EqualsAndHashCode(of = {"aula", "alunoTurma"})
+@EqualsAndHashCode(of = {"aula", "aluno", "turma"})
 public class PresencaAlunoPK implements Serializable{
 	private static final long serialVersionUID = 1L;
 
@@ -22,29 +24,16 @@ public class PresencaAlunoPK implements Serializable{
 	@JoinColumn(name = "aula_id")
 	private Aula aula;
 	
-	@ManyToOne
-    @JoinColumns({
-    	@JoinColumn(name = "aluno_id", referencedColumnName = "aluno_id"),
-    	@JoinColumn(name = "turma_id", referencedColumnName = "turma_id")
-    })
+    @ManyToOne
+    @JoinColumn(name = "aluno_id")
+    @Getter
+    @Setter
+    private Aluno aluno;
 
-	public void setTurma(Turma turma) {
-		// TODO Auto-generated method stub
-		
-	}
+    @ManyToOne
+    @JoinColumn(name = "turma_id")
+    @Getter
+    @Setter
+    private Turma turma;
 
-	public void setAluno(Aluno aluno) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public Turma getTurma() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Aluno getAluno() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

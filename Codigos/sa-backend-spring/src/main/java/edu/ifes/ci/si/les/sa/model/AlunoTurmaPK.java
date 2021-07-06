@@ -1,12 +1,17 @@
 package edu.ifes.ci.si.les.sa.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import lombok.*;
 
 //Classe criada para representar a chave primária composta do objeto AlunoTurma
 @Embeddable
 @Data
+
 @EqualsAndHashCode(of = {"aluno", "turma"})
 public class AlunoTurmaPK implements Serializable {
 
@@ -14,30 +19,14 @@ public class AlunoTurmaPK implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "aluno_id")
+    @Getter
+    @Setter
     private Aluno aluno;
 
     @ManyToOne
     @JoinColumn(name = "turma_id")
+    @Getter
+    @Setter
     private Turma turma;
-
-	public void setTurma(Turma turma2) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public Aluno getAluno() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Turma getTurma() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void setAluno(Aluno aluno2) {
-		// TODO Auto-generated method stub
-		
-	}
     
 }

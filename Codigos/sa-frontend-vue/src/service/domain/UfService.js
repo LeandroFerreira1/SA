@@ -7,5 +7,5 @@ export default class UfService extends Rest {
     /**
      * @type {String}
      */
-    static resource = '/Ufs'
+    static resource = '/uf'
 }

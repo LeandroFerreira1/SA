@@ -6,11 +6,12 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-@Entity
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id"})
+@Entity
 public class Uf implements Serializable {
 
     private static final long serialVersionUID = 1L;

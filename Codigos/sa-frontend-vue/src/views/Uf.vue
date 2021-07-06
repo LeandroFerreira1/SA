@@ -31,7 +31,7 @@
                         outlined
                         required
                         :counter="200"
-                        :rules="cursoRulesNome"
+                        :rules="ufRulesNome"
                       ></v-text-field>
                     </v-col>
 
@@ -42,7 +42,7 @@
                         outlined
                         required
                         :counter="200"
-                        :rules="cursoRulesSigla"
+                        :rules="ufRulesSigla"
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -89,7 +89,7 @@
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
     <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize">Alterar</v-btn>
+      <v-btn color="primary" @click="fetchRecords">Alterar</v-btn>
     </template>
   </v-data-table>
 </template>
@@ -111,16 +111,22 @@ export default {
     dialog: false,
     dialogExcluir: false,
     valid: true,
-    cursoRulesNome: [
+    ufRulesNome: [
       (v) => !!v || "Preenchimento Necessário",
       (v) =>
-        (v && v.length <= 200 && v.length >= 10) ||
+        (v && v.length <= 200 && v.length >= 2) ||
+        "O campo deve ter pelo menos 10 e no maximo 200 letras",
+    ],
+    ufRulesSigla: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length <= 2 && v.length >= 2) ||
         "O campo deve ter pelo menos 10 e no maximo 200 letras",
     ],
     headers: [
       { text: "ID", value: "id" },
       { text: "Nome", align: "start", value: "nome" },
-      { text: "Sigla", value: "uf" },
+      { text: "Sigla", value: "sigla" },
       { text: "Ações", align: "end", value: "actions", sortable: false },
     ],
     lUf: [],
@@ -142,11 +148,11 @@ export default {
     },
   },
   created() {
-    // this.fetchRecords();
+     this.fetchRecords();
   },
   methods: {
     fetchRecords() {
-      //this.service.search({}).then(this.fetchRecodsSuccess);
+      this.service.search({}).then(this.fetchRecodsSuccess);
     },
     fetchRecodsSuccess(response) {
       if (Array.isArray(response.rows)) {
@@ -166,10 +172,9 @@ export default {
       this.dialogExcluir = true;
     },
     deleteItemComfirm() {
-      //   this.service
-      //     .destroy(this.editedItem)
-      //     .then(this.lUf.splice(this.editedIndex, 1));
-      this.lUf.splice(this.editedIndex, 1);
+         this.service
+           .destroy(this.editedItem)
+           .then(this.lUf.splice(this.editedIndex, 1));
       this.closeExcluir();
     },
     closeExcluir() {
@@ -188,18 +193,16 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-        // this.service
-        //   .update(this.editedItem)
-        //   .then(
-        //     Object.assign(this.lUf[this.editedIndex], this.editedItem)
-        //   );
-        Object.assign(this.lUf[this.editedIndex], this.editedItem);
+        this.service
+          .update(this.editedItem)
+          .then(
+            Object.assign(this.lUf[this.editedIndex], this.editedItem)
+          );
+
       } else {
-        // this.service
-        //   .create(this.editedItem)
-        //   .then((response) => this.lUf.push(response));
-        //  this.lUf.push(response)editedItem
-        this.lUf.push(this.editedItem);
+        this.service
+          .create(this.editedItem)
+          .then((response) => this.lUf.push(response));
       }
       this.close();
     },
