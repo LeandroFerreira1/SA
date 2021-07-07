@@ -37,11 +37,13 @@
 
                     <v-col cols="12" sm="6" md="6">
                       <v-combobox
-                        v-model="editedItem.tipo"
+                        :items="lCurso"
+                        item-text="tipo"
                         label="Tipo"
+                        v-model="editedItem.curso"
                         outlined
                         required
-                        :rules="cursoRulesTipo"
+                        :rules="CursoRulesTipo"
                       ></v-combobox>
                     </v-col>
 
@@ -108,42 +110,43 @@
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
     <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize">Alterar</v-btn>
+      <v-btn color="primary" @click="initialize">Resetar</v-btn>
     </template>
   </v-data-table>
 </template>
 
 <script>
 import CursoService from "../service/domain/CursoService";
-import { mask } from "@titou10/v-mask";
+const serviceCurso = CursoService.build();
 
 const textos = {
   novo: "Novo Curso",
   edicao: "Edição de Curso",
   exclusao: "Deseja mesmo remover este Curso?",
 };
-
 export default {
-  directives: { mask },
+  name: "lCurso",
+  components: {},
   data: () => ({
-    service: CursoService.build(),
     dialog: false,
     dialogExcluir: false,
     valid: true,
-    cursoRulesNomeEndereco: [
+    cursoRulesCurso: [(v) => !!v || "Seleção Necessária"],
+    cursoRulesNome: [
       (v) => !!v || "Preenchimento Necessário",
       (v) =>
-        (v && v.length <= 200 && v.length >= 10) ||
-        "O campo deve ter pelo menos 10 e no maximo 200 letras",
+        (v && v.length <= 20 && v.length >= 3) ||
+        "O campo deve ter pelo menos 3 e no maximo 20 letras",
     ],
     headers: [
       { text: "ID", value: "id" },
       { text: "Nome", align: "start", value: "nome" },
       { text: "Tipo", value: "tipo" },
-      { text: "Carga Horária", value: "cargahoraria" },
+      { text: "Carga Horária", value: "cargaHoraria" },
       { text: "Duração", value: "duracao" },
       { text: "Ações", align: "end", value: "actions", sortable: false },
     ],
+    cursoSelecionado: null,
     lCurso: [],
     editedIndex: -1,
     editedItem: {},
@@ -163,11 +166,12 @@ export default {
     },
   },
   created() {
-    // this.fetchRecords();
+    this.fetchRecords();
+    this.fetchRecordsUf();
   },
   methods: {
     fetchRecords() {
-      //this.service.search({}).then(this.fetchRecodsSuccess);
+      serviceCurso.search({}).then(this.fetchRecodsSuccess);
     },
     fetchRecodsSuccess(response) {
       if (Array.isArray(response.rows)) {
@@ -176,6 +180,26 @@ export default {
       }
       this.lCurso = [];
     },
+    fetchRecodsSuccessUf(response) {
+      if (Array.isArray(response.rows)) {
+        this.lUf = response.rows;
+        return;
+      }
+      this.lUf = [];
+    },
+
+    buscarTipoCurso() {
+      const query = this.getQueryUrlBuscarTipoCurso();
+      this.resetSelecaoCurso();
+      this.fetchRecordsTipo(query);
+    },
+    getQueryUrlBuscarTipoCurso() {
+      return `findByCurso/${this.cursoSelecionado.id}`;
+    },
+    resetSelecaoCurso() {
+      this.lCurso = null;
+    },
+
     editItem(item) {
       this.editedIndex = this.lCurso.indexOf(item);
       this.editedItem = Object.assign({}, item);
@@ -187,10 +211,10 @@ export default {
       this.dialogExcluir = true;
     },
     deleteItemComfirm() {
-      //   this.service
-      //     .destroy(this.editedItem)
-      //     .then(this.lCurso.splice(this.editedIndex, 1));
-      this.lCurso.splice(this.editedIndex, 1);
+      //const index = this.lCurso.indexOf(this.editedItem);
+      serviceCurso
+        .destroy(this.editedItem)
+        .then(this.lCurso.splice(this.editedIndex, 1));
       this.closeExcluir();
     },
     closeExcluir() {
@@ -209,18 +233,14 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-        // this.service
-        //   .update(this.editedItem)
-        //   .then(
-        //     Object.assign(this.lCurso[this.editedIndex], this.editedItem)
-        //   );
-        Object.assign(this.lCurso[this.editedIndex], this.editedItem);
+        console.log(this.editedItem);
+        serviceCurso
+          .update(this.editedItem)
+          .then(Object.assign(this.lCurso[this.editedIndex], this.editedItem));
       } else {
-        // this.service
-        //   .create(this.editedItem)
-        //   .then((response) => this.lCurso.push(response));
-        //  this.lCurso.push(response)editedItem
-        this.lCurso.push(this.editedItem);
+        serviceCurso
+          .create(this.editedItem)
+          .then((response) => this.lCurso.push(response));
       }
       this.close();
     },

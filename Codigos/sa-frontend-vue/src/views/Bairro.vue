@@ -26,21 +26,25 @@
                   <v-row>
                     <v-col cols="12" sm="6" md="6">
                       <v-combobox
-                        v-model="editedItem.uf"
+                        :items="lUf"
+                        item-text="nome"
                         label="UF"
+                        v-model="editedItem.uf"
                         outlined
                         required
-                        :rules="cursoRulesUf"
+                        :rules="bairroRulesUf"
                       ></v-combobox>
                     </v-col>
 
                     <v-col cols="12" sm="6" md="6">
                       <v-combobox
-                        v-model="editedItem.cidade"
+                        :items="lCidade"
+                        item-text="nome"
                         label="Cidade"
+                        v-model="editedItem.cidade"
                         outlined
                         required
-                        :rules="cursoRulesCidade"
+                        :rules="bairroRulesCidade"
                       ></v-combobox>
                     </v-col>
 
@@ -51,7 +55,7 @@
                         outlined
                         required
                         :counter="200"
-                        :rules="cursoRulesNome"
+                        :rules="bairroRulesNome"
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -98,14 +102,18 @@
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
     <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize">Alterar</v-btn>
+      <v-btn color="primary" @click="initialize">Resetar</v-btn>
     </template>
   </v-data-table>
 </template>
 
 <script>
 import BairroService from "../service/domain/BairroService";
-import { mask } from "@titou10/v-mask";
+const serviceBairro = BairroService.build();
+import CidadeService from "../service/domain/CidadeService";
+const serviceCidade = CidadeService.build();
+import UfService from "../service/domain/UfService";
+const serviceUf = UfService.build();
 
 const textos = {
   novo: "Novo Bairro",
@@ -113,27 +121,31 @@ const textos = {
   exclusao: "Deseja mesmo remover este Bairro?",
 };
 
+// Precisa Ajeitar as Regras
 export default {
-  directives: { mask },
+  name: "lBairro",
+  components: {},
   data: () => ({
-    service: BairroService.build(),
     dialog: false,
     dialogExcluir: false,
     valid: true,
-    cursoRulesNome: [
+    bairroRulesUf: [(v) => !!v || "Seleção Necessária"],
+    bairroRulesNome: [
       (v) => !!v || "Preenchimento Necessário",
       (v) =>
-        (v && v.length <= 200 && v.length >= 10) ||
-        "O campo deve ter pelo menos 10 e no maximo 200 letras",
+        (v && v.length <= 20 && v.length >= 3) ||
+        "O campo deve ter pelo menos 3 e no maximo 20 letras", // Neste Campo
     ],
     headers: [
       { text: "ID", value: "id" },
       { text: "Nome", align: "start", value: "nome" },
-      { text: "Cidade", value: "cidade" },
-      { text: "UF", value: "uf" },
+      { text: "Cidade", value: "cidade.nome" },
+      { text: "UF", value: "cidade.uf.nome" },
       { text: "Ações", align: "end", value: "actions", sortable: false },
     ],
     lBairro: [],
+    lUf: [],
+    lCidade: [],
     editedIndex: -1,
     editedItem: {},
     defaultItem: {},
@@ -152,11 +164,19 @@ export default {
     },
   },
   created() {
-    // this.fetchRecords();
+    this.fetchRecords();
+    this.fetchRecordsUf();
+    this.fetchRecordsCidade();
   },
   methods: {
     fetchRecords() {
-      //this.service.search({}).then(this.fetchRecodsSuccess);
+      serviceBairro.search({}).then(this.fetchRecodsSuccess);
+    },
+    fetchRecordsUf() {
+      serviceUf.search({}).then(this.fetchRecodsSuccessUf);
+    },
+    fetchRecordsCidade() {
+      serviceCidade.search({}).then(this.fetchRecodsSuccess);
     },
     fetchRecodsSuccess(response) {
       if (Array.isArray(response.rows)) {
@@ -165,6 +185,36 @@ export default {
       }
       this.lBairro = [];
     },
+    fetchRecodsSuccessUf(response) {
+      if (Array.isArray(response.rows)) {
+        this.lUf = response.rows;
+        return;
+      }
+      this.lUf = [];
+    },
+
+    fetchRecodsSuccessCidade(response) {
+      if (Array.isArray(response.rows)) {
+        this.lCidade = response.rows;
+        return;
+      }
+      this.lCidade = [];
+    },
+
+
+    buscarCidades() {
+      const query = this.getQueryUrlBuscaCidadesPorUf();
+      this.resetSelecaoCidade();
+      this.fetchRecordsCidade(query);
+    },
+    getQueryUrlBuscaCidadesPorUf() {
+      return `findByUf/${this.ufSelecionado.id}`;
+    },
+    resetSelecaoCidade() {
+      this.lCidade = [];
+      this.editedItem.cidade = null;
+    },
+
     editItem(item) {
       this.editedIndex = this.lBairro.indexOf(item);
       this.editedItem = Object.assign({}, item);
@@ -176,10 +226,10 @@ export default {
       this.dialogExcluir = true;
     },
     deleteItemComfirm() {
-      //   this.service
-      //     .destroy(this.editedItem)
-      //     .then(this.lBairro.splice(this.editedIndex, 1));
-      this.lBairro.splice(this.editedIndex, 1);
+      //const index = this.lBairro.indexOf(this.editedItem);
+      serviceBairro
+        .destroy(this.editedItem)
+        .then(this.lBairro.splice(this.editedIndex, 1));
       this.closeExcluir();
     },
     closeExcluir() {
@@ -198,18 +248,14 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-        // this.service
-        //   .update(this.editedItem)
-        //   .then(
-        //     Object.assign(this.lBairro[this.editedIndex], this.editedItem)
-        //   );
-        Object.assign(this.lBairro[this.editedIndex], this.editedItem);
+        console.log(this.editedItem);
+        serviceBairro
+          .update(this.editedItem)
+          .then(Object.assign(this.lBairro[this.editedIndex], this.editedItem));
       } else {
-        // this.service
-        //   .create(this.editedItem)
-        //   .then((response) => this.lBairro.push(response));
-        //  this.lBairro.push(response)editedItem
-        this.lBairro.push(this.editedItem);
+        serviceBairro
+          .create(this.editedItem)
+          .then((response) => this.lBairro.push(response));
       }
       this.close();
     },

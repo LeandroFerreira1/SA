@@ -7,5 +7,5 @@ export default class BairroService extends Rest {
     /**
      * @type {String}
      */
-    static resource = '/bairros'
+    static resource = '/bairro'
 }

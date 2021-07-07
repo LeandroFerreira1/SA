@@ -26,11 +26,13 @@
                   <v-row>
                     <v-col cols="12" sm="6" md="6">
                       <v-combobox
-                        v-model="editedItem.curso"
+                        :items="lCurso"
+                        item-text="nome"
                         label="Curso"
+                        v-model="editedItem.curso"
                         outlined
                         required
-                        :rules="cursoRulesCurso"
+                        :rules="cidadeRulesCurso"
                       ></v-combobox>
                     </v-col>
 
@@ -47,7 +49,7 @@
 
                     <v-col cols="12" sm="6" md="6">
                       <v-text-field
-                        v-model="editedItem.nomereduzido"
+                        v-model="editedItem.nomeReduzido"
                         label="Nome Reduzido"
                         outlined
                         required
@@ -108,59 +110,46 @@
       <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
-       <template v-slot:body.append>
-      <tr>
-        <td></td>
-        <td>
-          <v-combobox
-            v-model="EscolherCurso"
-            item-text="curso"
-            :items="curso"
-            label="Curso"
-            clearable
-          ></v-combobox>
-        </td>
-        <td></td>
-      </tr>
-    </template>
     <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize">Alterar</v-btn>
+      <v-btn color="primary" @click="initialize">Resetar</v-btn>
     </template>
   </v-data-table>
 </template>
 
 <script>
 import DisciplinaService from "../service/domain/DisciplinaService";
-import { mask } from "@titou10/v-mask";
-
+const serviceDisciplina = DisciplinaService.build();
+import CursoService from "../service/domain/CursoService";
+const serviceCurso = CursoService.build();
 const textos = {
-  novo: "Nova Disciplina",
+  novo: "Novo Disciplina",
   edicao: "Edição de Disciplina",
-  exclusao: "Deseja mesmo remover esta Disciplina?",
+  exclusao: "Deseja mesmo remover este Disciplina?",
 };
-
 export default {
-  directives: { mask },
+  name: "lDisciplina",
+  components: {},
   data: () => ({
-    service: DisciplinaService.build(),
     dialog: false,
     dialogExcluir: false,
     valid: true,
-    disciplinaRulesNomeEndereco: [
+    disciplinaRulesCurso: [(v) => !!v || "Seleção Necessária"],
+    disciplinaRulesNome: [
       (v) => !!v || "Preenchimento Necessário",
       (v) =>
-        (v && v.length <= 200 && v.length >= 10) ||
-        "O campo deve ter pelo menos 10 e no maximo 200 letras",
+        (v && v.length <= 20 && v.length >= 3) ||
+        "O campo deve ter pelo menos 3 e no maximo 20 letras",
     ],
-
     headers: [
       { text: "ID", value: "id" },
+      { text: "Nome", align: "start", value: "curso.nome" },
       { text: "Nome", align: "start", value: "nome" },
-      { text: "Nome Reduzido", align: "start", value: "nomereduzido" },
-      { text: "Carga Horária", value: "cargahoraria" },
+      { text: "Nome Reduzido", value: "nomeReduzido" },
+      { text: "Carga Horária (Horas)", value: "cargaHoraria" },
       { text: "Ações", align: "end", value: "actions", sortable: false },
     ],
     lDisciplina: [],
+    lCurso: [],
     editedIndex: -1,
     editedItem: {},
     defaultItem: {},
@@ -179,11 +168,15 @@ export default {
     },
   },
   created() {
-    // this.fetchRecords();
+    this.fetchRecords();
+    this.fetchRecordsCurso();
   },
   methods: {
     fetchRecords() {
-      //this.service.search({}).then(this.fetchRecodsSuccess);
+      serviceDisciplina.search({}).then(this.fetchRecodsSuccess);
+    },
+    fetchRecordsCurso() {
+      serviceCurso.search({}).then(this.fetchRecodsSuccessCurso);
     },
     fetchRecodsSuccess(response) {
       if (Array.isArray(response.rows)) {
@@ -192,6 +185,14 @@ export default {
       }
       this.lDisciplina = [];
     },
+    fetchRecodsSuccessCurso(response) {
+      if (Array.isArray(response.rows)) {
+        this.lCurso = response.rows;
+        return;
+      }
+      this.lCurso = [];
+    },
+
     editItem(item) {
       this.editedIndex = this.lDisciplina.indexOf(item);
       this.editedItem = Object.assign({}, item);
@@ -203,10 +204,10 @@ export default {
       this.dialogExcluir = true;
     },
     deleteItemComfirm() {
-      //   this.service
-      //     .destroy(this.editedItem)
-      //     .then(this.lDisciplina.splice(this.editedIndex, 1));
-      this.lDisciplina.splice(this.editedIndex, 1);
+      //const index = this.lDisciplina.indexOf(this.editedItem);
+      serviceDisciplina
+        .destroy(this.editedItem)
+        .then(this.lDisciplina.splice(this.editedIndex, 1));
       this.closeExcluir();
     },
     closeExcluir() {
@@ -225,18 +226,16 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-        // this.service
-        //   .update(this.editedItem)
-        //   .then(
-        //     Object.assign(this.lDisciplina[this.editedIndex], this.editedItem)
-        //   );
-        Object.assign(this.lDisciplina[this.editedIndex], this.editedItem);
+        console.log(this.editedItem);
+        serviceDisciplina
+          .update(this.editedItem)
+          .then(
+            Object.assign(this.lDisciplina[this.editedIndex], this.editedItem)
+          );
       } else {
-        // this.service
-        //   .create(this.editedItem)
-        //   .then((response) => this.lDisciplina.push(response));
-        //  this.lDisciplina.push(response)editedItem
-        this.lDisciplina.push(this.editedItem);
+        serviceDisciplina
+          .create(this.editedItem)
+          .then((response) => this.lDisciplina.push(response));
       }
       this.close();
     },

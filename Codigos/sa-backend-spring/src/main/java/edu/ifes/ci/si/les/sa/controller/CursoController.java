@@ -13,31 +13,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.ifes.ci.si.les.sa.model.Cidade;
-import edu.ifes.ci.si.les.sa.services.CidadeService;
+import edu.ifes.ci.si.les.sa.model.Curso;
+import edu.ifes.ci.si.les.sa.services.CursoService;
 import edu.ifes.ci.si.les.sa.services.exceptions.ConstraintException;
 
 @RestController
-@RequestMapping(value = "/api/v1/cidade")
-public class CidadeController {
+@RequestMapping(value = "/api/v1/curso")
+public class CursoController {
 
 	@Autowired
-	private CidadeService service;
+	private CursoService service;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<Collection<Cidade>> findAll() {
-		Collection<Cidade> collection = service.findAll();
+	public ResponseEntity<Collection<Curso>> findAll() {
+		Collection<Curso> collection = service.findAll();
 		return ResponseEntity.ok().body(collection);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Cidade> find(@PathVariable Integer id) {
-		Cidade obj = service.findById(id);
+	public ResponseEntity<Curso> find(@PathVariable Integer id) {
+		Curso obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Cidade> insert(@Valid @RequestBody Cidade obj, BindingResult br) {
+	public ResponseEntity<Curso> insert(@Valid @RequestBody Curso obj, BindingResult br) {
 		if (br.hasErrors())
 			throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
 		obj = service.insert(obj);
@@ -45,7 +45,7 @@ public class CidadeController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
-	public ResponseEntity<Cidade> update(@Valid @RequestBody Cidade obj, BindingResult br) {
+	public ResponseEntity<Curso> update(@Valid @RequestBody Curso obj, BindingResult br) {
 		if (br.hasErrors())
 			throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
 		obj = service.update(obj);

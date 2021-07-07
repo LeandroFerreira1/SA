@@ -7,5 +7,5 @@ export default class CursoService extends Rest {
     /**
      * @type {String}
      */
-    static resource = '/cursos'
+    static resource = '/curso'
 }

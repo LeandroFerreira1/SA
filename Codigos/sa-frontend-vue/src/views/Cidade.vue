@@ -7,7 +7,7 @@
   >
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>Cadastro de Cidades</v-toolbar-title>
+        <v-toolbar-title>Cadastro de Cidade</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="800px">
           <template v-slot:activator="{ on, attrs }">
@@ -28,7 +28,7 @@
                       <v-combobox
                         :items="lUf"
                         item-text="nome"
-                        label="Uf"
+                        label="UF"
                         v-model="editedItem.uf"
                         outlined
                         required
@@ -97,7 +97,7 @@
 
 <script>
 import CidadeService from "../service/domain/CidadeService";
-const service = CidadeService.build();
+const serviceCidade = CidadeService.build();
 import UfService from "../service/domain/UfService";
 const serviceUf = UfService.build();
 const textos = {
@@ -150,7 +150,7 @@ export default {
   },
   methods: {
     fetchRecords() {
-      service.search({}).then(this.fetchRecodsSuccess);
+      serviceCidade.search({}).then(this.fetchRecodsSuccess);
     },
     fetchRecordsUf() {
       serviceUf.search({}).then(this.fetchRecodsSuccessUf);
@@ -169,6 +169,7 @@ export default {
       }
       this.lUf = [];
     },
+
     editItem(item) {
       this.editedIndex = this.lCidade.indexOf(item);
       this.editedItem = Object.assign({}, item);
@@ -181,7 +182,7 @@ export default {
     },
     deleteItemComfirm() {
       //const index = this.lCidade.indexOf(this.editedItem);
-      service
+      serviceCidade
         .destroy(this.editedItem)
         .then(this.lCidade.splice(this.editedIndex, 1));
       this.closeExcluir();
@@ -203,11 +204,11 @@ export default {
     save() {
       if (this.editedIndex > -1) {
         console.log(this.editedItem);
-        service
+        serviceCidade
           .update(this.editedItem)
           .then(Object.assign(this.lCidade[this.editedIndex], this.editedItem));
       } else {
-        service
+        serviceCidade
           .create(this.editedItem)
           .then((response) => this.lCidade.push(response));
       }

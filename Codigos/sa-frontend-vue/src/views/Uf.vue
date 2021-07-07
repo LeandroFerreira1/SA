@@ -99,7 +99,7 @@ import UfService from "../service/domain/UfService";
 import { mask } from "@titou10/v-mask";
 
 const textos = {
-  novo: "Novo Uf",
+  novo: "Novo UF",
   edicao: "Edição de Uf",
   exclusao: "Deseja mesmo remover este Uf?",
 };

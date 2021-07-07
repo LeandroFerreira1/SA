@@ -46,5 +46,19 @@ public class AvaliacaoAluno implements Serializable{
 	    public void setAluno(Aluno aluno) {
 	        id.setAluno(aluno);
 	    }
+	    
+	    
+	    /////////// ********** Teste   *********
+		public void setId(Object object) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public AvaliacaoAlunoPK getId() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		
 
 }
