@@ -7,7 +7,7 @@
   >
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>Cadastro de Cidade</v-toolbar-title>
+        <v-toolbar-title>Cadastro de Cidades</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="800px">
           <template v-slot:activator="{ on, attrs }">
@@ -26,8 +26,10 @@
                   <v-row>
                     <v-col cols="12" sm="6" md="6">
                       <v-combobox
+                        :items="lUf"
+                        item-text="nome"
+                        label="Uf"
                         v-model="editedItem.uf"
-                        label="UF"
                         outlined
                         required
                         :rules="cidadeRulesUf"
@@ -88,41 +90,43 @@
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
     <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize">Alterar</v-btn>
+      <v-btn color="primary" @click="initialize">Resetar</v-btn>
     </template>
   </v-data-table>
 </template>
 
 <script>
 import CidadeService from "../service/domain/CidadeService";
-import { mask } from "@titou10/v-mask";
-
+const service = CidadeService.build();
+import UfService from "../service/domain/UfService";
+const serviceUf = UfService.build();
 const textos = {
-  novo: "Nova Cidade",
+  novo: "Novo Cidade",
   edicao: "Edição de Cidade",
-  exclusao: "Deseja mesmo remover esta Cidade?",
+  exclusao: "Deseja mesmo remover este Cidade?",
 };
-
 export default {
-  directives: { mask },
+  name: "lCidade",
+  components: {},
   data: () => ({
-    service: CidadeService.build(),
     dialog: false,
     dialogExcluir: false,
     valid: true,
-    cursoRulesNome: [
+    cidadeRulesUf: [(v) => !!v || "Seleção Necessária"],
+    cidadeRulesNome: [
       (v) => !!v || "Preenchimento Necessário",
       (v) =>
-        (v && v.length <= 200 && v.length >= 10) ||
-        "O campo deve ter pelo menos 10 e no maximo 200 letras",
+        (v && v.length <= 20 && v.length >= 3) ||
+        "O campo deve ter pelo menos 3 e no maximo 20 letras",
     ],
     headers: [
       { text: "ID", value: "id" },
       { text: "Nome", align: "start", value: "nome" },
-      { text: "UF", value: "uf" },
+      { text: "UF", value: "uf.nome" },
       { text: "Ações", align: "end", value: "actions", sortable: false },
     ],
     lCidade: [],
+    lUf: [],
     editedIndex: -1,
     editedItem: {},
     defaultItem: {},
@@ -142,10 +146,14 @@ export default {
   },
   created() {
     this.fetchRecords();
+    this.fetchRecordsUf();
   },
   methods: {
     fetchRecords() {
-      this.service.search({}).then(this.fetchRecodsSuccess);
+      service.search({}).then(this.fetchRecodsSuccess);
+    },
+    fetchRecordsUf() {
+      serviceUf.search({}).then(this.fetchRecodsSuccessUf);
     },
     fetchRecodsSuccess(response) {
       if (Array.isArray(response.rows)) {
@@ -153,6 +161,13 @@ export default {
         return;
       }
       this.lCidade = [];
+    },
+    fetchRecodsSuccessUf(response) {
+      if (Array.isArray(response.rows)) {
+        this.lUf = response.rows;
+        return;
+      }
+      this.lUf = [];
     },
     editItem(item) {
       this.editedIndex = this.lCidade.indexOf(item);
@@ -165,10 +180,10 @@ export default {
       this.dialogExcluir = true;
     },
     deleteItemComfirm() {
-      this.service
+      //const index = this.lCidade.indexOf(this.editedItem);
+      service
         .destroy(this.editedItem)
         .then(this.lCidade.splice(this.editedIndex, 1));
-      this.lCidade.splice(this.editedIndex, 1);
       this.closeExcluir();
     },
     closeExcluir() {
@@ -187,16 +202,14 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-        this.service
+        console.log(this.editedItem);
+        service
           .update(this.editedItem)
           .then(Object.assign(this.lCidade[this.editedIndex], this.editedItem));
-        //  Object.assign(this.lCidade[this.editedIndex], this.editedItem);
       } else {
-        this.service
+        service
           .create(this.editedItem)
           .then((response) => this.lCidade.push(response));
-        //    this.lCidade.push(response)editedItem
-        //  this.lCidade.push(this.editedItem);
       }
       this.close();
     },

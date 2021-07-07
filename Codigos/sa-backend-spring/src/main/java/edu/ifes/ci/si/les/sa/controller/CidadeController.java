@@ -19,7 +19,7 @@ import edu.ifes.ci.si.les.sa.services.CidadeService;
 import edu.ifes.ci.si.les.sa.services.exceptions.ConstraintException;
 
 @RestController
-@RequestMapping(value = "/api/v1/Cidade")
+@RequestMapping(value = "/api/v1/cidade")
 public class CidadeController {
 
 	@Autowired
