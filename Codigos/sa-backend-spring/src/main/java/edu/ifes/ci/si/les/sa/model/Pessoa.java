@@ -12,6 +12,10 @@ import lombok.*;
 
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(of = {"id"})
 public class Pessoa implements Serializable{
 	private static final long serialVersionUID = 1L;
 
