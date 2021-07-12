@@ -27,11 +27,11 @@
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
                         v-model="editedItem.nome"
-                        v-mask="{ mask: '####/#' }"
                         label="Nome"
                         outlined
                         required
                         :counter="5"
+                        v-mask="{ mask: '####/#' }"
                         :rules="periodoLetivoRulesNome"
                       ></v-text-field>
                     </v-col>
@@ -47,13 +47,13 @@
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
                             v-model="editedItem.dataInicio"
-                            label="Data de Inicio"
+                            label="Data de Início"
                             readonly
                             v-bind="attrs"
                             v-on="on"
                             outlined
                             required
-                            :rules="modeloRulesDataInicio"
+                            :rules="modeloRulesDataIncio"
                           ></v-text-field>
                         </template>
                         <v-date-picker
