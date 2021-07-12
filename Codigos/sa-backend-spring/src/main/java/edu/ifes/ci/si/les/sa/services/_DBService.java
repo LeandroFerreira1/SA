@@ -129,7 +129,7 @@ public class _DBService {
 		Disciplina disciplina5 = new Disciplina(null, "Fundamentos de Hardware", 30, "FH", curso5);
 		disciplinaRepository.saveAll(Arrays.asList(disciplina1, disciplina2, disciplina3, disciplina4, disciplina5));
 
-		// CADASTRO ATIVIDADE AVALIATIVA (Avaliação)
+		// CADASTRO ATIVIDADE AVALIATIVA (AVALIAÇÃO)
 		AtividadeAvaliativa atividadeAvaliativa1 = new AtividadeAvaliativa(null,
 				"Avaliacao Listas Duplamente Encadeadas", "Avaliacao", sdf.parse("2021-02-16"), 25.0, disciplina4);
 		AtividadeAvaliativa atividadeAvaliativa2 = new AtividadeAvaliativa(null, "Trabalho de HTML5 - Aspnet.core",

@@ -26,38 +26,35 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"id"})
-public class AtividadeAvaliativa implements Serializable{
+@EqualsAndHashCode(of = { "id" })
+public class AtividadeAvaliativa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
 	@Column(length = 50)
-    @NotBlank(message = "O nome da Atividade Avaliativa deve ser preenchida")
-    @Size(min = 2, max = 50, message = "O nome da Atividade Avaliativa deve ter entre 2 e 50 letras")
+	@NotBlank(message = "O nome da Atividade Avaliativa deve ser preenchida")
+	@Size(min = 2, max = 50, message = "O nome da Atividade Avaliativa deve ter entre 2 e 50 letras")
 	private String nome;
-	
+
 	@Column(length = 50)
-    @NotBlank(message = "O nome da Atividade Avaliativa deve ser preenchida")
-    @Size(min = 2, max = 50, message = "AO nome da Atividade Avaliativa deve ter entre 2 e 50 letras")
+	@NotBlank(message = "O nome da Atividade Avaliativa deve ser preenchida")
+	@Size(min = 2, max = 50, message = "AO nome da Atividade Avaliativa deve ter entre 2 e 50 letras")
 	private String tipo;
-	
-	@NotNull(message = "O Campo deve ser preenchida")
-	@Column(length = 10)
-	@NotBlank(message = "O Campo deve ser preenchido")
-	@Size(min = 10, max = 10, message = "O campo deve ter 8 digitos")
+
+	@NotNull(message = "A data da Atividade Avaliativa deve  ser preenchido")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date dataAvaliacao;
-	
-	@NotNull(message = "Valor da Atividade Avaliativa deve ser preenchida")
-    @Digits(integer=6, fraction=2, message = "Valor da Atividade Avaliativa deve ser preenchida com dígitos")
+
+	@NotNull(message = "A data de início do Periodo Letivo deve ser preenchido")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Double valor;
-	
+
 	@NotNull(message = "A disciplina da Atividade avaliativa deve ser preenchido")
 	@ManyToOne
 	@JoinColumn(name = "disciplina_id")
 	private Disciplina disciplina;
-	
 
 }

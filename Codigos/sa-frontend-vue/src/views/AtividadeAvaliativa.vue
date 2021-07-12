@@ -183,7 +183,7 @@ export default {
     headers: [
       { text: "ID", value: "id" },
       { text: "Nome", align: "start", value: "nome" },
-      { text: "Tipo", align: "start", value: "tipo" },
+      { text: "Tipo",  value: "tipo" },
       { text: "Data da Avaliação", value: "dataAvaliacao" },
       { text: "Valor", value: "valor" },
       { text: "Disciplina", value: "disciplina.nome" },

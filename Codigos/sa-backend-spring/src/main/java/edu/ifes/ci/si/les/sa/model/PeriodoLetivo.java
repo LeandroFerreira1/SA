@@ -40,7 +40,7 @@ public class PeriodoLetivo implements Serializable{
     @NotNull(message = "A data de início do Periodo Letivo deve ser preenchido")
     @JsonFormat(pattern = "yyyy-MM-dd")
 	private Date dataInicio;
-	;
+	
 	
     @NotNull(message = "A data de Fim do Periodo Letivo deve ser preenchido")
     @JsonFormat(pattern = "yyyy-MM-dd")
