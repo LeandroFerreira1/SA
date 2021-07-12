@@ -48,7 +48,7 @@ public class AtividadeAvaliativa implements Serializable{
 	@Column(length = 10)
 	@NotBlank(message = "O Campo deve ser preenchido")
 	@Size(min = 10, max = 10, message = "O campo deve ter 8 digitos")
-	private String dataAvaliacao;
+	private Date dataAvaliacao;
 	
 	@NotNull(message = "Valor da Atividade Avaliativa deve ser preenchida")
     @Digits(integer=6, fraction=2, message = "Valor da Atividade Avaliativa deve ser preenchida com dígitos")
