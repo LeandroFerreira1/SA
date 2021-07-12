@@ -200,9 +200,9 @@ public class _DBService {
 		avaliacaoAlunoRepository.saveAll(Arrays.asList(avaliacaoAluno1,avaliacaoAluno2,avaliacaoAluno3));
 		
 		// CADASTRO ADMINISTRADOR
-		Administrador administrador1 = new Administrador("adm1@email.com","123456");
-		Administrador administrador2 = new Administrador("adm2@email.com","123456");
-		Administrador administrador3 = new Administrador("adm3@email.com","123456");
+		Administrador administrador1 = new Administrador(null, "João Paulo", sdf.parse("1980-02-05"), "M", "865.132.132-14", "Rua das mangas amarelas", 20, 1, bairro1, "adm1@email.com", "123456");
+		Administrador administrador2 = new Administrador(null, "Paulo Mendonca", sdf.parse("1972-01-15"), "F", "097.364.741-25", "Rua Paralela Ivis", 52, 1, bairro2, "adm2@email.com", "123456");
+		Administrador administrador3 = new Administrador(null, "Marco Aurelio", sdf.parse("1969-03-11"), "M", "235.987.150-00", "Rua Jorge Amarelo", 71, 1, bairro3, "adm3@email.com", "123456");
 		administradorRepository.saveAll(Arrays.asList(administrador1,administrador2,administrador3));
 	}
 }

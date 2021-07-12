@@ -33,5 +33,11 @@ public class Administrador extends Pessoa {
     @NotBlank(message = "Senha do Administrador deve ser preenchida")
     @Size(min = 6, max = 10, message = "Senha do Administrador deve ter entre 6 e 20 caracteres")
 	private String senha;
+	
+	public Administrador(Integer id, String nome, Date dataNascimento, String sexo, String cpf, String rua, Integer numero, Integer tipoUsuario, Bairro bairro, String email, String senha) {
+		super(id, nome, dataNascimento, sexo, cpf, rua, numero, tipoUsuario, bairro);
+		this.email = email;
+		this.senha = senha;
+	}
 
 }
