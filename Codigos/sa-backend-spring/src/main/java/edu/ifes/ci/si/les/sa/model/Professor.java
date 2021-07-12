@@ -6,12 +6,24 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 
 
 @Entity
+@Data 
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class Professor extends Pessoa {
 	private static final long serialVersionUID = 1L;
 	
@@ -33,5 +45,13 @@ public class Professor extends Pessoa {
     @ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name="TELEFONE")
 	private Set<String> telefones = new HashSet<>();
+    
+    @Builder
+    public Professor(Integer id, String nome, Date dataNascimento, String sexo, String cpf, String rua, Integer numero, Integer tipoUsuario, Bairro bairro, String titulacao, String email, String senha) {
+    	super(id, nome, dataNascimento, sexo, cpf, rua, numero, tipoUsuario, bairro);
+    	this.titulacao = titulacao;
+    	this.email = email;
+    	this.senha = senha;
+    }
 
 }

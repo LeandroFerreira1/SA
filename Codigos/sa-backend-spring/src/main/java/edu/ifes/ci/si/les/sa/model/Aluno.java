@@ -3,13 +3,24 @@ package edu.ifes.ci.si.les.sa.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
 
 @Entity
+@Data 
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class Aluno extends Pessoa{
 	private static final long serialVersionUID = 1L;
 	
@@ -44,5 +55,15 @@ public class Aluno extends Pessoa{
     @ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name="TELEFONE")
 	private Set<String> telefones = new HashSet<>();
-
+	
+	@Builder
+	public Aluno(Integer id, String nome, Date dataNascimento, String sexo, String cpf, String rua, Integer numero, Integer tipoUsuario, Bairro bairro,String matricula, String rg, String email, String senha, Curso curso) {
+		super(id, nome, dataNascimento, sexo, cpf, rua, numero, tipoUsuario, bairro);
+		this.matricula = matricula;
+		this.rg = rg;
+		this.email = email;
+		this.senha = senha;
+		this.curso = curso;
+		
+	}
 }

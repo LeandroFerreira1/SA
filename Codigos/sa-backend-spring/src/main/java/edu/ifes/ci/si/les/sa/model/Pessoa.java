@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 
-@Entity
+@MappedSuperclass
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
