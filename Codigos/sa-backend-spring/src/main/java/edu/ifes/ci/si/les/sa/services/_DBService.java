@@ -9,10 +9,14 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.ifes.ci.si.les.sa.model.Administrador;
 import edu.ifes.ci.si.les.sa.model.Aluno;
+import edu.ifes.ci.si.les.sa.model.AlunoTurma;
+import edu.ifes.ci.si.les.sa.model.AlunoTurmaPK;
 import edu.ifes.ci.si.les.sa.model.AtividadeAvaliativa;
 import edu.ifes.ci.si.les.sa.model.Aula;
 import edu.ifes.ci.si.les.sa.model.AvaliacaoAluno;
+import edu.ifes.ci.si.les.sa.model.AvaliacaoAlunoPK;
 import edu.ifes.ci.si.les.sa.model.Bairro;
 import edu.ifes.ci.si.les.sa.model.Cidade;
 import edu.ifes.ci.si.les.sa.model.Curso;
@@ -142,6 +146,8 @@ public class _DBService {
 		Professor professor1 = new Professor(null, "Mario da Silva", sdf.parse("1979-08-10"), "M", "147.2356.987-50", "Ruas dos Braos Loics", 21, 1, bairro1, "Mestre", "mm@gmail.com", "123456");
 		Professor professor2 = new Professor(null, "Lorena Marcos", sdf.parse("1990-09-15"), "F", "000.748.962-71", "Ruas Marcos Fonseca", 52, 1, bairro2, "Mestre", "lorena@gmail.com", "123456");
 		Professor professor3 = new Professor(null, "Sebastiao Santos", sdf.parse("1965-08-09"), "M", "951.232.741-32", "Avenida Sambaio Dutra", 70, 1, bairro3, "Doutor", "sebastiao@gmail.com", "123456");
+		
+		//professor1.getTelefones().addAll(Arrays.asList("273323-6333","273321-8600"));
 		professorRepository.saveAll(Arrays.asList(professor1, professor2, professor3));
 		
 		// CADASTRO PERIODO LETIVO
@@ -157,18 +163,45 @@ public class _DBService {
 		Turma turma4 = new Turma(null, "Redes I - 2021.1", 20, sdf.parse("2021-10-12"), sdf.parse("2021-10-15"), periodoLetivo1, aula1, atividadeAvaliativa1, professor1, disciplina1);
 		Turma turma5 = new Turma(null, "Banco de Dados I - 2021.1", 20, sdf.parse("2021-10-12"), sdf.parse("2021-10-15"), periodoLetivo1, aula1, atividadeAvaliativa1, professor1, disciplina1);
 		turmaRepository.saveAll(Arrays.asList(turma1,turma2,turma3,turma4,turma5));
-		// CADASTRO AVALIACAO ALUNO
 		
 		// AvaliacaoAluno avaliacaoAluno1 = new AvaliacaoAluno(null,);
 		// avaliacaoAlunoRepository.saveAll(Arrays.asList(avaliacaoAluno1));
 
 		// CADASTRO ADMINISTRADOR
+		Administrador administrador1 = new Administrador("adm1@email.com","123456");
+		Administrador administrador2 = new Administrador("adm2@email.com","123456");
+		Administrador administrador3 = new Administrador("adm3@email.com","123456");
+		administradorRepository.saveAll(Arrays.asList(administrador1,administrador2,administrador3));
 
 		// CADASTRO ALUNO
 		
 		Aluno aluno1 = new Aluno(null, "Abrao Lincao", sdf.parse("1980-10-12"), "M", "154.145.025-96", "Rua Canoi Carpado", 10, 2, bairro1, "20161SI0030", "3987412ES", "abraol@email.cpm", "123456", curso1);
 		Aluno aluno2 = new Aluno(null, "Jovelha Nova", sdf.parse("1982-04-13"), "F", "003.134.543-96", "Rua Tabata battat", 11, 3, bairro2, "20161MA0031", "8889542ES", "joana@email.cpm", "123456", curso2);
 		Aluno aluno3 = new Aluno(null, "Linara Barg", sdf.parse("1989-12-14"), "F", "111.532.004-96", "Rua Macarena Barao", 12, 4, bairro3, "20161ME0032", "0005412ES", "magno@email.cpm", "123456", curso3);
+		
+		//aluno1.getTelefones().addAll(Arrays.asList("2899910-1112","283027-1112"));
 		alunoRepository.saveAll(Arrays.asList(aluno1, aluno2,aluno3));
+		
+		
+		//CADASTRO ALUNOTURMA
+		AlunoTurmaPK alunoTurmaPK1 = new AlunoTurmaPK(aluno1, turma1);
+		AlunoTurmaPK alunoTurmaPK2 = new AlunoTurmaPK(aluno2, turma1);
+		AlunoTurmaPK alunoTurmaPK3 = new AlunoTurmaPK(aluno3, turma2);
+		
+		AlunoTurma alunoTurma1 = new AlunoTurma(alunoTurmaPK1, "PENDENTE", 25.00, 18);
+		AlunoTurma alunoTurma2 = new AlunoTurma(alunoTurmaPK2, "PENDENTE", 16.00, 14);
+		AlunoTurma alunoTurma3 = new AlunoTurma(alunoTurmaPK3, "PENDENTE", 25.00, 16);
+		alunoTurmaRepository.saveAll(Arrays.asList(alunoTurma1, alunoTurma2, alunoTurma3));
+		
+		//CADASTRO AVALIACAO ALUNO
+		AvaliacaoAlunoPK avaliacaoAlunoPK1 = new AvaliacaoAlunoPK(alunoTurma1, atividadeAvaliativa1);
+		AvaliacaoAlunoPK avaliacaoAlunoPK2 = new AvaliacaoAlunoPK(alunoTurma2, atividadeAvaliativa1);
+		AvaliacaoAlunoPK avaliacaoAlunoPK3 = new AvaliacaoAlunoPK(alunoTurma3, atividadeAvaliativa2);
+		
+		AvaliacaoAluno avaliacaoAluno1 = new AvaliacaoAluno(avaliacaoAlunoPK1, 25.00);
+		AvaliacaoAluno avaliacaoAluno2 = new AvaliacaoAluno(avaliacaoAlunoPK2, 16.00);
+		AvaliacaoAluno avaliacaoAluno3 = new AvaliacaoAluno(avaliacaoAlunoPK3, 25.00);
+		avaliacaoAlunoRepository.saveAll(Arrays.asList(avaliacaoAluno1,avaliacaoAluno2,avaliacaoAluno3));
+		
 	}
 }
