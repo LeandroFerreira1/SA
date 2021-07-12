@@ -7,7 +7,7 @@
   >
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>Cadastro de Perído Letivo</v-toolbar-title>
+        <v-toolbar-title>Cadastro de PeriodoLetivo</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="800px">
           <template v-slot:activator="{ on, attrs }">
@@ -26,13 +26,13 @@
                   <v-row>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
+                        v-model="editedItem.nome"
                         v-mask="{ mask: '####/#' }"
-                        v-model="editedItem.PeriodoLetivo"
-                        label="Perído Letivo"
+                        label="Nome"
                         outlined
                         required
                         :counter="5"
-                        :rules="periodoletivoRulesPeriodoLetivo"
+                        :rules="periodoLetivoRulesNome"
                       ></v-text-field>
                     </v-col>
 
@@ -122,7 +122,7 @@
 
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
-                        v-model="editedItem.numerodiasletivos"
+                        v-model="editedItem.qtddiaLetivo"
                         label="Nº de Dias Letivos"
                         outlined
                         required
@@ -173,37 +173,45 @@
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
     <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize">Alterar</v-btn>
+      <v-btn color="primary" @click="initialize">Resetar</v-btn>
     </template>
   </v-data-table>
 </template>
 
 <script>
 import PeriodoLetivoService from "../service/domain/PeriodoLetivoService";
-import { mask } from "@titou10/v-mask";
-
+const servicePeriodoLetivo = PeriodoLetivoService.build();
+import CursoService from "../service/domain/CursoService";
+const serviceCurso = CursoService.build();
 const textos = {
-  novo: "Novo Perído Letivo",
-  edicao: "Edição de Perído Letivo",
-  exclusao: "Deseja mesmo remover este Perído Letivo?",
+  novo: "Novo PeriodoLetivo",
+  edicao: "Edição de PeriodoLetivo",
+  exclusao: "Deseja mesmo remover este PeriodoLetivo?",
 };
-
 export default {
-  directives: { mask },
+  name: "lPeriodoLetivo",
+  components: {},
   data: () => ({
-    service: PeriodoLetivoService.build(),
     dialog: false,
     dialogExcluir: false,
     valid: true,
-
+    periodoLetivoRulesCurso: [(v) => !!v || "Seleção Necessária"],
+    periodoLetivoRulesNome: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length <= 20 && v.length >= 3) ||
+        "O campo deve ter pelo menos 3 e no maximo 20 letras",
+    ],
     headers: [
       { text: "ID", value: "id" },
-      { text: "Nome", align: "start", value: "nome" },
-      { text: "Data Inicio", value: "datainicio" },
-      { text: "Data Fim", value: "datafim" },
+      { text: "Período Letivo", align: "start", value: "nome" },
+      { text: "Data Inicio", value: "dataInicio" },
+      { text: "Data Fim", value: "dataFim" },
+      { text: "Nº de dias Letivos", value: "qtddiaLetivo" },
       { text: "Ações", align: "end", value: "actions", sortable: false },
     ],
     lPeriodoLetivo: [],
+    lCurso: [],
     editedIndex: -1,
     editedItem: {},
     defaultItem: {},
@@ -222,11 +230,15 @@ export default {
     },
   },
   created() {
-    // this.fetchRecords();
+    this.fetchRecords();
+    this.fetchRecordsCurso();
   },
   methods: {
     fetchRecords() {
-      //this.service.search({}).then(this.fetchRecodsSuccess);
+      servicePeriodoLetivo.search({}).then(this.fetchRecodsSuccess);
+    },
+    fetchRecordsCurso() {
+      serviceCurso.search({}).then(this.fetchRecodsSuccessCurso);
     },
     fetchRecodsSuccess(response) {
       if (Array.isArray(response.rows)) {
@@ -235,6 +247,14 @@ export default {
       }
       this.lPeriodoLetivo = [];
     },
+    fetchRecodsSuccessCurso(response) {
+      if (Array.isArray(response.rows)) {
+        this.lCurso = response.rows;
+        return;
+      }
+      this.lCurso = [];
+    },
+
     editItem(item) {
       this.editedIndex = this.lPeriodoLetivo.indexOf(item);
       this.editedItem = Object.assign({}, item);
@@ -246,10 +266,10 @@ export default {
       this.dialogExcluir = true;
     },
     deleteItemComfirm() {
-      //   this.service
-      //     .destroy(this.editedItem)
-      //     .then(this.lPeriodoLetivo.splice(this.editedIndex, 1));
-      this.lPeriodoLetivo.splice(this.editedIndex, 1);
+      //const index = this.lPeriodoLetivo.indexOf(this.editedItem);
+      servicePeriodoLetivo
+        .destroy(this.editedItem)
+        .then(this.lPeriodoLetivo.splice(this.editedIndex, 1));
       this.closeExcluir();
     },
     closeExcluir() {
@@ -268,18 +288,19 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-        // this.service
-        //   .update(this.editedItem)
-        //   .then(
-        //     Object.assign(this.lPeriodoLetivo[this.editedIndex], this.editedItem)
-        //   );
-        Object.assign(this.lPeriodoLetivo[this.editedIndex], this.editedItem);
+        console.log(this.editedItem);
+        servicePeriodoLetivo
+          .update(this.editedItem)
+          .then(
+            Object.assign(
+              this.lPeriodoLetivo[this.editedIndex],
+              this.editedItem
+            )
+          );
       } else {
-        // this.service
-        //   .create(this.editedItem)
-        //   .then((response) => this.lPeriodoLetivo.push(response));
-        //  this.lPeriodoLetivo.push(response)editedItem
-        this.lPeriodoLetivo.push(this.editedItem);
+        servicePeriodoLetivo
+          .create(this.editedItem)
+          .then((response) => this.lPeriodoLetivo.push(response));
       }
       this.close();
     },
