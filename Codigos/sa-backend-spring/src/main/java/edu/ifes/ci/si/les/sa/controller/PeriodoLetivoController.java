@@ -18,7 +18,7 @@ import edu.ifes.ci.si.les.sa.services.PeriodoLetivoService;
 import edu.ifes.ci.si.les.sa.services.exceptions.ConstraintException;
 
 @RestController
-@RequestMapping(value = "/api/v1/PeriodoLetivo")
+@RequestMapping(value = "/api/v1/periodoLetivo")
 public class PeriodoLetivoController {
 
 	@Autowired

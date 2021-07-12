@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Arrays;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -117,11 +118,10 @@ public class _DBService {
 		// CADASTRO PROFESSOR
 
 		// CADASTRO PERIODO LETIVO
-		// PeriodoLetivo periodoLetivo1 = new PeriodoLetivo(null, "2021/1",
-		// "2021-02-08","2020-10-10",208 );
-		// Tudo ok, só constando um problema na linha acima com a sintax da inserção do
-		/// tipo date
-		// periodoLetivoRepository.saveAll(Arrays.asList(periodoLetivo1));
+		PeriodoLetivo periodoLetivo1 = new PeriodoLetivo(null, "2021/1", "2021-02-08","2021-06-01",280 );	
+		PeriodoLetivo periodoLetivo2 = new PeriodoLetivo(null, "2021/2", "2021-07-31","2020-12-21",283 );
+		PeriodoLetivo periodoLetivo3 = new PeriodoLetivo(null, "2022/1", "2022-02-10","2022-06-03",275 );
+		periodoLetivoRepository.saveAll(Arrays.asList(periodoLetivo1,periodoLetivo2,periodoLetivo3));
 
 		// CADASTRO TURMA
 

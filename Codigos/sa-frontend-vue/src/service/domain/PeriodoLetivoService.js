@@ -7,5 +7,5 @@ export default class PeriodoLetivoService extends Rest {
     /**
      * @type {String}
      */
-    static resource = '/periodoletivo'
+    static resource = '/PeriodoLetivo'
 }

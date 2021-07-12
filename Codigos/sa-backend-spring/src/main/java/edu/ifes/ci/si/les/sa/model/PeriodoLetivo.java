@@ -37,13 +37,17 @@ public class PeriodoLetivo implements Serializable{
     @Size(min = 2, max = 50, message = "O nome do Periodo Letivo deve ter entre 2 e 50 letras ou digitos")
 	private String nome;
 	
-	@NotNull(message = "A data de início do Periodo Letivo deve ser preenchida")
-    @JsonFormat(pattern = "yyyy-MM-dd")
-	private Date dataInicio;
+	@NotNull(message = "O Campo deve ser preenchida")
+	@Column(length = 10)
+	@NotBlank(message = "O Campo deve ser preenchido")
+	@Size(min = 10, max = 10, message = "O campo deve ter 8 digitos")
+	private String dataInicio;
 	
-	@NotNull(message = "A data de fim do Periodo Letivo deve ser preenchida")
-    @JsonFormat(pattern = "yyyy-MM-dd")
-	private Date dataFim;
+	@NotNull(message = "O Campo deve ser preenchida")
+	@Column(length = 10)
+	@NotBlank(message = "O Campo deve ser preenchido")
+	@Size(min = 10, max = 10, message = "O campo deve ter 8 digitos")
+	private String dataFim;
 	
     @Digits(integer=6, fraction=0, message = "A quantidade de dias letivos deve ser preenchido com dígitos")
 	private Integer qtddiaLetivo;
