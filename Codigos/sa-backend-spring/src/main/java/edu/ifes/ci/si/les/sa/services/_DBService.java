@@ -147,12 +147,17 @@ public class _DBService {
 
 		// CADASTRO PROFESSOR
 		Professor professor1 = new Professor(null, "Mario da Silva", sdf.parse("1979-08-10"), "M", "147.2356.987-50", "Ruas dos Braos Loics", 21, 1, bairro1, "Mestre", "mm@gmail.com", "123456");
-		Professor professor2 = new Professor(null, "Lorena Marcos", sdf.parse("1990-09-15"), "F", "000.748.962-71", "Ruas Marcos Fonseca", 52, 1, bairro2, "Mestre", "lorena@gmail.com", "123456");
-		Professor professor3 = new Professor(null, "Sebastiao Santos", sdf.parse("1965-08-09"), "M", "951.232.741-32", "Avenida Sambaio Dutra", 70, 1, bairro3, "Doutor", "sebastiao@gmail.com", "123456");
+		//Professor professor2 = new Professor(null, "Lorena Marcos", sdf.parse("1990-09-15"), "F", "000.748.962-71", "Ruas Marcos Fonseca", 52, 1, bairro2, "Mestre", "lorena@gmail.com", "123456");
+		//Professor professor3 = new Professor(null, "Sebastiao Santos", sdf.parse("1965-08-09"), "M", "951.232.741-32", "Avenida Sambaio Dutra", 70, 1, bairro3, "Doutor", "sebastiao@gmail.com", "123456");
 		
+<<<<<<< Updated upstream
 		//professor1.getTelefones().addAll(Arrays.asList("273323-6333","273321-8600"));
 		professorRepository.saveAll(Arrays.asList(professor1, professor2, professor3));
 		
+=======
+		professorRepository.saveAll(Arrays.asList(professor1));
+
+>>>>>>> Stashed changes
 		// CADASTRO PERIODO LETIVO
 		PeriodoLetivo periodoLetivo1 = new PeriodoLetivo(null, "2021/1", sdf.parse("2021-02-08"), sdf.parse("2021-06-01"), 280);
 		PeriodoLetivo periodoLetivo2 = new PeriodoLetivo(null, "2021/2", sdf.parse("2021-07-31"), sdf.parse("2020-12-21"), 283);

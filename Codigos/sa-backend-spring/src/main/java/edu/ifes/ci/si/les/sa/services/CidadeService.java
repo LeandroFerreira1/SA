@@ -7,6 +7,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import edu.ifes.ci.si.les.sa.model.Cidade;
+import edu.ifes.ci.si.les.sa.model.Uf;
 import edu.ifes.ci.si.les.sa.services.exceptions.DataIntegrityException;
 import edu.ifes.ci.si.les.sa.services.exceptions.ObjectNotFoundException;
 import edu.ifes.ci.si.les.sa.repositories.CidadeRepository;
@@ -29,6 +30,10 @@ public class CidadeService {
 
 	public Collection<Cidade> findAll() {
 		return repository.findAll();
+	}
+	
+	public Collection<Cidade> findByUf(Uf uf) {
+		return repository.findByUf(uf);
 	}
 
 	public Cidade insert(Cidade obj) {

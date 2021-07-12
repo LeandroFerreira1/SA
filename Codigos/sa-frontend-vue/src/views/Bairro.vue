@@ -30,6 +30,7 @@
                         item-text="nome"
                         label="UF"
                         v-model="editedItem.uf"
+                        @change="buscarCidades"
                         outlined
                         required
                         :rules="bairroRulesUf"
@@ -176,7 +177,7 @@ export default {
       serviceUf.search({}).then(this.fetchRecodsSuccessUf);
     },
     fetchRecordsCidade() {
-      serviceCidade.search({}).then(this.fetchRecodsSuccess);
+      serviceCidade.search({}).then(this.fetchRecodsSuccessCidade);
     },
     fetchRecodsSuccess(response) {
       if (Array.isArray(response.rows)) {

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.ifes.ci.si.les.sa.model.Cidade;
+import edu.ifes.ci.si.les.sa.model.Uf;
 import edu.ifes.ci.si.les.sa.services.CidadeService;
 import edu.ifes.ci.si.les.sa.services.exceptions.ConstraintException;
 
@@ -27,6 +28,14 @@ public class CidadeController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Collection<Cidade>> findAll() {
 		Collection<Cidade> collection = service.findAll();
+		return ResponseEntity.ok().body(collection);
+	}
+	
+	@RequestMapping(value = "/findByUf/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Collection<Cidade>> findByUf(@PathVariable Integer id) {
+		Uf uf = new Uf();
+		uf.setId(id);
+		Collection<Cidade> collection = service.findByUf(uf);
 		return ResponseEntity.ok().body(collection);
 	}
 

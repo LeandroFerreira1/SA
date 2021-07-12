@@ -37,7 +37,7 @@
 
                     <v-col cols="12" sm="6" md="6">
                       <v-combobox
-                        :items="lCurso"
+                        :items="itemsUf"
                         item-text="tipo"
                         label="Tipo"
                         v-model="editedItem.curso"
@@ -138,6 +138,7 @@ export default {
         (v && v.length <= 20 && v.length >= 3) ||
         "O campo deve ter pelo menos 3 e no maximo 20 letras",
     ],
+    itemsUf: ['Graduação', 'Técnico'],
     headers: [
       { text: "ID", value: "id" },
       { text: "Nome", align: "start", value: "nome" },
