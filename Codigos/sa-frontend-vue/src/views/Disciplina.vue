@@ -32,7 +32,7 @@
                         v-model="editedItem.curso"
                         outlined
                         required
-                        :rules="cidadeRulesCurso"
+                        :rules="DisciplinaRulesCurso"
                       ></v-combobox>
                     </v-col>
 

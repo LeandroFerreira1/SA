@@ -46,9 +46,9 @@ const routes = [
     component: () => import(/* webpackChunkName: "turma" */ '../views/Turma.vue')
   },
   {
-    path: '/avaliacao',
-    name: 'Avaliacao',
-    component: () => import(/* webpackChunkName: "avaliacao" */ '../views/Avaliacao.vue')
+    path: '/atividadeAvaliativa',
+    name: 'AtividadeAvaliativa',
+    component: () => import(/* webpackChunkName: "atividadeAvaliativa" */ '../views/AtividadeAvaliativa.vue')
   },
   {
     path: '/disciplina',

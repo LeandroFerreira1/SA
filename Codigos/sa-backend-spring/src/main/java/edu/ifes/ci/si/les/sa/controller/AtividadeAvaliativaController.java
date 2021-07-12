@@ -13,31 +13,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.ifes.ci.si.les.sa.model.AvaliacaoAluno;
-import edu.ifes.ci.si.les.sa.services.AvaliacaoAlunoService;
+import edu.ifes.ci.si.les.sa.model.AtividadeAvaliativa;
+import edu.ifes.ci.si.les.sa.services.AtividadeAvaliativaService;
 import edu.ifes.ci.si.les.sa.services.exceptions.ConstraintException;
 
 @RestController
-@RequestMapping(value = "/api/v1/avaliacao")
-public class AvaliacaoAlunoController {
+@RequestMapping(value = "/api/v1/atividadeAvaliativa")
+public class AtividadeAvaliativaController {
 
 	@Autowired
-	private AvaliacaoAlunoService service;
+	private AtividadeAvaliativaService service;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<Collection<AvaliacaoAluno>> findAll() {
-		Collection<AvaliacaoAluno> collection = service.findAll();
+	public ResponseEntity<Collection<AtividadeAvaliativa>> findAll() {
+		Collection<AtividadeAvaliativa> collection = service.findAll();
 		return ResponseEntity.ok().body(collection);
 	}
 
-	//@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-//	public ResponseEntity<AvaliacaoAluno> find(@PathVariable Integer id) {
-	//	AvaliacaoAluno obj = service.findById(id);
-	//	return ResponseEntity.ok().body(obj);
-	//}
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<AtividadeAvaliativa> find(@PathVariable Integer id) {
+		AtividadeAvaliativa obj = service.findById(id);
+		return ResponseEntity.ok().body(obj);
+	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<AvaliacaoAluno> insert(@Valid @RequestBody AvaliacaoAluno obj, BindingResult br) {
+	public ResponseEntity<AtividadeAvaliativa> insert(@Valid @RequestBody AtividadeAvaliativa obj, BindingResult br) {
 		if (br.hasErrors())
 			throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
 		obj = service.insert(obj);
@@ -45,17 +45,17 @@ public class AvaliacaoAlunoController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
-	public ResponseEntity<AvaliacaoAluno> update(@Valid @RequestBody AvaliacaoAluno obj, BindingResult br) {
+	public ResponseEntity<AtividadeAvaliativa> update(@Valid @RequestBody AtividadeAvaliativa obj, BindingResult br) {
 		if (br.hasErrors())
 			throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
 		obj = service.update(obj);
 		return ResponseEntity.ok().body(obj);
 	}
 
-	//@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	//public ResponseEntity<Void> delete(@PathVariable Integer id) {
-	//	service.delete(id);
-	//	return ResponseEntity.noContent().build();
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 
-//}
+}

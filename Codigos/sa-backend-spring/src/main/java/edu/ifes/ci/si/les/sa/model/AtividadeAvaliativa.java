@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -42,12 +44,20 @@ public class AtividadeAvaliativa implements Serializable{
     @Size(min = 2, max = 50, message = "AO nome da Atividade Avaliativa deve ter entre 2 e 50 letras")
 	private String tipo;
 	
-	@NotNull(message = "A data da Atividade Avaliativa deve ser preenchida")
-    @JsonFormat(pattern = "yyyy-MM-dd")
-	private Date data;
+	@NotNull(message = "O Campo deve ser preenchida")
+	@Column(length = 10)
+	@NotBlank(message = "O Campo deve ser preenchido")
+	@Size(min = 10, max = 10, message = "O campo deve ter 8 digitos")
+	private String dataAvaliacao;
 	
 	@NotNull(message = "Valor da Atividade Avaliativa deve ser preenchida")
     @Digits(integer=6, fraction=2, message = "Valor da Atividade Avaliativa deve ser preenchida com dígitos")
 	private Double valor;
+	
+	@NotNull(message = "A disciplina da Atividade avaliativa deve ser preenchido")
+	@ManyToOne
+	@JoinColumn(name = "disciplina_id")
+	private Disciplina disciplina;
+	
 
 }
