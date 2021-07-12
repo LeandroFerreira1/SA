@@ -24,7 +24,7 @@ import edu.ifes.ci.si.les.sa.services.CursoService;
 import edu.ifes.ci.si.les.sa.services.exceptions.ConstraintException;
 
 @RestController
-@RequestMapping(value = "/api/v1/aluno")
+@RequestMapping(value = "/api/v1/administrador")
 public class AdministradorController {
 
 	@Autowired
