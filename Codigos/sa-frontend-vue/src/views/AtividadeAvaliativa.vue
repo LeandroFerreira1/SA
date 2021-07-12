@@ -7,7 +7,9 @@
   >
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>Cadastro de Atividade Avaliativa (Avaliação)</v-toolbar-title>
+        <v-toolbar-title
+          >Cadastro de Atividade Avaliativa (Avaliação)</v-toolbar-title
+        >
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="800px">
           <template v-slot:activator="{ on, attrs }">
@@ -21,26 +23,28 @@
                 <span class="headline">{{ formTitle }}</span>
               </v-card-title>
 
-             <v-card-text>
+              <v-card-text>
                 <v-container>
                   <v-row>
-                    <v-col cols="12" sm="4" md="6">
+                    <v-col cols="12" sm="6" md="6">
                       <v-combobox
-                        v-model="editedItem.atividadeAvaliativa"
-                        label="AtividadeAvaliativa"
+                        :items="lDisciplina"
+                        item-text="nome"
+                        label="Disciplina"
+                        v-model="editedItem.disciplina"
                         outlined
                         required
-                        :rules="AvaliacaoRulesAtividadeAvaliativa"
+                        :rules="atividadeAvaliativaRulesDisciplina"
                       ></v-combobox>
                     </v-col>
 
                     <v-col cols="12" sm="6" md="6">
                       <v-text-field
-                        v-model="editedItem.avaliacao"
-                        label="Avaliação"
+                        v-model="editedItem.nome"
+                        label="Nome"
                         outlined
                         required
-                        :rules="avaliacaoRulesAvaliacao"
+                        :rules="atividadeAvaliativaRulesNome"
                       ></v-text-field>
                     </v-col>
 
@@ -50,10 +54,10 @@
                         label="Tipo"
                         outlined
                         required
-                        :rules="avaliacaoRulesTipo"
+                        :rules="atividadeAvaliativaRulesTipo"
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12" sm="6" md="6">
+                    <v-col cols="12" sm="6" md="4">
                       <v-menu
                         ref="menuEntrada"
                         :close-on-content-click="false"
@@ -63,18 +67,18 @@
                       >
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
-                            v-model="editedItem.dataavaliacao"
+                            v-model="editedItem.dataAvaliacao"
                             label="Data da Avaliação"
                             readonly
                             v-bind="attrs"
                             v-on="on"
                             outlined
                             required
-                            :rules="modeloRulesDataAvaliacao"
+                            :rules="atividadeAvaliativaRulesdataAvaliacao"
                           ></v-text-field>
                         </template>
                         <v-date-picker
-                          v-model="editedItem.dataavaliacao"
+                          v-model="editedItem.dataAvaliacao"
                           no-title
                           scrollable
                         >
@@ -88,7 +92,7 @@
                           <v-btn
                             text
                             color="primary"
-                            @click="$refs.menuEntrada.save(dataavaliacao)"
+                            @click="$refs.menuEntrada.save(dataAvaliacao)"
                             >OK</v-btn
                           >
                         </v-date-picker>
@@ -100,7 +104,7 @@
                         label="Valor"
                         outlined
                         required
-                        :rules="avaliacaoRulesValor"
+                        :rules="atividadeAvaliativaRulesValor"
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -155,12 +159,12 @@
 <script>
 import AtividadeAvaliativaService from "../service/domain/AtividadeAvaliativaService";
 const serviceAtividadeAvaliativa = AtividadeAvaliativaService.build();
-import CursoService from "../service/domain/CursoService";
-const serviceCurso = CursoService.build();
+import DisciplinaService from "../service/domain/DisciplinaService";
+const serviceDisciplina = DisciplinaService.build();
 const textos = {
-  novo: "Novo AtividadeAvaliativa",
-  edicao: "Edição de AtividadeAvaliativa",
-  exclusao: "Deseja mesmo remover este AtividadeAvaliativa?",
+  novo: "Nova Atividade Avaliativa(Avaliação)",
+  edicao: "Edição de Atividade Avaliativa(Avaliação)",
+  exclusao: "Deseja mesmo remover este Atividade Avaliativa(Avaliação)?",
 };
 export default {
   name: "lAtividadeAvaliativa",
@@ -169,7 +173,7 @@ export default {
     dialog: false,
     dialogExcluir: false,
     valid: true,
-    atividadeAvaliativaRulesCurso: [(v) => !!v || "Seleção Necessária"],
+    atividadeAvaliativaRulesDisciplina: [(v) => !!v || "Seleção Necessária"],
     atividadeAvaliativaRulesNome: [
       (v) => !!v || "Preenchimento Necessário",
       (v) =>
@@ -180,12 +184,13 @@ export default {
       { text: "ID", value: "id" },
       { text: "Nome", align: "start", value: "nome" },
       { text: "Tipo", align: "start", value: "tipo" },
+      { text: "Data da Avaliação", value: "dataAvaliacao" },
       { text: "Valor", value: "valor" },
       { text: "Disciplina", value: "disciplina.nome" },
       { text: "Ações", align: "end", value: "actions", sortable: false },
     ],
     lAtividadeAvaliativa: [],
-    lCurso: [],
+    lDisciplina: [],
     editedIndex: -1,
     editedItem: {},
     defaultItem: {},
@@ -205,14 +210,14 @@ export default {
   },
   created() {
     this.fetchRecords();
-    this.fetchRecordsCurso();
+    this.fetchRecordsDisciplina();
   },
   methods: {
     fetchRecords() {
       serviceAtividadeAvaliativa.search({}).then(this.fetchRecodsSuccess);
     },
-    fetchRecordsCurso() {
-      serviceCurso.search({}).then(this.fetchRecodsSuccessCurso);
+    fetchRecordsDisciplina() {
+      serviceDisciplina.search({}).then(this.fetchRecodsSuccessDisciplina);
     },
     fetchRecodsSuccess(response) {
       if (Array.isArray(response.rows)) {
@@ -221,12 +226,12 @@ export default {
       }
       this.lAtividadeAvaliativa = [];
     },
-    fetchRecodsSuccessCurso(response) {
+    fetchRecodsSuccessDisciplina(response) {
       if (Array.isArray(response.rows)) {
-        this.lCurso = response.rows;
+        this.lDisciplina = response.rows;
         return;
       }
-      this.lCurso = [];
+      this.lDisciplina = [];
     },
 
     editItem(item) {
@@ -266,7 +271,10 @@ export default {
         serviceAtividadeAvaliativa
           .update(this.editedItem)
           .then(
-            Object.assign(this.lAtividadeAvaliativa[this.editedIndex], this.editedItem)
+            Object.assign(
+              this.lAtividadeAvaliativa[this.editedIndex],
+              this.editedItem
+            )
           );
       } else {
         serviceAtividadeAvaliativa
