@@ -7,5 +7,5 @@ export default class AvaliacaoService extends Rest {
     /**
      * @type {String}
      */
-    static resource = '/avaliacao'
+    static resource = '/atividadeAvaliativa'
 }

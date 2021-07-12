@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Arrays;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.ifes.ci.si.les.sa.model.Administrador;
 import edu.ifes.ci.si.les.sa.model.Aluno;
+import edu.ifes.ci.si.les.sa.model.AtividadeAvaliativa;
 import edu.ifes.ci.si.les.sa.model.AvaliacaoAluno;
 import edu.ifes.ci.si.les.sa.model.Bairro;
 import edu.ifes.ci.si.les.sa.model.Cidade;
@@ -120,28 +120,31 @@ public class _DBService {
 		disciplinaRepository.saveAll(Arrays.asList(disciplina1, disciplina2, disciplina3, disciplina4, disciplina5));
 
 		// CADASTRO PROFESSOR
-		Professor professor1 = new Professor ();
+		Professor professor1 = new Professor();
 		professorRepository.saveAll(Arrays.asList(professor1));
 
 		// CADASTRO PERIODO LETIVO
-		PeriodoLetivo periodoLetivo1 = new PeriodoLetivo(null, "2021/1", "2021-02-08","2021-06-01",280 );	
-		PeriodoLetivo periodoLetivo2 = new PeriodoLetivo(null, "2021/2", "2021-07-31","2020-12-21",283 );
-		PeriodoLetivo periodoLetivo3 = new PeriodoLetivo(null, "2022/1", "2022-02-10","2022-06-03",275 );		
-		periodoLetivoRepository.saveAll(Arrays.asList(periodoLetivo1,periodoLetivo2,periodoLetivo3));
+		PeriodoLetivo periodoLetivo1 = new PeriodoLetivo(null, "2021/1", "2021-02-08", "2021-06-01", 280);
+		PeriodoLetivo periodoLetivo2 = new PeriodoLetivo(null, "2021/2", "2021-07-31", "2020-12-21", 283);
+		PeriodoLetivo periodoLetivo3 = new PeriodoLetivo(null, "2022/1", "2022-02-10", "2022-06-03", 275);
+		periodoLetivoRepository.saveAll(Arrays.asList(periodoLetivo1, periodoLetivo2, periodoLetivo3));
 
 		// CADASTRO TURMA
-		Turma turma1 = new Turma ();
+		Turma turma1 = new Turma();
 		turmaRepository.saveAll(Arrays.asList(turma1));
 
-		// CADASTRO AVALIACAO
-		// AvaliacaoAluno avaliacaoAluno1 = new AvaliacaoAluno(null,);
-		// avaliacaoAlunoRepository.saveAll(Arrays.asList(avaliacaoAluno1));
+		// CADASTRO AVALIACAO (AtividadeAvaliativa)
+		AtividadeAvaliativa atividadeAvaliativa1 = new AtividadeAvaliativa(null, "Listas Encadeadas Encadeadas", "Trabalho","2021-09-11", 20.0, disciplina4 );
+		AtividadeAvaliativa atividadeAvaliativa2 = new AtividadeAvaliativa(null, "Listas Duplamente Encadeadas", "Prova","2021-10-09", 30.0, disciplina4 );
+		AtividadeAvaliativa atividadeAvaliativa3 = new AtividadeAvaliativa(null, "FILA, PILHA, LISTAS", "Prova","2021-11-27", 40.0, disciplina4 );
+		AtividadeAvaliativa atividadeAvaliativa4 = new AtividadeAvaliativa(null, "Compilação de LINUX", "Trabalho","2021-10-20", 40.0, disciplina3 );
+		atividadeAvaliativaRepository.saveAll(Arrays.asList(atividadeAvaliativa1,atividadeAvaliativa2,atividadeAvaliativa3,atividadeAvaliativa4));
 
 		// CADASTRO ADMINISTRADOR
-		Administrador adm1 = new Administrador ();
+		Administrador adm1 = new Administrador();
 		administradorRepository.saveAll(Arrays.asList(adm1));
 		// CADASTRO ALUNO
-		Aluno aluno1 = new Aluno ();
+		Aluno aluno1 = new Aluno();
 		alunoRepository.saveAll(Arrays.asList(aluno1));
 
 	}

@@ -6,36 +6,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import edu.ifes.ci.si.les.sa.model.AvaliacaoAluno;
-import edu.ifes.ci.si.les.sa.model.AvaliacaoAlunoPK;
-import edu.ifes.ci.si.les.sa.model.Curso;
+import edu.ifes.ci.si.les.sa.model.AtividadeAvaliativa;
 import edu.ifes.ci.si.les.sa.services.exceptions.DataIntegrityException;
 import edu.ifes.ci.si.les.sa.services.exceptions.ObjectNotFoundException;
-import edu.ifes.ci.si.les.sa.repositories.AvaliacaoAlunoRepository;
+import edu.ifes.ci.si.les.sa.repositories.AtividadeAvaliativaRepository;
 
 
 
 @Service
-public class AvaliacaoAlunoService {
+public class AtividadeAvaliativaService {
 
 	@Autowired
-	private AvaliacaoAlunoRepository repository;
+	private AtividadeAvaliativaRepository repository;
 
-	public AvaliacaoAluno findById(AvaliacaoAlunoPK id) {
-		AvaliacaoAluno obj = repository.findById(id).get();
+	public AtividadeAvaliativa findById(Integer id) {
+		AtividadeAvaliativa obj = repository.findById(id).get();
 		if (obj == null) {
 			throw new ObjectNotFoundException(
-					"Objeto não encontrado! Id: " + id + ", Tipo: " + AvaliacaoAluno.class.getName());
+					"Objeto não encontrado! Id: " + id + ", Tipo: " + AtividadeAvaliativa.class.getName());
 		}
 		return obj;
 	}
 
-	public Collection<AvaliacaoAluno> findAll() {
+	public Collection<AtividadeAvaliativa> findAll() {
 		return repository.findAll();
 	}
 
-	public AvaliacaoAluno insert(AvaliacaoAluno obj) {
-		//obj.setId(null);
+	public AtividadeAvaliativa insert(AtividadeAvaliativa obj) {
+		obj.setId(null);
 		try {
 			return repository.save(obj);
 		} catch (DataIntegrityViolationException e) {
@@ -43,8 +41,8 @@ public class AvaliacaoAlunoService {
 		}
 	}
 
-	public AvaliacaoAluno update(AvaliacaoAluno obj) {
-	//	findById(obj.getId());
+	public AtividadeAvaliativa update(AtividadeAvaliativa obj) {
+		findById(obj.getId());
 		try {
 			return repository.save(obj);
 		} catch (DataIntegrityViolationException e) {
@@ -52,7 +50,7 @@ public class AvaliacaoAlunoService {
 		}
 	}
 
-	public void delete(AvaliacaoAlunoPK id) {
+	public void delete(Integer id) {
 		findById(id);
 		try {
 			repository.deleteById(id);

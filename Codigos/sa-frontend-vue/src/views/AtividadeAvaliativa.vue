@@ -1,13 +1,13 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="lAvaliacao"
+    :items="lAtividadeAvaliativa"
     sort-by="id"
     class="elevation-1"
   >
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>Cadastro de Avaliacao</v-toolbar-title>
+        <v-toolbar-title>Cadastro de Atividade Avaliativa (Avaliação)</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="800px">
           <template v-slot:activator="{ on, attrs }">
@@ -21,16 +21,16 @@
                 <span class="headline">{{ formTitle }}</span>
               </v-card-title>
 
-              <v-card-text>
+             <v-card-text>
                 <v-container>
                   <v-row>
                     <v-col cols="12" sm="4" md="6">
                       <v-combobox
-                        v-model="editedItem.disciplina"
-                        label="Disciplina"
+                        v-model="editedItem.atividadeAvaliativa"
+                        label="AtividadeAvaliativa"
                         outlined
                         required
-                        :rules="AvaliacaoRulesDisciplina"
+                        :rules="AvaliacaoRulesAtividadeAvaliativa"
                       ></v-combobox>
                     </v-col>
 
@@ -149,76 +149,43 @@
     <template v-slot:no-data>
       <v-btn color="primary" @click="initialize">Resetar</v-btn>
     </template>
-
-    <!--COPIAR PARA ONDE TEM FILTROS-->
-    <template v-slot:body.append>
-      <tr>
-        <td></td>
-        <td>
-          <v-combobox
-            v-model="EscolherPLetivo"
-            item-text="periodo"
-            :items="periodos"
-            label="P. Letivo"
-            clearable
-          ></v-combobox>
-        </td>
-        <td>
-          <v-combobox
-            v-model="EscolherProfessor"
-            item-text="professor"
-            :items="professores"
-            label="Professor"
-            clearable
-          ></v-combobox>
-        </td>
-        <td>
-          <v-combobox
-            v-model="EscolherTurma"
-            item-text="turma"
-            :items="turmas"
-            label="Turma"
-            clearable
-          ></v-combobox>
-        </td>
-        <td></td>
-      </tr>
-    </template>
-
-    <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize">Recarregar</v-btn>
-    </template>
-
-    <!--FIM FILTROS-->
   </v-data-table>
 </template>
 
 <script>
-import AvaliacaoService from "../service/domain/AvaliacaoService";
-import { mask } from "@titou10/v-mask";
-
+import AtividadeAvaliativaService from "../service/domain/AtividadeAvaliativaService";
+const serviceAtividadeAvaliativa = AtividadeAvaliativaService.build();
+import CursoService from "../service/domain/CursoService";
+const serviceCurso = CursoService.build();
 const textos = {
-  novo: "Nova Avaliação",
-  edicao: "Edição de Avaliacao",
-  exclusao: "Deseja mesmo remover esta Avaliacao?",
+  novo: "Novo AtividadeAvaliativa",
+  edicao: "Edição de AtividadeAvaliativa",
+  exclusao: "Deseja mesmo remover este AtividadeAvaliativa?",
 };
-
 export default {
-  directives: { mask },
+  name: "lAtividadeAvaliativa",
+  components: {},
   data: () => ({
-    service: AvaliacaoService.build(),
     dialog: false,
     dialogExcluir: false,
     valid: true,
-
+    atividadeAvaliativaRulesCurso: [(v) => !!v || "Seleção Necessária"],
+    atividadeAvaliativaRulesNome: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length <= 20 && v.length >= 3) ||
+        "O campo deve ter pelo menos 3 e no maximo 20 letras",
+    ],
     headers: [
       { text: "ID", value: "id" },
       { text: "Nome", align: "start", value: "nome" },
       { text: "Tipo", align: "start", value: "tipo" },
       { text: "Valor", value: "valor" },
+      { text: "Disciplina", value: "disciplina.nome" },
       { text: "Ações", align: "end", value: "actions", sortable: false },
     ],
-    lAvaliacao: [],
+    lAtividadeAvaliativa: [],
+    lCurso: [],
     editedIndex: -1,
     editedItem: {},
     defaultItem: {},
@@ -237,34 +204,46 @@ export default {
     },
   },
   created() {
-    // this.fetchRecords();
+    this.fetchRecords();
+    this.fetchRecordsCurso();
   },
   methods: {
     fetchRecords() {
-      //this.service.search({}).then(this.fetchRecodsSuccess);
+      serviceAtividadeAvaliativa.search({}).then(this.fetchRecodsSuccess);
+    },
+    fetchRecordsCurso() {
+      serviceCurso.search({}).then(this.fetchRecodsSuccessCurso);
     },
     fetchRecodsSuccess(response) {
       if (Array.isArray(response.rows)) {
-        this.lAvaliacao = response.rows;
+        this.lAtividadeAvaliativa = response.rows;
         return;
       }
-      this.lAvaliacao = [];
+      this.lAtividadeAvaliativa = [];
     },
+    fetchRecodsSuccessCurso(response) {
+      if (Array.isArray(response.rows)) {
+        this.lCurso = response.rows;
+        return;
+      }
+      this.lCurso = [];
+    },
+
     editItem(item) {
-      this.editedIndex = this.lAvaliacao.indexOf(item);
+      this.editedIndex = this.lAtividadeAvaliativa.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
     deleteItem(item) {
-      this.editedIndex = this.lAvaliacao.indexOf(item);
+      this.editedIndex = this.lAtividadeAvaliativa.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogExcluir = true;
     },
     deleteItemComfirm() {
-      //   this.service
-      //     .destroy(this.editedItem)
-      //     .then(this.lAvaliacao.splice(this.editedIndex, 1));
-      this.lAvaliacao.splice(this.editedIndex, 1);
+      //const index = this.lAtividadeAvaliativa.indexOf(this.editedItem);
+      serviceAtividadeAvaliativa
+        .destroy(this.editedItem)
+        .then(this.lAtividadeAvaliativa.splice(this.editedIndex, 1));
       this.closeExcluir();
     },
     closeExcluir() {
@@ -283,18 +262,16 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-        // this.service
-        //   .update(this.editedItem)
-        //   .then(
-        //     Object.assign(this.lAvaliacao[this.editedIndex], this.editedItem)
-        //   );
-        Object.assign(this.lAvaliacao[this.editedIndex], this.editedItem);
+        console.log(this.editedItem);
+        serviceAtividadeAvaliativa
+          .update(this.editedItem)
+          .then(
+            Object.assign(this.lAtividadeAvaliativa[this.editedIndex], this.editedItem)
+          );
       } else {
-        // this.service
-        //   .create(this.editedItem)
-        //   .then((response) => this.lAvaliacao.push(response));
-        //  this.lAvaliacao.push(response)editedItem
-        this.lAvaliacao.push(this.editedItem);
+        serviceAtividadeAvaliativa
+          .create(this.editedItem)
+          .then((response) => this.lAtividadeAvaliativa.push(response));
       }
       this.close();
     },
