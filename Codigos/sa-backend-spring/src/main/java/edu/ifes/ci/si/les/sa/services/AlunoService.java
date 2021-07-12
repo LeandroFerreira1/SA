@@ -29,7 +29,7 @@ public class AlunoService {
 		Aluno obj = repository.findById(id).get();
 		if (obj == null) {
 			throw new ObjectNotFoundException(
-					"Objeto não encontrado! Id: " + id + ", Tipo: " + PresencaAluno.class.getName());
+					"Objeto não encontrado! Id: " + id + ", Tipo: " + Aluno.class.getName());
 		}
 		return obj;
 	}
