@@ -18,7 +18,6 @@ O objetivo do sistema é agilizar o processos e garantir maior segurança, ao me
 * Cidade
 * Bairro
 * Disciplina
-* Nota
 * Turma
 * Curso
 * PeriodoLetivo
