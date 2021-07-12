@@ -9,9 +9,18 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(of = {"id"})
 public class AvaliacaoAluno implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -24,7 +33,7 @@ public class AvaliacaoAluno implements Serializable{
 	private Double nota;
 	
 	@Builder
-    public void AvaliacaoAluno(Turma turma, Aluno aluno, Double nota) {
+    public AvaliacaoAluno(Turma turma, Aluno aluno, Double nota) {
     	this.id.setTurma(turma);
     	this.id.setAluno(aluno);
     	this.nota = nota;

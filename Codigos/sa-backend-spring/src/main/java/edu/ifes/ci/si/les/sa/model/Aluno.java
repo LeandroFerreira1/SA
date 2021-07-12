@@ -52,7 +52,7 @@ public class Aluno extends Pessoa{
 	private Curso curso;
 
 	@NotNull(message = "O Aluno deve possuir pelo menos um Telefone")
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection
 	@CollectionTable(name="TELEFONE")
 	private Set<String> telefones = new HashSet<>();
 	

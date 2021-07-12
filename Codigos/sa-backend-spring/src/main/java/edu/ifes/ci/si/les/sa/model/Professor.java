@@ -42,7 +42,7 @@ public class Professor extends Pessoa {
     @Size(min = 6, max = 10, message = "Senha do Professor deve ter entre 6 e 20 caracteres")
 	private String senha;
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection
 	@CollectionTable(name="TELEFONE")
 	private Set<String> telefones = new HashSet<>();
     

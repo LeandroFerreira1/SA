@@ -11,13 +11,17 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 //Classe criada para representar a chave primária composta do objeto AvaliacaoAluno
 @Embeddable
 @Data
 @EqualsAndHashCode(of = {"alunoTurma", "atividadeAvaliativa"})
+@AllArgsConstructor
+@NoArgsConstructor
 public class AvaliacaoAlunoPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
