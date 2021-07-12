@@ -19,10 +19,10 @@ O objetivo do sistema é agilizar o processos e garantir maior segurança, ao me
 * Bairro
 * Disciplina
 * Nota
-* Falta
 * Turma
 * Curso
-* Status
+* PeriodoLetivo
+* Atividade Avaliativa
 ```
 
 ### Processos de Negócio
