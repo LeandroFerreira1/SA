@@ -152,7 +152,6 @@ public class _DBService {
 				"Ruas Marcos Fonseca", 52, 1, bairro2, "Mestre", "lorena@gmail.com", "123456");
 		Professor professor3 = new Professor(null, "Sebastiao Santos", sdf.parse("1965-08-09"), "M", "951.232.741-32",
 				"Avenida Sambaio Dutra", 70, 1, bairro3, "Doutor", "sebastiao@gmail.com", "123456");
-
 		// professor1.getTelefones().addAll(Arrays.asList("273323-6333","273321-8600"));
 		professorRepository.saveAll(Arrays.asList(professor1, professor2, professor3));
 
@@ -166,7 +165,6 @@ public class _DBService {
 		periodoLetivoRepository.saveAll(Arrays.asList(periodoLetivo1, periodoLetivo2, periodoLetivo3));
 
 		// CADASTRO TURMA
-
 		Turma turma1 = new Turma(null, "ProgramacaoI - 2021.1", 20, sdf.parse("2021-10-12"), sdf.parse("2021-10-15"),
 				periodoLetivo1, aula1, atividadeAvaliativa1, professor1, disciplina1);
 		Turma turma2 = new Turma(null, "LogicaI - 2021.1", 20, sdf.parse("2021-10-12"), sdf.parse("2021-10-15"),
@@ -186,7 +184,6 @@ public class _DBService {
 				"Rua Tabata battat", 11, 3, bairro2, "20161MA0031", "8889542ES", "joana@email.cpm", "123456", curso2);
 		Aluno aluno3 = new Aluno(null, "Linara Barg", sdf.parse("1989-12-14"), "F", "111.532.004-96",
 				"Rua Macarena Barao", 12, 4, bairro3, "20161ME0032", "0005412ES", "magno@email.cpm", "123456", curso3);
-
 		// aluno1.getTelefones().addAll(Arrays.asList("2899910-1112","283027-1112"));
 		alunoRepository.saveAll(Arrays.asList(aluno1, aluno2, aluno3));
 
