@@ -59,6 +59,135 @@
                         :rules="administradorRulesEmail"
                       ></v-text-field>
                     </v-col>
+                       <v-col cols="12" sm="6" md="7">
+                      <v-text-field
+                        v-model="editedItem.tipoUsuario"
+                        label="Tipo de Usuário"
+                        outlined
+                        required
+                        :counter="200"
+                        :rules="administradorRulesTipoDeUsuario"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6" md="8">
+                      <v-text-field
+                        v-model="editedItem.cpf"
+                        label="CPF"
+                        outlined
+                        required
+                        :counter="200"
+                        :rules="administradorRulesCpf"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6" md="8">
+                      <v-menu
+                        ref="menuEntrada"
+                        :close-on-content-click="false"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="290px"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="editedItem.dataNascimento"
+                            label="Data de Nascimento"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                            outlined
+                            required
+                            :rules="atividadeAvaliativaRulesdatadataNascimento"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="editedItem.dataNascimento"
+                          no-title
+                          scrollable
+                        >
+                          <v-spacer></v-spacer>
+                          <v-btn
+                            text
+                            color="primary"
+                            @click="menuEntrada = false"
+                            >Cancelar</v-btn
+                          >
+                          <v-btn
+                            text
+                            color="primary"
+                            @click="$refs.menuEntrada.save(dataNascimento)"
+                            >OK</v-btn
+                          >
+                        </v-date-picker>
+                      </v-menu>
+                    </v-col>
+
+                    <v-col cols="12" sm="6" md="8">
+                      <v-text-field
+                        v-model="editedItem.sexo"
+                        label="Sexo"
+                        outlined
+                        required
+                        :counter="200"
+                        :rules="administradorRulesSexo"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6" md="8">
+                      <v-text-field
+                        v-model="editedItem.uf"
+                        label="UF"
+                        outlined
+                        required
+                        :counter="200"
+                        :rules="administradorRulesUf"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6" md="8">
+                      <v-text-field
+                        v-model="editedItem.cidade"
+                        label="Cidade"
+                        outlined
+                        required
+                        :counter="200"
+                        :rules="administradorRulesCidade"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6" md="8">
+                      <v-text-field
+                        v-model="editedItem.bairro"
+                        label="Bairro"
+                        outlined
+                        required
+                        :counter="200"
+                        :rules="administradorRulesBairro"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6" md="8">
+                      <v-text-field
+                        v-model="editedItem.rua"
+                        label="Rua"
+                        outlined
+                        required
+                        :counter="200"
+                        :rules="administradorRulesRua"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6" md="8">
+                      <v-text-field
+                        v-model="editedItem.numero"
+                        label="Número"
+                        outlined
+                        required
+                        :counter="200"
+                        :rules="administradorRulesNumero"
+                      ></v-text-field>
+                    </v-col>
                   </v-row>
                 </v-container>
               </v-card-text>
@@ -156,7 +285,7 @@ export default {
     },
   },
   created() {
-     this.fetchRecords();
+    this.fetchRecords();
   },
   methods: {
     fetchRecords() {
@@ -180,9 +309,9 @@ export default {
       this.dialogExcluir = true;
     },
     deleteItemComfirm() {
-         this.service
-         .destroy(this.editedItem)
-         .then(this.lAdministrador.splice(this.editedIndex, 1));
+      this.service
+        .destroy(this.editedItem)
+        .then(this.lAdministrador.splice(this.editedIndex, 1));
       this.closeExcluir();
     },
     closeExcluir() {
@@ -201,16 +330,18 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-           this.service
-           .update(this.editedItem)
-           .then(
-             Object.assign(this.lAdministrador[this.editedIndex], this.editedItem)
-      );
-  
+        this.service
+          .update(this.editedItem)
+          .then(
+            Object.assign(
+              this.lAdministrador[this.editedIndex],
+              this.editedItem
+            )
+          );
       } else {
-         this.service
-           .create(this.editedItem)
-           .then((response) => this.lAdministrador.push(response));
+        this.service
+          .create(this.editedItem)
+          .then((response) => this.lAdministrador.push(response));
       }
       this.close();
     },
