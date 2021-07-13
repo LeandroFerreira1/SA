@@ -4,6 +4,8 @@
     :items="lPeriodoLetivo"
     sort-by="id"
     class="elevation-1"
+    :loading="carregando" 
+    loading-text="Aguarde... Carregando"
   >
     <template v-slot:top>
       <v-toolbar flat>
@@ -192,6 +194,7 @@ export default {
   name: "lPeriodoLetivo",
   components: {},
   data: () => ({
+    carregando: true,
     dialog: false,
     dialogExcluir: false,
     valid: true,
@@ -230,10 +233,13 @@ export default {
     },
   },
   created() {
-    this.fetchRecords();
-    this.fetchRecordsCurso();
+    this.initialize();
   },
   methods: {
+    initialize(){
+      this.fetchRecords();
+      this.fetchRecordsCurso();
+    },
     fetchRecords() {
       servicePeriodoLetivo.search({}).then(this.fetchRecodsSuccess);
     },
@@ -241,11 +247,17 @@ export default {
       serviceCurso.search({}).then(this.fetchRecodsSuccessCurso);
     },
     fetchRecodsSuccess(response) {
-      if (Array.isArray(response.rows)) {
+      setTimeout(() => {
+        if (Array.isArray(response.rows)) {
         this.lPeriodoLetivo = response.rows;
+        this.carregando = false
         return;
       }
       this.lPeriodoLetivo = [];
+      this.carregando = false
+      }, 1500);
+      
+      
     },
     fetchRecodsSuccessCurso(response) {
       if (Array.isArray(response.rows)) {

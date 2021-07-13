@@ -7,5 +7,5 @@ export default class AdministradorService extends Rest {
     /**
      * @type {String}
      */
-    static resource = '/Administrador'
+    static resource = '/administrador'
 }

@@ -40,7 +40,7 @@
                         :items="itemsUf"
                         item-text="tipo"
                         label="Tipo"
-                        v-model="editedItem.curso"
+                        v-model="editedItem.tipo"
                         outlined
                         required
                         :rules="CursoRulesTipo"
@@ -167,10 +167,12 @@ export default {
     },
   },
   created() {
-    this.fetchRecords();
-    this.fetchRecordsUf();
+    this.initialize();
   },
   methods: {
+    initialize(){
+      this.fetchRecords();
+    },
     fetchRecords() {
       serviceCurso.search({}).then(this.fetchRecodsSuccess);
     },
@@ -181,14 +183,6 @@ export default {
       }
       this.lCurso = [];
     },
-    fetchRecodsSuccessUf(response) {
-      if (Array.isArray(response.rows)) {
-        this.lUf = response.rows;
-        return;
-      }
-      this.lUf = [];
-    },
-
     buscarTipoCurso() {
       const query = this.getQueryUrlBuscarTipoCurso();
       this.resetSelecaoCurso();

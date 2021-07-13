@@ -157,11 +157,11 @@ export default {
     },
   },
   created() {
-    // this.fetchRecords();
+     this.fetchRecords();
   },
   methods: {
     fetchRecords() {
-      //this.service.search({}).then(this.fetchRecodsSuccess);
+      this.service.search({}).then(this.fetchRecodsSuccess);
     },
     fetchRecodsSuccess(response) {
       if (Array.isArray(response.rows)) {
@@ -181,10 +181,9 @@ export default {
       this.dialogExcluir = true;
     },
     deleteItemComfirm() {
-      //   this.service
-      //     .destroy(this.editedItem)
-      //     .then(this.lAdministrador.splice(this.editedIndex, 1));
-      this.lAdministrador.splice(this.editedIndex, 1);
+         this.service
+         .destroy(this.editedItem)
+         .then(this.lAdministrador.splice(this.editedIndex, 1));
       this.closeExcluir();
     },
     closeExcluir() {
@@ -203,18 +202,16 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-        // this.service
-        //   .update(this.editedItem)
-        //   .then(
-        //     Object.assign(this.lAdministrador[this.editedIndex], this.editedItem)
-        //   );
-        Object.assign(this.lAdministrador[this.editedIndex], this.editedItem);
+           this.service
+           .update(this.editedItem)
+           .then(
+             Object.assign(this.lAdministrador[this.editedIndex], this.editedItem)
+      );
+  
       } else {
-        // this.service
-        //   .create(this.editedItem)
-        //   .then((response) => this.lAdministrador.push(response));
-        //  this.lAdministrador.push(response)editedItem
-        this.lAdministrador.push(this.editedItem);
+         this.service
+           .create(this.editedItem)
+           .then((response) => this.lAdministrador.push(response));
       }
       this.close();
     },
