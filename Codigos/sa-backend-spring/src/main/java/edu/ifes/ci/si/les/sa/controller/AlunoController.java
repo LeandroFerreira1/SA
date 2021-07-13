@@ -47,7 +47,7 @@ public class AlunoController {
 		if (br.hasErrors())
 			throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
 		obj.setMatricula(gerarMatricula());
-		obj.setTipoUsuario(1);
+		obj.setTipoUsuario(2);
 		obj.setSenha("123456");
 		obj = service.insert(obj);
 		return ResponseEntity.ok().body(obj);

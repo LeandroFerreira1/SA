@@ -8,5 +8,5 @@ import edu.ifes.ci.si.les.sa.model.Aluno;
 @Repository
 public interface AlunoRepository extends JpaRepository<Aluno, Integer>{
 
-
+	
 }

@@ -46,6 +46,7 @@ public class AdministradorController {
 	public ResponseEntity<Administrador> insert(@Valid @RequestBody Administrador obj, BindingResult br) {
 		if (br.hasErrors())
 			throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
+		obj.setTipoUsuario(2);
 		obj = service.insert(obj);
 		return ResponseEntity.ok().body(obj);
 	}

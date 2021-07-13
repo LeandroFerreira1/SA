@@ -46,7 +46,7 @@ public class ProfessorController {
 	public ResponseEntity<Professor> insert(@Valid @RequestBody Professor obj, BindingResult br) {
 		if (br.hasErrors())
 			throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
-		obj.setTipoUsuario(1);
+		obj.setTipoUsuario(3);
 		obj.setSenha("123456");
 		obj = service.insert(obj);
 		return ResponseEntity.ok().body(obj);
