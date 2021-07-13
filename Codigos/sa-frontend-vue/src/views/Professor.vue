@@ -140,6 +140,9 @@
                         v-model="editedItem.uf"
                         label="UF"
                         outlined
+                        :items="lUf"
+                        item-text="nome"
+                        @change="filtrarCidadesPorEstado"
                         required
                         :rules="cursoRulesUf"
                       ></v-combobox>
@@ -148,7 +151,10 @@
                     <v-col cols="12" sm="8" md="4">
                       <v-combobox
                         v-model="editedItem.cidade"
+                        :items="lCidadeFiltrada"
                         label="Cidade"
+                        item-text="nome"
+                        @change="filtrarBairroPorCidade"
                         outlined
                         required
                         :rules="cursoRulesCidade"
@@ -158,7 +164,9 @@
                     <v-col cols="12" sm="12" md="4">
                       <v-combobox
                         v-model="editedItem.bairro"
+                        :items="lBairroFiltrada"
                         label="Bairro"
+                        item-text="nome"
                         outlined
                         required
                         :rules="cursoRulesBairro"
@@ -235,8 +243,15 @@
 </template>
 
 <script>
-import ProfessorService from "../service/domain/ProfessorService";
 import { mask } from "@titou10/v-mask";
+import ProfessorService from "../service/domain/ProfessorService";
+import BairroService from "../service/domain/BairroService";
+import CidadeService from "../service/domain/CidadeService";
+import UfService from "../service/domain/UfService";
+
+const serviceUf = UfService.build();
+const serviceBairro = BairroService.build();
+const serviceCidade = CidadeService.build();
 
 const textos = {
   novo: "Novo Professor",
@@ -266,8 +281,8 @@ export default {
     professorRulesTelefone: [
       (v) => !!v || "Preenchimento Necessário",
       (v) =>
-        (v && v.length <= 14 && v.length >= 14) ||
-        "O campo deve ter 10 digitos",
+        (v && v.length <= 15 && v.length >= 15) ||
+        "O campo deve ter 11 digitos",
     ],
     headers: [
       { text: "ID", value: "id" },
@@ -279,6 +294,11 @@ export default {
       { text: "Ações", align: "end", value: "actions", sortable: false },
     ],
     lProfessor: [],
+    lBairro: [],
+    lBairroFiltrada: [],
+    lUf: [],
+    lCidade: [],
+    lCidadeFiltrada: [],
     editedIndex: -1,
     editedItem: {},
     defaultItem: {},
@@ -297,11 +317,26 @@ export default {
     },
   },
   created() {
-     this.fetchRecords();
+     this.initialize();
   },
   methods: {
+    initialize(){
+      this.fetchRecords();
+      this.fetchRecordsUf();
+      this.fetchRecordsCidade();
+      this.fetchRecordsBairro();
+    },
     fetchRecords() {
       this.service.search({}).then(this.fetchRecodsSuccess);
+    },
+    fetchRecordsUf() {
+      serviceUf.search({}).then(this.fetchRecodsSuccessUf);
+    },
+    fetchRecordsCidade() {
+      serviceCidade.search({}).then(this.fetchRecodsSuccessCidade);
+    },
+    fetchRecordsBairro() {
+      serviceBairro.search({}).then(this.fetchRecodsSuccessBairro);
     },
     fetchRecodsSuccess(response) {
       if (Array.isArray(response.rows)) {
@@ -309,6 +344,44 @@ export default {
         return;
       }
       this.lProfessor = [];
+    },
+    fetchRecodsSuccessUf(response) {
+      if (Array.isArray(response.rows)) {
+        this.lUf = response.rows;
+        return;
+      }
+      this.lUf = [];
+    },
+
+    fetchRecodsSuccessCidade(response) {
+      if (Array.isArray(response.rows)) {
+        this.lCidade = response.rows;
+        return;
+      }
+      this.lCidade = [];
+    },
+    fetchRecodsSuccessBairro(response) {
+      if (Array.isArray(response.rows)) {
+        this.lBairro = response.rows;
+        return;
+      }
+      this.lBairro = [];
+    },
+    filtrarCidadesPorEstado() {
+      this.resetSelecaoCidade();
+      this.lCidadeFiltrada = this.lCidade.filter(cidade => cidade.uf.id == this.editedItem.uf.id);
+    },
+    filtrarBairroPorCidade() {
+      this.resetSelecaoBairro();
+      this.lBairroFiltrada = this.lBairro.filter(bairro => bairro.cidade.id == this.editedItem.cidade.id);
+    },
+    resetSelecaoCidade() {
+      this.lCidadeFiltrada = [];
+      this.editedItem.cidade = null;
+    },
+    resetSelecaoBairro() {
+      this.lBairroFiltrada = [];
+      this.editedItem.bairro = null;
     },
     editItem(item) {
       this.editedIndex = this.lProfessor.indexOf(item);
