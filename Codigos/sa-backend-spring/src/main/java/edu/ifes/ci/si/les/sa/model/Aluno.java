@@ -51,19 +51,20 @@ public class Aluno extends Pessoa{
 	@JoinColumn(name = "curso_id")
 	private Curso curso;
 
-	@NotNull(message = "O Aluno deve possuir pelo menos um Telefone")
-    @ElementCollection
-	@CollectionTable(name="TELEFONE")
-	private Set<String> telefones = new HashSet<>();
+	@Column(length = 15)
+	  @NotBlank(message = "O Campo deve ser preenchido")
+	  @Size(min = 14, max = 15, message = "O campo deve ter pelo menos 14 digitos")
+	  private String telefone;
 	
 	@Builder
-	public Aluno(Integer id, String nome, Date dataNascimento, String sexo, String cpf, String rua, Integer numero, Integer tipoUsuario, Bairro bairro,String matricula, String rg, String email, String senha, Curso curso) {
+	public Aluno(Integer id, String nome, Date dataNascimento, String sexo, String cpf, String rua, Integer numero, Integer tipoUsuario, Bairro bairro,String matricula, String rg, String email, String senha, Curso curso, String telefone) {
 		super(id, nome, dataNascimento, sexo, cpf, rua, numero, tipoUsuario, bairro);
 		this.matricula = matricula;
 		this.rg = rg;
 		this.email = email;
 		this.senha = senha;
 		this.curso = curso;
+		this.telefone = telefone;
 		
 	}
 }

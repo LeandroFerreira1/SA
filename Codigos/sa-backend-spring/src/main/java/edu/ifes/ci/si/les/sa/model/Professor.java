@@ -42,16 +42,18 @@ public class Professor extends Pessoa {
     @Size(min = 6, max = 10, message = "Senha do Professor deve ter entre 6 e 20 caracteres")
 	private String senha;
 
-    @ElementCollection
-	@CollectionTable(name="TELEFONE")
-	private Set<String> telefones = new HashSet<>();
+	@Column(length = 15)
+	  @NotBlank(message = "O Campo deve ser preenchido")
+	  @Size(min = 14, max = 15, message = "O campo deve ter pelo menos 14 digitos")
+	  private String telefone;
     
     @Builder
-    public Professor(Integer id, String nome, Date dataNascimento, String sexo, String cpf, String rua, Integer numero, Integer tipoUsuario, Bairro bairro, String titulacao, String email, String senha) {
+    public Professor(Integer id, String nome, Date dataNascimento, String sexo, String cpf, String rua, Integer numero, Integer tipoUsuario, Bairro bairro, String titulacao, String email, String senha, String telefone) {
     	super(id, nome, dataNascimento, sexo, cpf, rua, numero, tipoUsuario, bairro);
     	this.titulacao = titulacao;
     	this.email = email;
     	this.senha = senha;
+    	this.telefone = telefone;
     }
 
 }

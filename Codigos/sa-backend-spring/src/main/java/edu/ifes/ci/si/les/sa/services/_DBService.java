@@ -147,11 +147,11 @@ public class _DBService {
 
 		// CADASTRO PROFESSOR
 		Professor professor1 = new Professor(null, "Mario da Silva", sdf.parse("1979-08-10"), "M", "147.2356.987-50",
-				"Ruas dos Braos Loics", 21, 1, bairro1, "Mestre", "mm@gmail.com", "123456");
+				"Ruas dos Braos Loics", 21, 1, bairro1, "Mestre", "mm@gmail.com", "123456", "(28) 99900-0000");
 		Professor professor2 = new Professor(null, "Lorena Marcos", sdf.parse("1990-09-15"), "F", "000.748.962-71",
-				"Ruas Marcos Fonseca", 52, 1, bairro2, "Mestre", "lorena@gmail.com", "123456");
+				"Ruas Marcos Fonseca", 52, 1, bairro2, "Mestre", "lorena@gmail.com", "123456", "(28) 99900-0000");
 		Professor professor3 = new Professor(null, "Sebastiao Santos", sdf.parse("1965-08-09"), "M", "951.232.741-32",
-				"Avenida Sambaio Dutra", 70, 1, bairro3, "Doutor", "sebastiao@gmail.com", "123456");
+				"Avenida Sambaio Dutra", 70, 1, bairro3, "Doutor", "sebastiao@gmail.com", "123456", "(28) 99900-0000");
 		// professor1.getTelefones().addAll(Arrays.asList("273323-6333","273321-8600"));
 		professorRepository.saveAll(Arrays.asList(professor1, professor2, professor3));
 
@@ -179,11 +179,11 @@ public class _DBService {
 
 		// CADASTRO ALUNO
 		Aluno aluno1 = new Aluno(null, "Abrao Lincao", sdf.parse("1980-10-12"), "M", "154.145.025-96",
-				"Rua Canoi Carpado", 10, 2, bairro1, "20161SI0030", "3987412ES", "abraol@email.cpm", "123456", curso1);
+				"Rua Canoi Carpado", 10, 2, bairro1, "20161SI0030", "3987412ES", "abraol@email.cpm", "123456", curso1, "(28) 99900-0000");
 		Aluno aluno2 = new Aluno(null, "Jovelha Nova", sdf.parse("1982-04-13"), "F", "003.134.543-96",
-				"Rua Tabata battat", 11, 3, bairro2, "20161MA0031", "8889542ES", "joana@email.cpm", "123456", curso2);
+				"Rua Tabata battat", 11, 3, bairro2, "20161MA0031", "8889542ES", "joana@email.cpm", "123456", curso2, "(28) 99900-0000");
 		Aluno aluno3 = new Aluno(null, "Linara Barg", sdf.parse("1989-12-14"), "F", "111.532.004-96",
-				"Rua Macarena Barao", 12, 4, bairro3, "20161ME0032", "0005412ES", "magno@email.cpm", "123456", curso3);
+				"Rua Macarena Barao", 12, 4, bairro3, "20161ME0032", "0005412ES", "magno@email.cpm", "123456", curso3, "(28) 99900-0000");
 		// aluno1.getTelefones().addAll(Arrays.asList("2899910-1112","283027-1112"));
 		alunoRepository.saveAll(Arrays.asList(aluno1, aluno2, aluno3));
 

@@ -1,5 +1,7 @@
 package edu.ifes.ci.si.les.sa.controller;
 
+
+import java.time.LocalDate;
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -44,9 +46,13 @@ public class AlunoController {
 	public ResponseEntity<Aluno> insert(@Valid @RequestBody Aluno obj, BindingResult br) {
 		if (br.hasErrors())
 			throw new ConstraintException(br.getAllErrors().get(0).getDefaultMessage());
+		obj.setMatricula(gerarMatricula());
+		obj.setTipoUsuario(1);
+		obj.setSenha("123456");
 		obj = service.insert(obj);
 		return ResponseEntity.ok().body(obj);
 	}
+	
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
 	public ResponseEntity<Aluno> update(@Valid @RequestBody Aluno obj, BindingResult br) {
@@ -60,6 +66,12 @@ public class AlunoController {
 	public ResponseEntity<Void> delete(@PathVariable Aluno id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	private String gerarMatricula() {
+		String ano = String.valueOf(LocalDate.now().getYear());
+		Integer qtd  = service.findAll().size();
+		return ano+qtd.toString();
 	}
 
 }

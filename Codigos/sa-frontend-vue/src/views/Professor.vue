@@ -274,15 +274,8 @@ export default {
       { text: "Nome", align: "start", value: "nome" },
       { text: "Titulação", value: "titulacao" },
       { text: "CPF", value: "cpf" },
-      { text: "Data de Nascimento", value: "datanascimento" },
-      { text: "Sexo", value: "sexo" },
       { text: "Email", value: "email" },
       { text: "Telefone", value: "telefone" },
-      { text: "UF", value: "uf" },
-      { text: "Cidade", value: "cidade" },
-      { text: "Bairro", value: "bairro" },
-      { text: "Endereço", value: "endereco" },
-      { text: "Número", value: "numero" },
       { text: "Ações", align: "end", value: "actions", sortable: false },
     ],
     lProfessor: [],
@@ -304,11 +297,11 @@ export default {
     },
   },
   created() {
-    // this.fetchRecords();
+     this.fetchRecords();
   },
   methods: {
     fetchRecords() {
-      //this.service.search({}).then(this.fetchRecodsSuccess);
+      this.service.search({}).then(this.fetchRecodsSuccess);
     },
     fetchRecodsSuccess(response) {
       if (Array.isArray(response.rows)) {
@@ -328,10 +321,9 @@ export default {
       this.dialogExcluir = true;
     },
     deleteItemComfirm() {
-      //   this.service
-      //     .destroy(this.editedItem)
-      //     .then(this.lProfessor.splice(this.editedIndex, 1));
-      this.lProfessor.splice(this.editedIndex, 1);
+         this.service
+          .destroy(this.editedItem)
+          .then(this.lProfessor.splice(this.editedIndex, 1));
       this.closeExcluir();
     },
     closeExcluir() {
@@ -350,18 +342,17 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-        // this.service
-        //   .update(this.editedItem)
-        //   .then(
-        //     Object.assign(this.lProfessor[this.editedIndex], this.editedItem)
-        //   );
-        Object.assign(this.lProfessor[this.editedIndex], this.editedItem);
+         this.service
+           .update(this.editedItem)
+           .then(
+             Object.assign(this.lProfessor[this.editedIndex], this.editedItem)
+           );
+       
       } else {
-        // this.service
-        //   .create(this.editedItem)
-        //   .then((response) => this.lProfessor.push(response));
-        //  this.lProfessor.push(response)editedItem
-        this.lProfessor.push(this.editedItem);
+         this.service
+           .create(this.editedItem)
+           .then((response) => this.lProfessor.push(response));
+       
       }
       this.close();
     },
