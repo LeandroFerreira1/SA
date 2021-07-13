@@ -4,7 +4,7 @@
       <v-col cols="12" sm="8" md="4">
         <v-card class="elevation-12">
           <v-toolbar>
-            <v-toolbar-title>Pagina de Login</v-toolbar-title>
+            <v-toolbar-title>Página de Login</v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>
           <v-card-text>

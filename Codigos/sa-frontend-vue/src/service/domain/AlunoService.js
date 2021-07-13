@@ -7,5 +7,5 @@ export default class AlunoService extends Rest {
     /**
      * @type {String}
      */
-    static resource = '/alunos'
+    static resource = '/aluno'
 }

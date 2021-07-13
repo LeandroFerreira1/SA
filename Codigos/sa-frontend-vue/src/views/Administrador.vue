@@ -134,7 +134,6 @@ export default {
     headers: [
       { text: "ID", value: "id" },
       { text: "Nome", align: "start", value: "nome" },
-      { text: "Senha", value: "senha" },
       { text: "Email", value: "email" },
       { text: "Ações", align: "end", value: "actions", sortable: false },
     ],
