@@ -30,7 +30,7 @@
                         item-text="nome"
                         label="UF"
                         v-model="editedItem.uf"
-                        @change="buscarCidades"
+                        @change="filtrarCidadesPorEstado"
                         outlined
                         required
                         :rules="bairroRulesUf"
@@ -39,7 +39,7 @@
 
                     <v-col cols="12" sm="6" md="6">
                       <v-combobox
-                        :items="lCidade"
+                        :items="lCidadeFiltrada"
                         item-text="nome"
                         label="Cidade"
                         v-model="editedItem.cidade"
@@ -131,6 +131,7 @@ export default {
     dialogExcluir: false,
     valid: true,
     bairroRulesUf: [(v) => !!v || "Seleção Necessária"],
+    bairroRulesCidade: [(v) => !!v || "Seleção Necessária"],
     bairroRulesNome: [
       (v) => !!v || "Preenchimento Necessário",
       (v) =>
@@ -147,6 +148,7 @@ export default {
     lBairro: [],
     lUf: [],
     lCidade: [],
+    lCidadeFiltrada: [],
     editedIndex: -1,
     editedItem: {},
     defaultItem: {},
@@ -165,11 +167,14 @@ export default {
     },
   },
   created() {
-    this.fetchRecords();
-    this.fetchRecordsUf();
-    this.fetchRecordsCidade();
+    this.initialize();
   },
   methods: {
+    initialize(){
+      this.fetchRecords();
+      this.fetchRecordsUf();
+      this.fetchRecordsCidade();
+    },
     fetchRecords() {
       serviceBairro.search({}).then(this.fetchRecodsSuccess);
     },
@@ -203,16 +208,13 @@ export default {
     },
 
 
-    buscarCidades() {
-      const query = this.getQueryUrlBuscaCidadesPorUf();
+    filtrarCidadesPorEstado() {
       this.resetSelecaoCidade();
-      this.fetchRecordsCidade(query);
+      this.lCidadeFiltrada = this.lCidade.filter(cidade => cidade.uf.id == this.editedItem.uf.id);
     },
-    getQueryUrlBuscaCidadesPorUf() {
-      return `findByUf/${this.ufSelecionado.id}`;
-    },
+
     resetSelecaoCidade() {
-      this.lCidade = [];
+      this.lCidadeFiltrada = [];
       this.editedItem.cidade = null;
     },
 
