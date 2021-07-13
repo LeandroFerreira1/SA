@@ -73,7 +73,7 @@
 
                     <v-col cols="12" sm="4" md="3">
                       <v-combobox
-                        v-model="editedItem.periodoletivo"
+                        v-model="editedItem.periodoLetivo"
                         label="Período Letivo"
                         outlined
                         :items="lPeriodoLetivo"
@@ -84,7 +84,7 @@
                     </v-col>
                     <v-col cols="12" sm="6" md="3">
                       <v-text-field
-                        v-model="editedItem.vagas"
+                        v-model="editedItem.qtdVaga"
                         label="Vagas"
                         outlined
                         required
@@ -217,7 +217,7 @@
       <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
-        <template v-slot:body.append>
+    <template v-slot:body.append>
       <tr>
         <td></td>
         <td>
@@ -286,9 +286,12 @@ export default {
       { text: "ID", value: "id" },
       { text: "Nome", align: "start", value: "nome" },
       { text: "Professor", align: "start", value: "professor.nome" },
+      { text: "Curso", align: "start", value: "curso.nome" },
       { text: "Disciplina", align: "start", value: "disciplina.nome" },
       { text: "Período Letivo", align: "start", value: "periodoLetivo.nome" },
       { text: "Vagas", align: "start", value: "qtdVaga" },
+      { text: "Data Início", align: "start", value: "dataInicio" },
+      { text: "Data Fim", align: "start", value: "dataFim" },
       { text: "Ações", align: "end", value: "actions", sortable: false },
     ],
     lTurma: [],
@@ -315,10 +318,10 @@ export default {
     },
   },
   created() {
-     this.initialize();
+    this.initialize();
   },
   methods: {
-    initialize(){
+    initialize() {
       this.fetchRecords();
       this.fetchRecordsProfessor();
       this.fetchRecordsCurso();
@@ -338,7 +341,9 @@ export default {
       serviceDisciplina.search({}).then(this.fetchRecodsSuccessDisciplina);
     },
     fetchRecordsPeriodoLetivo() {
-      servicePeriodoLetivo.search({}).then(this.fetchRecodsSuccessPeriodoLetivo);
+      servicePeriodoLetivo
+        .search({})
+        .then(this.fetchRecodsSuccessPeriodoLetivo);
     },
     fetchRecodsSuccess(response) {
       if (Array.isArray(response.rows)) {
@@ -354,21 +359,21 @@ export default {
       }
       this.lProfessor = [];
     },
-     fetchRecodsSuccessCurso(response) {
+    fetchRecodsSuccessCurso(response) {
       if (Array.isArray(response.rows)) {
         this.lCurso = response.rows;
         return;
       }
       this.lCurso = [];
     },
-     fetchRecodsSuccessDisciplina(response) {
+    fetchRecodsSuccessDisciplina(response) {
       if (Array.isArray(response.rows)) {
-        this.lDisciplina= response.rows;
+        this.lDisciplina = response.rows;
         return;
       }
       this.lDisciplina = [];
     },
-     fetchRecodsSuccessPeriodoLetivo(response) {
+    fetchRecodsSuccessPeriodoLetivo(response) {
       if (Array.isArray(response.rows)) {
         this.lPeriodoLetivo = response.rows;
         return;
@@ -378,7 +383,9 @@ export default {
 
     filtrarDisciplinaPorCurso() {
       this.resetSelecaoDisciplina();
-      this.lDisciplinaFiltrada = this.lDisciplina.filter(disciplina => disciplina.curso.id == this.editedItem.curso.id);
+      this.lDisciplinaFiltrada = this.lDisciplina.filter(
+        (disciplina) => disciplina.curso.id == this.editedItem.curso.id
+      );
     },
     resetSelecaoDisciplina() {
       this.lDisciplinaFiltrada = [];
@@ -395,9 +402,9 @@ export default {
       this.dialogExcluir = true;
     },
     deleteItemComfirm() {
-         this.service
-          .destroy(this.editedItem)
-          .then(this.lTurma.splice(this.editedIndex, 1));
+      this.service
+        .destroy(this.editedItem)
+        .then(this.lTurma.splice(this.editedIndex, 1));
       this.lTurma.splice(this.editedIndex, 1);
       this.closeExcluir();
     },
@@ -417,17 +424,13 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-         this.service
-           .update(this.editedItem)
-           .then(
-          Object.assign(this.lTurma[this.editedIndex], this.editedItem)
-        );
-        
+        this.service
+          .update(this.editedItem)
+          .then(Object.assign(this.lTurma[this.editedIndex], this.editedItem));
       } else {
-         this.service
-         .create(this.editedItem)
-         .then((response) => this.lTurma.push(response));
-      
+        this.service
+          .create(this.editedItem)
+          .then((response) => this.lTurma.push(response));
       }
       this.close();
     },

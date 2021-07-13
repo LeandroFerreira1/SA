@@ -24,7 +24,7 @@
               <v-card-text>
                 <v-container>
                   <v-row>
-                    <v-col cols="12" sm="6" md="7">
+                    <v-col cols="12" sm="6" md="10">
                       <v-text-field
                         v-model="editedItem.nome"
                         label="Nome"
@@ -36,7 +36,7 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="7">
+                    <v-col cols="12" sm="6" md="6">
                       <v-text-field
                         v-model="editedItem.senha"
                         label="Senha"
@@ -48,7 +48,7 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="7">
+                    <v-col cols="12" sm="6" md="6">
                       <v-text-field
                         v-model="editedItem.email"
                         label="Email"
@@ -59,7 +59,7 @@
                         :rules="administradorRulesEmail"
                       ></v-text-field>
                     </v-col>
-                       <v-col cols="12" sm="6" md="7">
+                    <v-col cols="12" sm="6" md="6">
                       <v-text-field
                         v-model="editedItem.tipoUsuario"
                         label="Tipo de Usuário"
@@ -70,7 +70,7 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="8">
+                    <v-col cols="12" sm="6" md="6">
                       <v-text-field
                         v-model="editedItem.cpf"
                         label="CPF"
@@ -81,7 +81,7 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="8">
+                    <v-col cols="12" sm="6" md="6">
                       <v-menu
                         ref="menuEntrada"
                         :close-on-content-click="false"
@@ -123,7 +123,7 @@
                       </v-menu>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="8">
+                    <v-col cols="12" sm="6" md="6">
                       <v-text-field
                         v-model="editedItem.sexo"
                         label="Sexo"
@@ -134,64 +134,69 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="8">
-                      <v-text-field
+                    <!--Endereço-->
+
+                    <v-col cols="12" sm="4" md="6">
+                      <v-combobox
                         v-model="editedItem.uf"
                         label="UF"
                         outlined
+                        :items="lUf"
+                        item-text="nome"
+                        @change="filtrarCidadesPorEstado"
                         required
-                        :counter="200"
-                        :rules="administradorRulesUf"
-                      ></v-text-field>
+                        :rules="cursoRulesUf"
+                      ></v-combobox>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="8">
-                      <v-text-field
+                    <v-col cols="12" sm="8" md="6">
+                      <v-combobox
                         v-model="editedItem.cidade"
+                        :items="lCidadeFiltrada"
                         label="Cidade"
+                        item-text="nome"
+                        @change="filtrarBairroPorCidade"
                         outlined
                         required
-                        :counter="200"
-                        :rules="administradorRulesCidade"
-                      ></v-text-field>
+                        :rules="cursoRulesCidade"
+                      ></v-combobox>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="8">
-                      <v-text-field
+                    <v-col cols="12" sm="12" md="4">
+                      <v-combobox
                         v-model="editedItem.bairro"
+                        :items="lBairroFiltrada"
                         label="Bairro"
+                        item-text="nome"
                         outlined
                         required
-                        :counter="200"
-                        :rules="administradorRulesBairro"
-                      ></v-text-field>
+                        :rules="cursoRulesBairro"
+                      ></v-combobox>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="8">
+                    <v-col cols="12" sm="12" md="6">
                       <v-text-field
                         v-model="editedItem.rua"
                         label="Rua"
                         outlined
                         required
-                        :counter="200"
+                        :counter="100"
                         :rules="administradorRulesRua"
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="8">
+                    <v-col cols="12" sm="6" md="2">
                       <v-text-field
                         v-model="editedItem.numero"
                         label="Número"
                         outlined
                         required
-                        :counter="200"
                         :rules="administradorRulesNumero"
                       ></v-text-field>
                     </v-col>
                   </v-row>
                 </v-container>
               </v-card-text>
-
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click="close"
@@ -240,6 +245,13 @@
 <script>
 import AdministradorService from "../service/domain/AdministradorService";
 import { mask } from "@titou10/v-mask";
+import BairroService from "../service/domain/BairroService";
+import CidadeService from "../service/domain/CidadeService";
+import UfService from "../service/domain/UfService";
+
+const serviceUf = UfService.build();
+const serviceBairro = BairroService.build();
+const serviceCidade = CidadeService.build();
 
 const textos = {
   novo: "Novo Administrador",
@@ -254,12 +266,28 @@ export default {
     dialog: false,
     dialogExcluir: false,
     valid: true,
-    cursoRulesNome: [
+
+    administradorRulesNome: [
       (v) => !!v || "Preenchimento Necessário",
       (v) =>
         (v && v.length <= 200 && v.length >= 10) ||
         "O campo deve ter pelo menos 10 e no maximo 200 letras",
     ],
+    administradorRulesCpf: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length <= 14 && v.length >= 14) ||
+        "O campo deve ter 11 digitos",
+    ],
+    administradorRulesTelefone: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length <= 14 && v.length >= 14) ||
+        "O campo deve ter 10 digitos",
+    ],
+    administradorRulesUf: [(v) => !!v || "Seleção Necessária"],
+    administradorRulesCidade: [(v) => !!v || "Seleção Necessária"],
+    administradorRulesBairro: [(v) => !!v || "Seleção Necessária"],
     headers: [
       { text: "ID", value: "id" },
       { text: "Nome", align: "start", value: "nome" },
@@ -267,6 +295,11 @@ export default {
       { text: "Ações", align: "end", value: "actions", sortable: false },
     ],
     lAdministrador: [],
+    lBairro: [],
+    lBairroFiltrada: [],
+    lUf: [],
+    lCidade: [],
+    lCidadeFiltrada: [],
     editedIndex: -1,
     editedItem: {},
     defaultItem: {},
@@ -285,11 +318,26 @@ export default {
     },
   },
   created() {
-    this.fetchRecords();
+    this.initialize();
   },
   methods: {
+    initialize() {
+      this.fetchRecords();
+      this.fetchRecordsUf();
+      this.fetchRecordsCidade();
+      this.fetchRecordsBairro();
+    },
     fetchRecords() {
       this.service.search({}).then(this.fetchRecodsSuccess);
+    },
+    fetchRecordsUf() {
+      serviceUf.search({}).then(this.fetchRecodsSuccessUf);
+    },
+    fetchRecordsCidade() {
+      serviceCidade.search({}).then(this.fetchRecodsSuccessCidade);
+    },
+    fetchRecordsBairro() {
+      serviceBairro.search({}).then(this.fetchRecodsSuccessBairro);
     },
     fetchRecodsSuccess(response) {
       if (Array.isArray(response.rows)) {
@@ -297,6 +345,48 @@ export default {
         return;
       }
       this.lAdministrador = [];
+    },
+    fetchRecodsSuccessUf(response) {
+      if (Array.isArray(response.rows)) {
+        this.lUf = response.rows;
+        return;
+      }
+      this.lUf = [];
+    },
+
+    fetchRecodsSuccessCidade(response) {
+      if (Array.isArray(response.rows)) {
+        this.lCidade = response.rows;
+        return;
+      }
+      this.lCidade = [];
+    },
+    fetchRecodsSuccessBairro(response) {
+      if (Array.isArray(response.rows)) {
+        this.lBairro = response.rows;
+        return;
+      }
+      this.lBairro = [];
+    },
+    filtrarCidadesPorEstado() {
+      this.resetSelecaoCidade();
+      this.lCidadeFiltrada = this.lCidade.filter(
+        (cidade) => cidade.uf.id == this.editedItem.uf.id
+      );
+    },
+    filtrarBairroPorCidade() {
+      this.resetSelecaoBairro();
+      this.lBairroFiltrada = this.lBairro.filter(
+        (bairro) => bairro.cidade.id == this.editedItem.cidade.id
+      );
+    },
+    resetSelecaoCidade() {
+      this.lCidadeFiltrada = [];
+      this.editedItem.cidade = null;
+    },
+    resetSelecaoBairro() {
+      this.lBairroFiltrada = [];
+      this.editedItem.bairro = null;
     },
     editItem(item) {
       this.editedIndex = this.lAdministrador.indexOf(item);

@@ -165,25 +165,28 @@ public class _DBService {
 		periodoLetivoRepository.saveAll(Arrays.asList(periodoLetivo1, periodoLetivo2, periodoLetivo3));
 
 		// CADASTRO TURMA
-		Turma turma1 = new Turma(null, "ProgramacaoI - 2021.1", 20, sdf.parse("2021-10-12"), sdf.parse("2021-10-15"),
-				periodoLetivo1, aula1, atividadeAvaliativa1, professor1, disciplina1);
-		Turma turma2 = new Turma(null, "LogicaI - 2021.1", 20, sdf.parse("2021-10-12"), sdf.parse("2021-10-15"),
-				periodoLetivo1, aula1, atividadeAvaliativa1, professor1, disciplina1);
+		Turma turma1 = new Turma(null, "Programacao I - 2021.1", 20, sdf.parse("2021-10-12"), sdf.parse("2021-10-15"),
+				periodoLetivo1, aula1, atividadeAvaliativa1, professor1, disciplina4, curso1);
+		Turma turma2 = new Turma(null, "Logica I - 2021.1", 20, sdf.parse("2021-10-12"), sdf.parse("2021-10-15"),
+				periodoLetivo1, aula1, atividadeAvaliativa1, professor1, disciplina1, curso1);
 		Turma turma3 = new Turma(null, "Calculo I - 2021.1", 20, sdf.parse("2021-10-12"), sdf.parse("2021-10-15"),
-				periodoLetivo1, aula1, atividadeAvaliativa1, professor1, disciplina1);
+				periodoLetivo1, aula1, atividadeAvaliativa1, professor1, disciplina2, curso2);
 		Turma turma4 = new Turma(null, "Redes I - 2021.1", 20, sdf.parse("2021-10-12"), sdf.parse("2021-10-15"),
-				periodoLetivo1, aula1, atividadeAvaliativa1, professor1, disciplina1);
+				periodoLetivo1, aula1, atividadeAvaliativa1, professor1, disciplina1, curso1);
 		Turma turma5 = new Turma(null, "Banco de Dados I - 2021.1", 20, sdf.parse("2021-10-12"),
-				sdf.parse("2021-10-15"), periodoLetivo1, aula1, atividadeAvaliativa1, professor1, disciplina1);
+				sdf.parse("2021-10-15"), periodoLetivo1, aula1, atividadeAvaliativa1, professor1, disciplina1, curso1);
 		turmaRepository.saveAll(Arrays.asList(turma1, turma2, turma3, turma4, turma5));
 
 		// CADASTRO ALUNO
 		Aluno aluno1 = new Aluno(null, "Abrao Lincao", sdf.parse("1980-10-12"), "M", "154.145.025-96",
-				"Rua Canoi Carpado", 10, 2, bairro1, "20161SI0030", "3987412ES", "abraol@email.cpm", "123456", curso1, "(28) 99900-0000");
+				"Rua Canoi Carpado", 10, 2, bairro1, "20161SI0030", "3987412ES", "abraol@email.cpm", "123456", curso1,
+				"(28) 99900-0000");
 		Aluno aluno2 = new Aluno(null, "Jovelha Nova", sdf.parse("1982-04-13"), "F", "003.134.543-96",
-				"Rua Tabata battat", 11, 3, bairro2, "20161MA0031", "8889542ES", "joana@email.cpm", "123456", curso2, "(28) 99900-0000");
+				"Rua Tabata battat", 11, 3, bairro2, "20161MA0031", "8889542ES", "joana@email.cpm", "123456", curso2,
+				"(28) 99900-0000");
 		Aluno aluno3 = new Aluno(null, "Linara Barg", sdf.parse("1989-12-14"), "F", "111.532.004-96",
-				"Rua Macarena Barao", 12, 4, bairro3, "20161ME0032", "0005412ES", "magno@email.cpm", "123456", curso3, "(28) 99900-0000");
+				"Rua Macarena Barao", 12, 4, bairro3, "20161ME0032", "0005412ES", "magno@email.cpm", "123456", curso3,
+				"(28) 99900-0000");
 		// aluno1.getTelefones().addAll(Arrays.asList("2899910-1112","283027-1112"));
 		alunoRepository.saveAll(Arrays.asList(aluno1, aluno2, aluno3));
 

@@ -295,7 +295,6 @@ const textos = {
 export default {
   directives: { mask },
   data: () => ({
-
     service: AlunoService.build(),
     dialog: false,
     dialogExcluir: false,
@@ -355,10 +354,10 @@ export default {
     },
   },
   created() {
-     this.initialize();
+    this.initialize();
   },
   methods: {
-    initialize(){
+    initialize() {
       this.fetchRecords();
       this.fetchRecordsUf();
       this.fetchRecordsCidade();
@@ -407,11 +406,15 @@ export default {
     },
     filtrarCidadesPorEstado() {
       this.resetSelecaoCidade();
-      this.lCidadeFiltrada = this.lCidade.filter(cidade => cidade.uf.id == this.editedItem.uf.id);
+      this.lCidadeFiltrada = this.lCidade.filter(
+        (cidade) => cidade.uf.id == this.editedItem.uf.id
+      );
     },
     filtrarBairroPorCidade() {
       this.resetSelecaoBairro();
-      this.lBairroFiltrada = this.lBairro.filter(bairro => bairro.cidade.id == this.editedItem.cidade.id);
+      this.lBairroFiltrada = this.lBairro.filter(
+        (bairro) => bairro.cidade.id == this.editedItem.cidade.id
+      );
     },
     resetSelecaoCidade() {
       this.lCidadeFiltrada = [];
@@ -432,9 +435,9 @@ export default {
       this.dialogExcluir = true;
     },
     deleteItemComfirm() {
-         this.service
-           .destroy(this.editedItem)
-           .then(this.lAluno.splice(this.editedIndex, 1));
+      this.service
+        .destroy(this.editedItem)
+        .then(this.lAluno.splice(this.editedIndex, 1));
       this.closeExcluir();
     },
     closeExcluir() {
@@ -453,16 +456,13 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-         this.service
-        .update(this.editedItem)
-        .then(
-             Object.assign(this.lAluno[this.editedIndex], this.editedItem)
-           );
+        this.service
+          .update(this.editedItem)
+          .then(Object.assign(this.lAluno[this.editedIndex], this.editedItem));
       } else {
-         this.service
-           .create(this.editedItem)
-           .then((response) => this.lAluno.push(response));
-  
+        this.service
+          .create(this.editedItem)
+          .then((response) => this.lAluno.push(response));
       }
       this.close();
     },
