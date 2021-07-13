@@ -32,7 +32,7 @@
                         v-model="editedItem.curso"
                         outlined
                         required
-                        :rules="DisciplinaRulesCurso"
+                        :rules="disciplinaRulesCurso"
                       ></v-combobox>
                     </v-col>
 
@@ -54,7 +54,6 @@
                         outlined
                         required
                         :counter="200"
-                        :rules="disciplinaRulesNomeReduzido"
                       ></v-text-field>
                     </v-col>
 
@@ -140,6 +139,12 @@ export default {
         (v && v.length <= 20 && v.length >= 3) ||
         "O campo deve ter pelo menos 3 e no maximo 20 letras",
     ],
+    disciplinaRulesCargaHoraria: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length <= 20 && v.length >= 1) ||
+        "O campo deve ter pelo menos 1 e no maximo 20 digitos",
+    ],
     headers: [
       { text: "ID", value: "id" },
       { text: "Nome", align: "start", value: "curso.nome" },
@@ -168,10 +173,13 @@ export default {
     },
   },
   created() {
-    this.fetchRecords();
-    this.fetchRecordsCurso();
+    this.initialize();
   },
   methods: {
+    initialize(){
+      this.fetchRecords();
+    this.fetchRecordsCurso();
+    },
     fetchRecords() {
       serviceDisciplina.search({}).then(this.fetchRecodsSuccess);
     },

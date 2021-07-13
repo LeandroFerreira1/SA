@@ -31,7 +31,7 @@
                         outlined
                         required
                         :counter="200"
-                        :rules="TurmaRulesNome"
+                        :rules="turmaRulesNome"
                       ></v-text-field>
                     </v-col>
 
@@ -43,7 +43,7 @@
                         :items="lProfessor"
                         item-text="nome"
                         required
-                        :rules="TurmaRulesProfessor"
+                        :rules="turmaRulesProfessor"
                       ></v-combobox>
                     </v-col>
                     <v-col cols="12" sm="4" md="6">
@@ -55,7 +55,7 @@
                         :items="lCurso"
                         required
                         @change="filtrarDisciplinaPorCurso"
-                        :rules="TurmaRulesCurso"
+                        :rules="turmaRulesCurso"
                       ></v-combobox>
                     </v-col>
 
@@ -67,7 +67,7 @@
                         required
                         :items="lDisciplinaFiltrada"
                         item-text="nome"
-                        :rules="TurmaRulesDisciplina"
+                        :rules="turmaRulesDisciplina"
                       ></v-combobox>
                     </v-col>
 
@@ -79,7 +79,7 @@
                         :items="lPeriodoLetivo"
                         required
                         item-text="nome"
-                        :rules="TurmaRulesPeriodoLetivo"
+                        :rules="turmaRulesPeriodoLetivo"
                       ></v-combobox>
                     </v-col>
                     <v-col cols="12" sm="6" md="3">
@@ -108,7 +108,7 @@
                             v-on="on"
                             outlined
                             required
-                            :rules="modeloRulesDataInicio"
+                           
                           ></v-text-field>
                         </template>
                         <v-date-picker
@@ -150,7 +150,7 @@
                             v-on="on"
                             outlined
                             required
-                            :rules="modeloRulesDataFim"
+                       
                           ></v-text-field>
                         </template>
                         <v-date-picker
@@ -217,39 +217,7 @@
       <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
-    <template v-slot:body.append>
-      <tr>
-        <td></td>
-        <td>
-          <v-combobox
-            v-model="EscolherCurso"
-            item-text="curso"
-            :items="curso"
-            label="Curso"
-            clearable
-          ></v-combobox>
-        </td>
-        <td>
-          <v-combobox
-            v-model="EscolherPLetivo"
-            item-text="periodo"
-            :items="periodos"
-            label="P. Letivo"
-            clearable
-          ></v-combobox>
-        </td>
-        <td>
-          <v-combobox
-            v-model="EscolherProfessor"
-            item-text="professor"
-            :items="turmas"
-            label="Professor"
-            clearable
-          ></v-combobox>
-        </td>
-        <td></td>
-      </tr>
-    </template>
+   
     <template v-slot:no-data>
       <v-btn color="primary" @click="initialize">Alterar</v-btn>
     </template>
@@ -281,7 +249,22 @@ export default {
     dialog: false,
     dialogExcluir: false,
     valid: true,
-
+    turmaRulesNome: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length <= 20 && v.length >= 3) ||
+        "O campo deve ter pelo menos 3 e no maximo 20 letras",
+    ],
+    turmaRulesVagas: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length <= 20 && v.length >= 1) ||
+        "O campo deve ter pelo menos 3 e no maximo 20 digitos",
+    ],
+    turmaRulesCurso: [(v) => !!v || "Seleção Necessária"],
+    turmaRulesProfessor: [(v) => !!v || "Seleção Necessária"],
+    turmaRulesDisciplina: [(v) => !!v || "Seleção Necessária"],
+    turmaRulesPeriodoLetivo: [(v) => !!v || "Seleção Necessária"],
     headers: [
       { text: "ID", value: "id" },
       { text: "Nome", align: "start", value: "nome" },

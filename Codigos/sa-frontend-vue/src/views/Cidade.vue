@@ -145,10 +145,13 @@ export default {
     },
   },
   created() {
-    this.fetchRecords();
-    this.fetchRecordsUf();
+    this.initialize();
   },
   methods: {
+    initialize() {
+      this.fetchRecords();
+      this.fetchRecordsUf();
+    },
     fetchRecords() {
       serviceCidade.search({}).then(this.fetchRecodsSuccess);
     },

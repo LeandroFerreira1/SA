@@ -205,6 +205,12 @@ export default {
         (v && v.length <= 20 && v.length >= 3) ||
         "O campo deve ter pelo menos 3 e no maximo 20 letras",
     ],
+   periodoletivoRulesNumeroDiasLetivos: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length <= 20 && v.length >= 1) ||
+        "O campo deve ter pelo menos 1 e no maximo 20 digitos",
+    ],
     headers: [
       { text: "ID", value: "id" },
       { text: "Período Letivo", align: "start", value: "nome" },

@@ -61,17 +61,6 @@
                     </v-col>
                     <v-col cols="12" sm="6" md="6">
                       <v-text-field
-                        v-model="editedItem.tipoUsuario"
-                        label="Tipo de Usuário"
-                        outlined
-                        required
-                        :counter="200"
-                        :rules="administradorRulesTipoDeUsuario"
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col cols="12" sm="6" md="6">
-                      <v-text-field
                         v-model="editedItem.cpf"
                         label="CPF"
                         outlined
@@ -145,7 +134,8 @@
                         item-text="nome"
                         @change="filtrarCidadesPorEstado"
                         required
-                        :rules="cursoRulesUf"
+                        :rules="administradorRulesUf"
+
                       ></v-combobox>
                     </v-col>
 
@@ -157,8 +147,8 @@
                         item-text="nome"
                         @change="filtrarBairroPorCidade"
                         outlined
+                        :rules="administradorRulesCidade"
                         required
-                        :rules="cursoRulesCidade"
                       ></v-combobox>
                     </v-col>
 
@@ -170,7 +160,7 @@
                         item-text="nome"
                         outlined
                         required
-                        :rules="cursoRulesBairro"
+                        :rules="administradorRulesBairro"
                       ></v-combobox>
                     </v-col>
 
@@ -285,6 +275,37 @@ export default {
         (v && v.length <= 14 && v.length >= 14) ||
         "O campo deve ter 10 digitos",
     ],
+    administradorRulesSenha: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length >= 8) ||
+        "O campo deve ter ao menos 8 digitos",
+    ],
+    administradorRulesEmail: [ 
+        (v) => !!v || "Preenchimento Necessário",
+        v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail deve ser válido',
+      ],
+
+    administradorRulesSexo: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length <= 200 && v.length >= 10) ||
+        "O campo deve ter pelo menos 8 e no maximo 200 letras",
+    ],
+    administradorRulesRua: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length <= 200 && v.length >= 10) ||
+        "O campo deve ter pelo menos 8 e no maximo 200 letras",
+    ],
+    administradorRulesNumero: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length <= 5 && v.length >= 1) ||
+        "O campo deve ter pelo menos 1 e no maximo 5 letras",
+    ],
+
+    
     administradorRulesUf: [(v) => !!v || "Seleção Necessária"],
     administradorRulesCidade: [(v) => !!v || "Seleção Necessária"],
     administradorRulesBairro: [(v) => !!v || "Seleção Necessária"],

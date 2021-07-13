@@ -148,9 +148,12 @@ export default {
     },
   },
   created() {
-    this.fetchRecords();
+    this.initialize();
   },
   methods: {
+    initialize() {
+      this.fetchRecords();
+    },
     fetchRecords() {
       this.service.search({}).then(this.fetchRecodsSuccess);
     },
