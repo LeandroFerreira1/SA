@@ -40,6 +40,8 @@
                         v-model="editedItem.professor"
                         label="Professor"
                         outlined
+                        :items="lProfessor"
+                        item-text="nome"
                         required
                         :rules="TurmaRulesProfessor"
                       ></v-combobox>
@@ -48,8 +50,11 @@
                       <v-combobox
                         v-model="editedItem.curso"
                         label="Curso"
+                        item-text="nome"
                         outlined
+                        :items="lCurso"
                         required
+                        @change="filtrarDisciplinaPorCurso"
                         :rules="TurmaRulesCurso"
                       ></v-combobox>
                     </v-col>
@@ -60,6 +65,8 @@
                         label="Disciplina"
                         outlined
                         required
+                        :items="lDisciplinaFiltrada"
+                        item-text="nome"
                         :rules="TurmaRulesDisciplina"
                       ></v-combobox>
                     </v-col>
@@ -69,7 +76,9 @@
                         v-model="editedItem.periodoletivo"
                         label="Período Letivo"
                         outlined
+                        :items="lPeriodoLetivo"
                         required
+                        item-text="nome"
                         :rules="TurmaRulesPeriodoLetivo"
                       ></v-combobox>
                     </v-col>
@@ -248,8 +257,16 @@
 </template>
 
 <script>
-import TurmaService from "../service/domain/TurmaService";
 import { mask } from "@titou10/v-mask";
+import TurmaService from "../service/domain/TurmaService";
+import ProfessorService from "../service/domain/ProfessorService";
+import DisciplinaService from "../service/domain/DisciplinaService";
+import CursoService from "../service/domain/CursoService";
+import PeriodoLetivoService from "../service/domain/PeriodoLetivoService";
+const serviceProfessor = ProfessorService.build();
+const serviceDisciplina = DisciplinaService.build();
+const serviceCurso = CursoService.build();
+const servicePeriodoLetivo = PeriodoLetivoService.build();
 
 const textos = {
   novo: "Nova Turma",
@@ -268,13 +285,18 @@ export default {
     headers: [
       { text: "ID", value: "id" },
       { text: "Nome", align: "start", value: "nome" },
-      { text: "Professor", align: "start", value: "professor" },
-      { text: "Disciplina", align: "start", value: "disciplina" },
-      { text: "Período Letivo", align: "start", value: "periodoletivo" },
-      { text: "Vagas", align: "start", value: "vagas" },
+      { text: "Professor", align: "start", value: "professor.nome" },
+      { text: "Disciplina", align: "start", value: "disciplina.nome" },
+      { text: "Período Letivo", align: "start", value: "periodoLetivo.nome" },
+      { text: "Vagas", align: "start", value: "qtdVaga" },
       { text: "Ações", align: "end", value: "actions", sortable: false },
     ],
     lTurma: [],
+    lProfessor: [],
+    lCurso: [],
+    lDisciplina: [],
+    lDisciplinaFiltrada: [],
+    lPeriodoLetivo: [],
     editedIndex: -1,
     editedItem: {},
     defaultItem: {},
@@ -293,11 +315,30 @@ export default {
     },
   },
   created() {
-    // this.fetchRecords();
+     this.initialize();
   },
   methods: {
+    initialize(){
+      this.fetchRecords();
+      this.fetchRecordsProfessor();
+      this.fetchRecordsCurso();
+      this.fetchRecordsDisciplina();
+      this.fetchRecordsPeriodoLetivo();
+    },
     fetchRecords() {
-      //this.service.search({}).then(this.fetchRecodsSuccess);
+      this.service.search({}).then(this.fetchRecodsSuccess);
+    },
+    fetchRecordsProfessor() {
+      serviceProfessor.search({}).then(this.fetchRecodsSuccessProfessor);
+    },
+    fetchRecordsCurso() {
+      serviceCurso.search({}).then(this.fetchRecodsSuccessCurso);
+    },
+    fetchRecordsDisciplina() {
+      serviceDisciplina.search({}).then(this.fetchRecodsSuccessDisciplina);
+    },
+    fetchRecordsPeriodoLetivo() {
+      servicePeriodoLetivo.search({}).then(this.fetchRecodsSuccessPeriodoLetivo);
     },
     fetchRecodsSuccess(response) {
       if (Array.isArray(response.rows)) {
@@ -305,6 +346,43 @@ export default {
         return;
       }
       this.lTurma = [];
+    },
+    fetchRecodsSuccessProfessor(response) {
+      if (Array.isArray(response.rows)) {
+        this.lProfessor = response.rows;
+        return;
+      }
+      this.lProfessor = [];
+    },
+     fetchRecodsSuccessCurso(response) {
+      if (Array.isArray(response.rows)) {
+        this.lCurso = response.rows;
+        return;
+      }
+      this.lCurso = [];
+    },
+     fetchRecodsSuccessDisciplina(response) {
+      if (Array.isArray(response.rows)) {
+        this.lDisciplina= response.rows;
+        return;
+      }
+      this.lDisciplina = [];
+    },
+     fetchRecodsSuccessPeriodoLetivo(response) {
+      if (Array.isArray(response.rows)) {
+        this.lPeriodoLetivo = response.rows;
+        return;
+      }
+      this.lPeriodoLetivo = [];
+    },
+
+    filtrarDisciplinaPorCurso() {
+      this.resetSelecaoDisciplina();
+      this.lDisciplinaFiltrada = this.lDisciplina.filter(disciplina => disciplina.curso.id == this.editedItem.curso.id);
+    },
+    resetSelecaoDisciplina() {
+      this.lDisciplinaFiltrada = [];
+      this.editedItem.disciplina = null;
     },
     editItem(item) {
       this.editedIndex = this.lTurma.indexOf(item);
@@ -317,9 +395,9 @@ export default {
       this.dialogExcluir = true;
     },
     deleteItemComfirm() {
-      //   this.service
-      //     .destroy(this.editedItem)
-      //     .then(this.lTurma.splice(this.editedIndex, 1));
+         this.service
+          .destroy(this.editedItem)
+          .then(this.lTurma.splice(this.editedIndex, 1));
       this.lTurma.splice(this.editedIndex, 1);
       this.closeExcluir();
     },
@@ -339,18 +417,17 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-        // this.service
-        //   .update(this.editedItem)
-        //   .then(
-        //     Object.assign(this.lTurma[this.editedIndex], this.editedItem)
-        //   );
-        Object.assign(this.lTurma[this.editedIndex], this.editedItem);
+         this.service
+           .update(this.editedItem)
+           .then(
+          Object.assign(this.lTurma[this.editedIndex], this.editedItem)
+        );
+        
       } else {
-        // this.service
-        //   .create(this.editedItem)
-        //   .then((response) => this.lTurma.push(response));
-        //  this.lTurma.push(response)editedItem
-        this.lTurma.push(this.editedItem);
+         this.service
+         .create(this.editedItem)
+         .then((response) => this.lTurma.push(response));
+      
       }
       this.close();
     },
