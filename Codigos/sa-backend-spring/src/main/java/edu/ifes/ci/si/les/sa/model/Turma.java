@@ -45,10 +45,10 @@ public class Turma implements Serializable{
 	private Integer qtdVaga;
 	
     @JsonFormat(pattern = "yyyy-MM-dd")
-	private Date dataInicioMatricula;
+	private Date dataInicio;
     
     @JsonFormat(pattern = "yyyy-MM-dd")
-	private Date dataFimMatricula;
+	private Date dataFim;
 	
 	@NotNull(message = "O Periodo Letivo da Turma deve ser preenchido")
 	@ManyToOne
@@ -74,5 +74,10 @@ public class Turma implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "disciplina_id")
 	private Disciplina disciplina;
+	
+	@NotNull(message = "o Curso da Turma deve ser preenchido")
+	@ManyToOne
+	@JoinColumn(name = "curso_id")
+	private Curso curso;
 
 }

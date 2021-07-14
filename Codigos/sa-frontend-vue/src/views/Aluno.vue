@@ -42,7 +42,6 @@
                         outlined
                         required
                         :counter="100"
-                        :rules="alunoRulesRg"
                       ></v-text-field>
                     </v-col>
 
@@ -144,7 +143,7 @@
                         item-text="nome"
                         @change="filtrarCidadesPorEstado"
                         required
-                        :rules="cursoRulesUf"
+                        :rules="alunoRulesUf"
                       ></v-combobox>
                     </v-col>
 
@@ -157,7 +156,7 @@
                         @change="filtrarBairroPorCidade"
                         outlined
                         required
-                        :rules="cursoRulesCidade"
+                        :rules="alunoRulesCidade"
                       ></v-combobox>
                     </v-col>
 
@@ -169,7 +168,7 @@
                         item-text="nome"
                         outlined
                         required
-                        :rules="cursoRulesBairro"
+                        :rules="alunoRulesBairro"
                       ></v-combobox>
                     </v-col>
 
@@ -236,39 +235,6 @@
       <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
-    <template v-slot:body.append>
-      <tr>
-        <td></td>
-        <td>
-          <v-combobox
-            v-model="EscolherCurso"
-            item-text="curso"
-            :items="curso"
-            label="Curso"
-            clearable
-          ></v-combobox>
-        </td>
-        <td>
-          <v-combobox
-            v-model="EscolherPLetivo"
-            item-text="periodo"
-            :items="periodos"
-            label="P. Letivo"
-            clearable
-          ></v-combobox>
-        </td>
-        <td>
-          <v-combobox
-            v-model="EscolherTurma"
-            item-text="turma"
-            :items="turmas"
-            label="Turma"
-            clearable
-          ></v-combobox>
-        </td>
-        <td></td>
-      </tr>
-    </template>
     <template v-slot:no-data>
       <v-btn color="primary" @click="initialize">Alterar</v-btn>
     </template>
@@ -295,7 +261,6 @@ const textos = {
 export default {
   directives: { mask },
   data: () => ({
-
     service: AlunoService.build(),
     dialog: false,
     dialogExcluir: false,
@@ -318,6 +283,29 @@ export default {
       (v) =>
         (v && v.length <= 14 && v.length >= 14) ||
         "O campo deve ter 10 digitos",
+    ],
+    alunoRulesEmail: [ 
+        (v) => !!v || "Preenchimento Necessário",
+        v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail deve ser válido',
+    ],
+
+    alunoRulesSexo: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length <= 200 && v.length >= 10) ||
+        "O campo deve ter pelo menos 8 e no maximo 200 letras",
+    ],
+    alunoRulesRua: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length <= 200 && v.length >= 10) ||
+        "O campo deve ter pelo menos 8 e no maximo 200 letras",
+    ],
+    alunoRulesNumero: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length <= 5 && v.length >= 1) ||
+        "O campo deve ter pelo menos 1 e no maximo 5 letras",
     ],
     alunoRulesUf: [(v) => !!v || "Seleção Necessária"],
     alunoRulesCidade: [(v) => !!v || "Seleção Necessária"],
@@ -355,10 +343,10 @@ export default {
     },
   },
   created() {
-     this.initialize();
+    this.initialize();
   },
   methods: {
-    initialize(){
+    initialize() {
       this.fetchRecords();
       this.fetchRecordsUf();
       this.fetchRecordsCidade();
@@ -407,11 +395,15 @@ export default {
     },
     filtrarCidadesPorEstado() {
       this.resetSelecaoCidade();
-      this.lCidadeFiltrada = this.lCidade.filter(cidade => cidade.uf.id == this.editedItem.uf.id);
+      this.lCidadeFiltrada = this.lCidade.filter(
+        (cidade) => cidade.uf.id == this.editedItem.uf.id
+      );
     },
     filtrarBairroPorCidade() {
       this.resetSelecaoBairro();
-      this.lBairroFiltrada = this.lBairro.filter(bairro => bairro.cidade.id == this.editedItem.cidade.id);
+      this.lBairroFiltrada = this.lBairro.filter(
+        (bairro) => bairro.cidade.id == this.editedItem.cidade.id
+      );
     },
     resetSelecaoCidade() {
       this.lCidadeFiltrada = [];
@@ -432,9 +424,9 @@ export default {
       this.dialogExcluir = true;
     },
     deleteItemComfirm() {
-         this.service
-           .destroy(this.editedItem)
-           .then(this.lAluno.splice(this.editedIndex, 1));
+      this.service
+        .destroy(this.editedItem)
+        .then(this.lAluno.splice(this.editedIndex, 1));
       this.closeExcluir();
     },
     closeExcluir() {
@@ -453,16 +445,13 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-         this.service
-        .update(this.editedItem)
-        .then(
-             Object.assign(this.lAluno[this.editedIndex], this.editedItem)
-           );
+        this.service
+          .update(this.editedItem)
+          .then(Object.assign(this.lAluno[this.editedIndex], this.editedItem));
       } else {
-         this.service
-           .create(this.editedItem)
-           .then((response) => this.lAluno.push(response));
-  
+        this.service
+          .create(this.editedItem)
+          .then((response) => this.lAluno.push(response));
       }
       this.close();
     },

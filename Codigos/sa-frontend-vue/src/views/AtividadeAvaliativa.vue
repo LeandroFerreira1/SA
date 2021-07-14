@@ -180,6 +180,18 @@ export default {
         (v && v.length <= 20 && v.length >= 3) ||
         "O campo deve ter pelo menos 3 e no maximo 20 letras",
     ],
+    atividadeAvaliativaRulesTipo: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length <= 20 && v.length >= 3) ||
+        "O campo deve ter pelo menos 3 e no maximo 20 letras",
+    ],
+    atividadeAvaliativaRulesValor: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length <= 20 && v.length >= 1) ||
+        "O campo deve ter pelo menos 1 e no maximo 20 digitos",
+    ],
     headers: [
       { text: "ID", value: "id" },
       { text: "Nome", align: "start", value: "nome" },
@@ -209,10 +221,13 @@ export default {
     },
   },
   created() {
-    this.fetchRecords();
-    this.fetchRecordsDisciplina();
+    this.initialize();
   },
   methods: {
+    initialize() {
+      this.fetchRecords();
+      this.fetchRecordsDisciplina();
+    },
     fetchRecords() {
       serviceAtividadeAvaliativa.search({}).then(this.fetchRecodsSuccess);
     },

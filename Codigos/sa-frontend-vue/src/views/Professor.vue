@@ -144,7 +144,7 @@
                         item-text="nome"
                         @change="filtrarCidadesPorEstado"
                         required
-                        :rules="cursoRulesUf"
+                        :rules="professorRulesUf"
                       ></v-combobox>
                     </v-col>
 
@@ -157,7 +157,7 @@
                         @change="filtrarBairroPorCidade"
                         outlined
                         required
-                        :rules="cursoRulesCidade"
+                        :rules="professorRulesCidade"
                       ></v-combobox>
                     </v-col>
 
@@ -169,7 +169,7 @@
                         item-text="nome"
                         outlined
                         required
-                        :rules="cursoRulesBairro"
+                        :rules="professorRulesBairro"
                       ></v-combobox>
                     </v-col>
 
@@ -259,6 +259,8 @@ const textos = {
   exclusao: "Deseja mesmo remover este Professor?",
 };
 
+
+
 export default {
   directives: { mask },
   data: () => ({
@@ -272,6 +274,12 @@ export default {
         (v && v.length <= 200 && v.length >= 10) ||
         "O campo deve ter pelo menos 10 e no maximo 200 letras",
     ],
+    professorRulesTitulacao: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length <= 200 && v.length >= 2) ||
+        "O campo deve ter pelo menos 2 e no maximo 200 letras",
+    ],
     professorRulesCpf: [
       (v) => !!v || "Preenchimento Necessário",
       (v) =>
@@ -284,6 +292,32 @@ export default {
         (v && v.length <= 15 && v.length >= 15) ||
         "O campo deve ter 11 digitos",
     ],
+    professorRulesEmail: [ 
+        (v) => !!v || "Preenchimento Necessário",
+        v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail deve ser válido',
+      ],
+
+    professorRulesSexo: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length <= 200 && v.length >= 10) ||
+        "O campo deve ter pelo menos 8 e no maximo 200 letras",
+    ],
+    professorRulesRua: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length <= 200 && v.length >= 10) ||
+        "O campo deve ter pelo menos 8 e no maximo 200 letras",
+    ],
+    professorRulesNumero: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length <= 5 && v.length >= 1) ||
+        "O campo deve ter pelo menos 1 e no maximo 5 letras",
+    ],
+    professorRulesUf: [(v) => !!v || "Seleção Necessária"],
+    professorRulesCidade: [(v) => !!v || "Seleção Necessária"],
+   professorRulesBairro: [(v) => !!v || "Seleção Necessária"],
     headers: [
       { text: "ID", value: "id" },
       { text: "Nome", align: "start", value: "nome" },

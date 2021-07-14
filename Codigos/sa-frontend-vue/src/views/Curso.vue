@@ -43,7 +43,7 @@
                         v-model="editedItem.tipo"
                         outlined
                         required
-                        :rules="CursoRulesTipo"
+                        :rules="cursoRulesTipo"
                       ></v-combobox>
                     </v-col>
 
@@ -138,6 +138,20 @@ export default {
         (v && v.length <= 20 && v.length >= 3) ||
         "O campo deve ter pelo menos 3 e no maximo 20 letras",
     ],
+    cursoRulesDuracao: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length <= 20 && v.length >= 1) ||
+        "O campo deve ter pelo menos 1 e no maximo 20 digitos",
+    ],
+    cursoRulesCargaHoraria: [
+      (v) => !!v || "Preenchimento Necessário",
+      (v) =>
+        (v && v.length <= 20 && v.length >= 1) ||
+        "O campo deve ter pelo menos 1 e no maximo 20 digitos",
+    ],
+    cursoRulesTipo: [(v) => !!v || "Seleção Necessária"],
+
     itemsUf: ['Graduação', 'Técnico'],
     headers: [
       { text: "ID", value: "id" },

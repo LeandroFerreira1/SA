@@ -30,7 +30,7 @@ public class CidadeController {
 		Collection<Cidade> collection = service.findAll();
 		return ResponseEntity.ok().body(collection);
 	}
-	
+
 	@RequestMapping(value = "/findByUf/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Collection<Cidade>> findByUf(@PathVariable Integer id) {
 		Uf uf = new Uf();
