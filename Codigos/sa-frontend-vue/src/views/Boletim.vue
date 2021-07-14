@@ -13,6 +13,8 @@
         :items="disciplinas"
         class="elevation-1"
         :hide-default-footer="true"
+        :loading="carregando"
+        loading-text="Aguarde... Carregando"
       >
       </v-data-table>
     </v-container>

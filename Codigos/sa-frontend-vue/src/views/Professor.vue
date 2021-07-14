@@ -4,6 +4,8 @@
     :items="lProfessor"
     sort-by="id"
     class="elevation-1"
+    :loading="carregando" 
+    loading-text="Aguarde... Carregando"
   >
     <template v-slot:top>
       <v-toolbar flat>
@@ -232,7 +234,7 @@
         </v-dialog>
       </v-toolbar>
     </template>
-    <template v-slot:item.actions="{ item }">
+    <template v-slot:[`item.actions`]="{ item }">
       <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
@@ -300,8 +302,8 @@ export default {
     professorRulesSexo: [
       (v) => !!v || "Preenchimento Necessário",
       (v) =>
-        (v && v.length <= 200 && v.length >= 10) ||
-        "O campo deve ter pelo menos 8 e no maximo 200 letras",
+        (v && v.length <= 1 && v.length >= 1) ||
+        "O campo deve ter pelo menos 1 e no maximo 1 letras",
     ],
     professorRulesRua: [
       (v) => !!v || "Preenchimento Necessário",
