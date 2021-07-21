@@ -15,47 +15,44 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"id"})
-public class AvaliacaoAluno implements Serializable{
+@EqualsAndHashCode(of = { "id" })
+public class AvaliacaoAluno implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@JsonIgnore
-    @EmbeddedId
-    private AvaliacaoAlunoPK id = new AvaliacaoAlunoPK();
-	
+	@EmbeddedId
+	private AvaliacaoAlunoPK id = new AvaliacaoAlunoPK();
+
 	@NotNull(message = "A Nota Avaliativa deve ser preenchida")
-    @Digits(integer=6, fraction=2, message = "A Nota Avaliativa deve ser preenchida com dígitos")
+	@Digits(integer = 6, fraction = 2, message = "A Nota Avaliativa deve ser preenchida com dígitos")
 	private Double nota;
-	
+
 	@Builder
-    public AvaliacaoAluno(Turma turma, Aluno aluno, Double nota) {
-    	this.id.setTurma(turma);
-    	this.id.setAluno(aluno);
-    	this.nota = nota;
-    }
+	public AvaliacaoAluno(Turma turma, Aluno aluno, Double nota) {
+		this.id.setTurma(turma);
+		this.id.setAluno(aluno);
+		this.nota = nota;
+	}
 
-	  @JsonIgnore
-	    public Turma getTurma() {
-	        return id.getTurma();
-	    }
+	@JsonIgnore
+	public Turma getTurma() {
+		return id.getTurma();
+	}
 
-	    public void setTurma(Turma turma) {
-	        id.setTurma(turma);
-	    }
+	public void setTurma(Turma turma) {
+		id.setTurma(turma);
+	}
 
-	    public Aluno getAluno() {
-	        return id.getAluno();
-	    }
+	public Aluno getAluno() {
+		return id.getAluno();
+	}
 
-	    public void setAluno(Aluno aluno) {
-	        id.setAluno(aluno);
-	    }
-	    
-		
+	public void setAluno(Aluno aluno) {
+		id.setAluno(aluno);
+	}
 
 }

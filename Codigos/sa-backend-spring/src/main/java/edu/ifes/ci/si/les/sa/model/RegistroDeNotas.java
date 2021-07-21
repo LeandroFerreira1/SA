@@ -27,48 +27,33 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"id"})
-public class RegistroDeNotas implements Serializable{
+@EqualsAndHashCode(of = { "id" })
+public class RegistroDeNotas implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-	
-	@Column(length = 50)
-    @NotBlank(message = "O nome da Turma deve ser preenchido")
-    @Size(min = 1, max = 3, message = "A nota deve ter entre 1 e 3 letras ou digitos")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
+	@Column(length = 4)
+	@NotBlank(message = "O nome da Turma deve ser preenchido")
+	@Size(min = 1, max = 3, message = "A nota deve ter entre 1 e 4 letras ou digitos")
 	private float nota;
-	
-	
-	@NotNull(message = "O Periodo Letivo da Turma deve ser preenchido")
-	@ManyToOne
-	@JoinColumn(name = "periodo_letivo_id")
-	private PeriodoLetivo periodoLetivo;
-	
-	@NotNull(message = "O aula da Turma deve ser preenchido")
-	@ManyToOne
-	@JoinColumn(name = "aluno_id")
-	private Aluno aluno;
-	
-	@NotNull(message = "A atividade Avaliativa da Turma deve ser preenchido")
-	@ManyToOne
-	@JoinColumn(name = "atividade_avaliativa_id")
-	private AtividadeAvaliativa atividadeAvaliativa;
-	
-	@NotNull(message = "o Curso da Turma deve ser preenchido")
-	@ManyToOne
-	@JoinColumn(name = "curso_id")
-	private Curso curso;
-	
-	@NotNull(message = "A Disciplina da Turma deve ser preenchido")
+
+	@NotNull(message = "A Disciplina do aluno deve ser preenchido")
 	@ManyToOne
 	@JoinColumn(name = "disciplina_id")
 	private Disciplina disciplina;
-	
 
-	
+	@NotNull(message = "A atividade Avaliativa deve ser preenchido")
+	@ManyToOne
+	@JoinColumn(name = "atividade_avaliativa_id")
+	private AtividadeAvaliativa atividadeAvaliativa;
 
-	
+	@NotNull(message = "O aluno deve ser preenchido")
+	@ManyToOne
+	@JoinColumn(name = "aluno_id")
+	private Aluno aluno;
 
+	// ---------O Valor da Nota Não pode ultrapassar o valor da AtividadeAvaliativa
 }

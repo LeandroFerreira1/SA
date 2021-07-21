@@ -250,21 +250,33 @@ public class _DBService {
 
 		// REGISTRO DE NOTAS (Processo 02) - MárcioJr
 
-		RegistroDeNotas registroDeNotas1 = new RegistroDeNotas(null, 15, periodoLetivo1, aluno4, atividadeAvaliativa5,
-				curso1, disciplina6);
-		RegistroDeNotas registroDeNotas2 = new RegistroDeNotas(null, 15, periodoLetivo1, aluno4, atividadeAvaliativa6,
-				curso1, disciplina6);
-		RegistroDeNotas registroDeNotas3 = new RegistroDeNotas(null, 15, periodoLetivo1, aluno4, atividadeAvaliativa7,
-				curso1, disciplina6);
-		RegistroDeNotas registroDeNotas4 = new RegistroDeNotas(null, 15, periodoLetivo1, aluno4, atividadeAvaliativa8,
-				curso1, disciplina6);
-		RegistroDeNotas registroDeNotas5 = new RegistroDeNotas(null, 20, periodoLetivo1, aluno4, atividadeAvaliativa9,
-				curso1, disciplina6);
-
-		RegistroDeNotas registroDeNotas6 = new RegistroDeNotas(null, 15, periodoLetivo2, aluno2, atividadeAvaliativa3,
-				curso2, disciplina2);
+		RegistroDeNotas registroDeNotas1 = new RegistroDeNotas(null, (float) 14.5, disciplina6, atividadeAvaliativa5,
+				aluno4);
+		RegistroDeNotas registroDeNotas2 = new RegistroDeNotas(null, 15, disciplina6, atividadeAvaliativa5, aluno4);
+		RegistroDeNotas registroDeNotas3 = new RegistroDeNotas(null, 15, disciplina6, atividadeAvaliativa6, aluno4);
+		RegistroDeNotas registroDeNotas4 = new RegistroDeNotas(null, 15, disciplina6, atividadeAvaliativa7, aluno4);
+		RegistroDeNotas registroDeNotas5 = new RegistroDeNotas(null, 15, disciplina6, atividadeAvaliativa8, aluno4);
+		RegistroDeNotas registroDeNotas6 = new RegistroDeNotas(null, 15, disciplina2, atividadeAvaliativa3, aluno2);
 		registroDeNotasRepository.saveAll(Arrays.asList(registroDeNotas1, registroDeNotas2, registroDeNotas3,
 				registroDeNotas4, registroDeNotas5, registroDeNotas6));
+
+		/*
+		 * RegistroDeNotas registroDeNotas1 = new RegistroDeNotas(null, (float) 14.5,
+		 * periodoLetivo1, aluno4, atividadeAvaliativa5, curso1, disciplina6);
+		 * RegistroDeNotas registroDeNotas2 = new RegistroDeNotas(null, 15,
+		 * periodoLetivo1, aluno4, atividadeAvaliativa6, curso1, disciplina6);
+		 * RegistroDeNotas registroDeNotas3 = new RegistroDeNotas(null, 15,
+		 * periodoLetivo1, aluno4, atividadeAvaliativa7, curso1, disciplina6);
+		 * RegistroDeNotas registroDeNotas4 = new RegistroDeNotas(null, 15,
+		 * periodoLetivo1, aluno4, atividadeAvaliativa8, curso1, disciplina6);
+		 * RegistroDeNotas registroDeNotas5 = new RegistroDeNotas(null, 20,
+		 * periodoLetivo1, aluno4, atividadeAvaliativa9, curso1, disciplina6);
+		 * RegistroDeNotas registroDeNotas6 = new RegistroDeNotas(null, 15,
+		 * periodoLetivo2, aluno2, atividadeAvaliativa3, curso2, disciplina2);
+		 * registroDeNotasRepository.saveAll(Arrays.asList(registroDeNotas1,
+		 * registroDeNotas2, registroDeNotas3, registroDeNotas4, registroDeNotas5,
+		 * registroDeNotas6));
+		 */
 
 		// REGISTRO DE APROVAÇÃO (Processo 03)
 

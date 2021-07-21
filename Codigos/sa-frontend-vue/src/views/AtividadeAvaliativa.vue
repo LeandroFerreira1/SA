@@ -16,7 +16,7 @@
         <v-dialog v-model="dialog" max-width="800px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on"
-              >Novo Item</v-btn
+              >Inserir Atividade Avaliativa</v-btn
             >
           </template>
           <v-card>
@@ -50,7 +50,7 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="3">
+                    <v-col cols="12" sm="6" md="4">
                       <v-text-field
                         v-model="editedItem.tipo"
                         label="Tipo"
@@ -59,7 +59,7 @@
                         :rules="atividadeAvaliativaRulesTipo"
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="12" sm="6" md="5">
                       <v-menu
                         ref="menuEntrada"
                         :close-on-content-click="false"
