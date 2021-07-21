@@ -149,7 +149,7 @@ export default {
     ],
     headers: [
       { text: "ID", value: "id" },
-      { text: "Nome", align: "start", value: "curso.nome" },
+      { text: "Curso", align: "start", value: "curso.nome" },
       { text: "Nome", align: "start", value: "nome" },
       { text: "Nome Reduzido", value: "nomeReduzido" },
       { text: "Carga Horária (Horas)", value: "cargaHoraria" },

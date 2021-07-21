@@ -71,9 +71,9 @@ const routes = [
     component: () => import(/* webpackChunkName: "bairro" */ '../views/Bairro.vue')
   },
   {
-    path: '/registroNotas',
+    path: '/registroDeNotas',
     name: 'Registro de Notas',
-    component: () => import(/* webpackChunkName: "registroNotas" */ '../views/RegistroNotas.vue')
+    component: () => import(/* webpackChunkName: "registroDeNotas" */ '../views/RegistroDeNotas.vue')
   },
   {
     path: '/matriculaDisciplina',
