@@ -225,6 +225,8 @@ public class _DBService {
 		AlunoTurma alunoTurma3 = new AlunoTurma(alunoTurmaPK3, "PENDENTE", 25.00, 16);
 		alunoTurmaRepository.saveAll(Arrays.asList(alunoTurma1, alunoTurma2, alunoTurma3));
 
+		// CADASTRO ALUNODISCIPLINA
+
 		// CADASTRO AVALIACAO ALUNO
 		AvaliacaoAlunoPK avaliacaoAlunoPK1 = new AvaliacaoAlunoPK(alunoTurma1, atividadeAvaliativa1);
 		AvaliacaoAlunoPK avaliacaoAlunoPK2 = new AvaliacaoAlunoPK(alunoTurma2, atividadeAvaliativa1);
@@ -250,7 +252,7 @@ public class _DBService {
 
 		// REGISTRO DE NOTAS (Processo 02) - MárcioJr
 
-		RegistroDeNotas registroDeNotas1 = new RegistroDeNotas(null, (float) 14.5, disciplina6, atividadeAvaliativa5,
+		RegistroDeNotas registroDeNotas1 = new RegistroDeNotas(null, (float) 14.55, disciplina6, atividadeAvaliativa5,
 				aluno4);
 		RegistroDeNotas registroDeNotas2 = new RegistroDeNotas(null, 15, disciplina6, atividadeAvaliativa5, aluno4);
 		RegistroDeNotas registroDeNotas3 = new RegistroDeNotas(null, 15, disciplina6, atividadeAvaliativa6, aluno4);

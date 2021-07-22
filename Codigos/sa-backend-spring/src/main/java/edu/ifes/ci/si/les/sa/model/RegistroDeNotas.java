@@ -35,17 +35,17 @@ public class RegistroDeNotas implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(length = 4)
-	@NotBlank(message = "O nome da Turma deve ser preenchido")
-	@Size(min = 1, max = 3, message = "A nota deve ter entre 1 e 4 letras ou digitos")
+	@Column(length = 5)
+	@NotBlank(message = "A nota deve ser preenchida")
+	@Size(min = 1, max = 4, message = "A nota deve ter entre 1 a 4 digitos")
 	private float nota;
 
-	@NotNull(message = "A Disciplina do aluno deve ser preenchido")
+	@NotNull(message = "A Disciplina do aluno deve ser preenchida")
 	@ManyToOne
 	@JoinColumn(name = "disciplina_id")
 	private Disciplina disciplina;
 
-	@NotNull(message = "A atividade Avaliativa deve ser preenchido")
+	@NotNull(message = "A atividade Avaliativa deve ser preenchid")
 	@ManyToOne
 	@JoinColumn(name = "atividade_avaliativa_id")
 	private AtividadeAvaliativa atividadeAvaliativa;
@@ -55,5 +55,5 @@ public class RegistroDeNotas implements Serializable {
 	@JoinColumn(name = "aluno_id")
 	private Aluno aluno;
 
-	// ---------O Valor da Nota Não pode ultrapassar o valor da AtividadeAvaliativa
+	// ---------VALOR DA NOTA NÃO PODE ULTRAPASSAR O VALOR DA ATIVIDADE AVALIATIVA
 }

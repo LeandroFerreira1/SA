@@ -86,7 +86,7 @@ export default {
           turma: "Programação I - 2021.1",
           intervalo: "01/01/2021 - 01/06/2021",
           faltas: 10,
-          status: 'Pendente'
+          status: "Pendente",
         },
 
         {
@@ -95,7 +95,7 @@ export default {
           turma: "Programação I - 2021.1",
           intervalo: "01/01/2021 - 01/06/2021",
           faltas: 8,
-          status: 'Pendente'
+          status: "Pendente",
         },
 
         {
@@ -104,7 +104,7 @@ export default {
           turma: "Programação I - 2021.1",
           intervalo: "01/01/2021 - 01/06/2021",
           faltas: 2,
-          status: 'Pendente'
+          status: "Pendente",
         },
         {
           matricula: "20161si004",
@@ -112,7 +112,7 @@ export default {
           turma: "Programação I - 2021.1",
           intervalo: "01/01/2021 - 01/06/2021",
           faltas: 4,
-          status: 'Pendente'
+          status: "Pendente",
         },
       ],
       headers: [

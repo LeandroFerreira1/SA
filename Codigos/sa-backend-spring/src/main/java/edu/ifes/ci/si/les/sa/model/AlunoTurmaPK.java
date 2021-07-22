@@ -12,23 +12,23 @@ import lombok.*;
 @Embeddable
 @Data
 
-@EqualsAndHashCode(of = {"aluno", "turma"})
+@EqualsAndHashCode(of = { "aluno", "turma" })
 @AllArgsConstructor
 @NoArgsConstructor
 public class AlunoTurmaPK implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @ManyToOne
-    @JoinColumn(name = "aluno_id")
-    @Getter
-    @Setter
-    private Aluno aluno;
+	@ManyToOne
+	@JoinColumn(name = "aluno_id")
+	@Getter
+	@Setter
+	private Aluno aluno;
 
-    @ManyToOne
-    @JoinColumn(name = "turma_id")
-    @Getter
-    @Setter
-    private Turma turma;
-    
+	@ManyToOne
+	@JoinColumn(name = "turma_id")
+	@Getter
+	@Setter
+	private Turma turma;
+
 }

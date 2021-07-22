@@ -57,6 +57,6 @@ public class AtividadeAvaliativa implements Serializable {
 	@JoinColumn(name = "disciplina_id")
 	private Disciplina disciplina;
 
-	// Não Inserir Atividades cujo valor da Soma ultrapasse 100 ----- REGRA DE
-	// NEGOCIO
+	// NÃO INSERIR ATIVIDADES CUJO A SOMA DE TODAS AS ATIVIDADES AVALIATIVAS DA
+	// DISCIPLINA TENHAM ULTRAPASSADO 100 PONTOS (REGRA DE NEGOCIO)
 }

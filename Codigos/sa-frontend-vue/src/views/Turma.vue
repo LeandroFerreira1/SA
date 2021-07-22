@@ -182,7 +182,7 @@
 
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="close"
+                <v-btn color="blue darken-1" v-text="false"
                   >Cancelar</v-btn
                 >
                 <v-btn
