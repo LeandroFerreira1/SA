@@ -82,9 +82,11 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+
+        
       </v-toolbar>
     </template>
-    <template v-slot:item.actions="{ item }">
+    <template v-slot:[`item.actions`]="{ item }">
       <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
@@ -114,14 +116,14 @@ export default {
     ufRulesNome: [
       (v) => !!v || "Preenchimento Necessário",
       (v) =>
-        (v && v.length <= 200 && v.length >= 2) ||
-        "O campo deve ter pelo menos 10 e no maximo 200 letras",
+        (v && v.length <= 200 && v.length >= 3) ||
+        "O campo deve ter pelo menos 3 e no maximo 200 letras",
     ],
     ufRulesSigla: [
       (v) => !!v || "Preenchimento Necessário",
       (v) =>
         (v && v.length <= 2 && v.length >= 2) ||
-        "O campo deve ter pelo menos 10 e no maximo 200 letras",
+        "O campo deve ter pelo menos 2 e no maximo 2 letras",
     ],
     headers: [
       { text: "ID", value: "id" },

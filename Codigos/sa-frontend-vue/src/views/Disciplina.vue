@@ -4,6 +4,8 @@
     :items="lDisciplina"
     sort-by="id"
     class="elevation-1"
+    :loading="carregando" 
+    loading-text="Aguarde... Carregando"
   >
     <template v-slot:top>
       <v-toolbar flat>
@@ -105,7 +107,7 @@
         </v-dialog>
       </v-toolbar>
     </template>
-    <template v-slot:item.actions="{ item }">
+    <template v-slot:[`item.actions`]="{ item }">
       <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
@@ -147,7 +149,7 @@ export default {
     ],
     headers: [
       { text: "ID", value: "id" },
-      { text: "Nome", align: "start", value: "curso.nome" },
+      { text: "Curso", align: "start", value: "curso.nome" },
       { text: "Nome", align: "start", value: "nome" },
       { text: "Nome Reduzido", value: "nomeReduzido" },
       { text: "Carga Horária (Horas)", value: "cargaHoraria" },

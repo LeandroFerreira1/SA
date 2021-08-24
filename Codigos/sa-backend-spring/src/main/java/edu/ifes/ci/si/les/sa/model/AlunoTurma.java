@@ -25,52 +25,51 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"id"})
-public class AlunoTurma implements Serializable{
+@EqualsAndHashCode(of = { "id" })
+public class AlunoTurma implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@JsonIgnore
-    @EmbeddedId
-    private AlunoTurmaPK id = new AlunoTurmaPK();
-	
+	@EmbeddedId
+	private AlunoTurmaPK id = new AlunoTurmaPK();
+
 	@Column(length = 50)
-    @NotBlank(message = "O status do aluno deve ser preenchida")
-    @Size(min = 2, max = 50, message = "O status do aluno deve ter entre 2 e 50 letras")
+	@NotBlank(message = "O status do aluno deve ser preenchida")
+	@Size(min = 2, max = 50, message = "O status do aluno deve ter entre 2 e 50 letras")
 	private String status;
-	
+
 	@NotNull(message = "A Nota Avaliativa deve ser preenchida")
-    @Digits(integer=6, fraction=2, message = "A Nota final deve ser preenchida com dígitos")
+	@Digits(integer = 6, fraction = 2, message = "A Nota final deve ser preenchida com dígitos")
 	private Double notaFinal;
-	
+
 	@NotNull(message = "A Nota Avaliativa deve ser preenchida")
-    @Digits(integer=6, fraction=0, message = "A presença final deve ser preenchida com dígitos")
+	@Digits(integer = 6, fraction = 0, message = "A presença final deve ser preenchida com dígitos")
 	private Integer presencaFinal;
-	
+
 	@Builder
-    public AlunoTurma(Turma turma, Aluno aluno, String status, Double notaFinal, Integer presencaFinal) {
-    	this.id.setTurma(turma);
-    	this.id.setAluno(aluno);
-        this.status = status;
-        this.notaFinal = notaFinal;
-        this.presencaFinal = presencaFinal;
-    }
+	public AlunoTurma(Turma turma, Aluno aluno, String status, Double notaFinal, Integer presencaFinal) {
+		this.id.setTurma(turma);
+		this.id.setAluno(aluno);
+		this.status = status;
+		this.notaFinal = notaFinal;
+		this.presencaFinal = presencaFinal;
+	}
 
-	  @JsonIgnore
-	    public Turma getTurma() {
-	        return id.getTurma();
-	    }
+	@JsonIgnore
+	public Turma getTurma() {
+		return id.getTurma();
+	}
 
-	    public void setTurma(Turma turma) {
-	        id.setTurma(turma);
-	    }
+	public void setTurma(Turma turma) {
+		id.setTurma(turma);
+	}
 
-	    public Aluno getAluno() {
-	        return id.getAluno();
-	    }
+	public Aluno getAluno() {
+		return id.getAluno();
+	}
 
-	    public void setAluno(Aluno aluno) {
-	        id.setAluno(aluno);
-	    }
-	    
+	public void setAluno(Aluno aluno) {
+		id.setAluno(aluno);
+	}
 
 }

@@ -23,6 +23,7 @@ import edu.ifes.ci.si.les.sa.model.Curso;
 import edu.ifes.ci.si.les.sa.model.Disciplina;
 import edu.ifes.ci.si.les.sa.model.PeriodoLetivo;
 import edu.ifes.ci.si.les.sa.model.Professor;
+import edu.ifes.ci.si.les.sa.model.RegistroDeNotas;
 import edu.ifes.ci.si.les.sa.model.Turma;
 import edu.ifes.ci.si.les.sa.model.Uf;
 import edu.ifes.ci.si.les.sa.repositories.AdministradorRepository;
@@ -38,6 +39,7 @@ import edu.ifes.ci.si.les.sa.repositories.DisciplinaRepository;
 import edu.ifes.ci.si.les.sa.repositories.PeriodoLetivoRepository;
 import edu.ifes.ci.si.les.sa.repositories.PresencaAlunoRepository;
 import edu.ifes.ci.si.les.sa.repositories.ProfessorRepository;
+import edu.ifes.ci.si.les.sa.repositories.RegistroDeNotasRepository;
 import edu.ifes.ci.si.les.sa.repositories.TurmaRepository;
 import edu.ifes.ci.si.les.sa.repositories.UfRepository;
 
@@ -89,9 +91,14 @@ public class _DBService {
 	@Autowired
 	private UfRepository ufRepository;
 
+	@Autowired
+	private RegistroDeNotasRepository registroDeNotasRepository;
+
 	public void instantiateTestDatabase() throws ParseException, IOException {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+		// ********************************************CRUDS************************************************
 
 		// CADASTRO UF
 		Uf uf1 = new Uf(null, "ES", "Espirito Santo");
@@ -131,7 +138,9 @@ public class _DBService {
 		Disciplina disciplina3 = new Disciplina(null, "Sistema Operacional", 60, "SO", curso1);
 		Disciplina disciplina4 = new Disciplina(null, "Programação Orientada a Objetos 1", 60, "POO1", curso1);
 		Disciplina disciplina5 = new Disciplina(null, "Fundamentos de Hardware", 30, "FH", curso5);
-		disciplinaRepository.saveAll(Arrays.asList(disciplina1, disciplina2, disciplina3, disciplina4, disciplina5));
+		Disciplina disciplina6 = new Disciplina(null, "Laboratório Engenharia de Software", 60, "LES", curso1);
+		disciplinaRepository
+				.saveAll(Arrays.asList(disciplina1, disciplina2, disciplina3, disciplina4, disciplina5, disciplina6));
 
 		// CADASTRO ATIVIDADE AVALIATIVA (AVALIAÇÃO)
 		AtividadeAvaliativa atividadeAvaliativa1 = new AtividadeAvaliativa(null,
@@ -142,8 +151,20 @@ public class _DBService {
 				"Avaliacao", sdf.parse("2021-05-16"), 25.0, disciplina2);
 		AtividadeAvaliativa atividadeAvaliativa4 = new AtividadeAvaliativa(null, "Compilação de KERNEL LINUX",
 				"Trabalho", sdf.parse("2021-06-16"), 25.0, disciplina3);
-		atividadeAvaliativaRepository.saveAll(
-				Arrays.asList(atividadeAvaliativa1, atividadeAvaliativa2, atividadeAvaliativa3, atividadeAvaliativa4));
+		AtividadeAvaliativa atividadeAvaliativa5 = new AtividadeAvaliativa(null,
+				"PDS - Implementar Levantamento de Requisitos, Diagramas de casos de Uso e Classe", "Trabalho",
+				sdf.parse("2021-03-16"), 15.0, disciplina6);
+		AtividadeAvaliativa atividadeAvaliativa6 = new AtividadeAvaliativa(null, "PDS - Implementar Interface Gráfica",
+				"Trabalho", sdf.parse("2021-04-16"), 15.0, disciplina6);
+		AtividadeAvaliativa atividadeAvaliativa7 = new AtividadeAvaliativa(null, "PDS - Implementar (CRUDS)",
+				"Trabalho", sdf.parse("2021-05-16"), 15.0, disciplina6);
+		AtividadeAvaliativa atividadeAvaliativa8 = new AtividadeAvaliativa(null, "PDS - Implementar Casos de Uso",
+				"Trabalho", sdf.parse("2021-06-16"), 15.0, disciplina6);
+		AtividadeAvaliativa atividadeAvaliativa9 = new AtividadeAvaliativa(null,
+				"PDS - Relatórios, Implantar, Apresentação", "Trabalho", sdf.parse("2021-07-16"), 20.0, disciplina6);
+		atividadeAvaliativaRepository.saveAll(Arrays.asList(atividadeAvaliativa1, atividadeAvaliativa2,
+				atividadeAvaliativa3, atividadeAvaliativa4, atividadeAvaliativa5, atividadeAvaliativa6,
+				atividadeAvaliativa7, atividadeAvaliativa8, atividadeAvaliativa9));
 
 		// CADASTRO PROFESSOR
 		Professor professor1 = new Professor(null, "Mario da Silva", sdf.parse("1979-08-10"), "M", "147.2356.987-50",
@@ -187,18 +208,24 @@ public class _DBService {
 		Aluno aluno3 = new Aluno(null, "Linara Barg", sdf.parse("1989-12-14"), "F", "111.532.004-96",
 				"Rua Macarena Barao", 12, 4, bairro3, "20161ME0032", "0005412ES", "magno@email.cpm", "123456", curso3,
 				"(28) 99900-0000");
+		Aluno aluno4 = new Aluno(null, "Márcio Jr", sdf.parse("1995-03-1"), "M", "166.532.004-76",
+				"Rua Oliveira Sobrinho", 215, 5, bairro3, "20181SI027", "1946001ES", "marciojr028@email.cpm", "123456",
+				curso1, "(28) 99900-0000");
 		// aluno1.getTelefones().addAll(Arrays.asList("2899910-1112","283027-1112"));
-		alunoRepository.saveAll(Arrays.asList(aluno1, aluno2, aluno3));
+		alunoRepository.saveAll(Arrays.asList(aluno1, aluno2, aluno3, aluno4));
 
 		// CADASTRO ALUNOTURMA
 		AlunoTurmaPK alunoTurmaPK1 = new AlunoTurmaPK(aluno1, turma1);
 		AlunoTurmaPK alunoTurmaPK2 = new AlunoTurmaPK(aluno2, turma1);
 		AlunoTurmaPK alunoTurmaPK3 = new AlunoTurmaPK(aluno3, turma2);
+		AlunoTurmaPK alunoTurmaPK4 = new AlunoTurmaPK(aluno4, turma1);
 
 		AlunoTurma alunoTurma1 = new AlunoTurma(alunoTurmaPK1, "PENDENTE", 25.00, 18);
 		AlunoTurma alunoTurma2 = new AlunoTurma(alunoTurmaPK2, "PENDENTE", 16.00, 14);
 		AlunoTurma alunoTurma3 = new AlunoTurma(alunoTurmaPK3, "PENDENTE", 25.00, 16);
 		alunoTurmaRepository.saveAll(Arrays.asList(alunoTurma1, alunoTurma2, alunoTurma3));
+
+		// CADASTRO ALUNODISCIPLINA
 
 		// CADASTRO AVALIACAO ALUNO
 		AvaliacaoAlunoPK avaliacaoAlunoPK1 = new AvaliacaoAlunoPK(alunoTurma1, atividadeAvaliativa1);
@@ -218,5 +245,44 @@ public class _DBService {
 		Administrador administrador3 = new Administrador(null, "Marco Aurelio", sdf.parse("1969-03-11"), "M",
 				"235.987.150-00", "Rua Jorge Amarelo", 71, 1, bairro3, "adm3@email.com", "123456");
 		administradorRepository.saveAll(Arrays.asList(administrador1, administrador2, administrador3));
+
+		// ***************************PROCESSOS_DE_NEGÓCIO******************************
+
+		// REGISTRO DE PRESENÇA (Processo 01)
+
+		// REGISTRO DE NOTAS (Processo 02) - MárcioJr
+
+		RegistroDeNotas registroDeNotas1 = new RegistroDeNotas(null, (float) 14.55, disciplina6, atividadeAvaliativa5,
+				aluno4);
+		RegistroDeNotas registroDeNotas2 = new RegistroDeNotas(null, 15, disciplina6, atividadeAvaliativa5, aluno4);
+		RegistroDeNotas registroDeNotas3 = new RegistroDeNotas(null, 15, disciplina6, atividadeAvaliativa6, aluno4);
+		RegistroDeNotas registroDeNotas4 = new RegistroDeNotas(null, 15, disciplina6, atividadeAvaliativa7, aluno4);
+		RegistroDeNotas registroDeNotas5 = new RegistroDeNotas(null, 15, disciplina6, atividadeAvaliativa8, aluno4);
+		RegistroDeNotas registroDeNotas6 = new RegistroDeNotas(null, 15, disciplina2, atividadeAvaliativa3, aluno2);
+		registroDeNotasRepository.saveAll(Arrays.asList(registroDeNotas1, registroDeNotas2, registroDeNotas3,
+				registroDeNotas4, registroDeNotas5, registroDeNotas6));
+
+		/*
+		 * RegistroDeNotas registroDeNotas1 = new RegistroDeNotas(null, (float) 14.5,
+		 * periodoLetivo1, aluno4, atividadeAvaliativa5, curso1, disciplina6);
+		 * RegistroDeNotas registroDeNotas2 = new RegistroDeNotas(null, 15,
+		 * periodoLetivo1, aluno4, atividadeAvaliativa6, curso1, disciplina6);
+		 * RegistroDeNotas registroDeNotas3 = new RegistroDeNotas(null, 15,
+		 * periodoLetivo1, aluno4, atividadeAvaliativa7, curso1, disciplina6);
+		 * RegistroDeNotas registroDeNotas4 = new RegistroDeNotas(null, 15,
+		 * periodoLetivo1, aluno4, atividadeAvaliativa8, curso1, disciplina6);
+		 * RegistroDeNotas registroDeNotas5 = new RegistroDeNotas(null, 20,
+		 * periodoLetivo1, aluno4, atividadeAvaliativa9, curso1, disciplina6);
+		 * RegistroDeNotas registroDeNotas6 = new RegistroDeNotas(null, 15,
+		 * periodoLetivo2, aluno2, atividadeAvaliativa3, curso2, disciplina2);
+		 * registroDeNotasRepository.saveAll(Arrays.asList(registroDeNotas1,
+		 * registroDeNotas2, registroDeNotas3, registroDeNotas4, registroDeNotas5,
+		 * registroDeNotas6));
+		 */
+
+		// REGISTRO DE APROVAÇÃO (Processo 03)
+
+		// REGISTRO DE MATRÍCULA EM DISCIPLINAS (Processo 04)
 	}
+
 }

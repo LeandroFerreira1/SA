@@ -34,14 +34,14 @@ public class AtividadeAvaliativa implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(length = 50)
+	@Column(length = 100)
 	@NotBlank(message = "O nome da Atividade Avaliativa deve ser preenchida")
-	@Size(min = 2, max = 50, message = "O nome da Atividade Avaliativa deve ter entre 2 e 50 letras")
+	@Size(min = 2, max = 100, message = "O nome da Atividade Avaliativa deve ter entre 2 e 100 letras")
 	private String nome;
 
-	@Column(length = 50)
+	@Column(length = 10)
 	@NotBlank(message = "O nome da Atividade Avaliativa deve ser preenchida")
-	@Size(min = 2, max = 50, message = "AO nome da Atividade Avaliativa deve ter entre 2 e 50 letras")
+	@Size(min = 2, max = 50, message = "AO nome da Atividade Avaliativa deve ter entre 2 e 10 letras")
 	private String tipo;
 
 	@NotNull(message = "A data da Atividade Avaliativa deve  ser preenchido")
@@ -57,4 +57,6 @@ public class AtividadeAvaliativa implements Serializable {
 	@JoinColumn(name = "disciplina_id")
 	private Disciplina disciplina;
 
+	// NÃO INSERIR ATIVIDADES CUJO A SOMA DE TODAS AS ATIVIDADES AVALIATIVAS DA
+	// DISCIPLINA TENHAM ULTRAPASSADO 100 PONTOS (REGRA DE NEGOCIO)
 }

@@ -105,7 +105,7 @@
         </v-dialog>
       </v-toolbar>
     </template>
-    <template v-slot:item.actions="{ item }">
+    <template v-slot:[`item.actions`]="{ item }">
       <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
@@ -135,7 +135,7 @@ export default {
     cursoRulesNome: [
       (v) => !!v || "Preenchimento Necessário",
       (v) =>
-        (v && v.length <= 20 && v.length >= 3) ||
+        (v && v.length <= 40 && v.length >= 3) ||
         "O campo deve ter pelo menos 3 e no maximo 20 letras",
     ],
     cursoRulesDuracao: [

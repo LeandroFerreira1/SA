@@ -4,6 +4,8 @@
     :items="lTurma"
     sort-by="id"
     class="elevation-1"
+    :loading="carregando" 
+    loading-text="Aguarde... Carregando"
   >
     <template v-slot:top>
       <v-toolbar flat>
@@ -180,7 +182,7 @@
 
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="close"
+                <v-btn color="blue darken-1" v-text="false"
                   >Cancelar</v-btn
                 >
                 <v-btn
@@ -213,7 +215,7 @@
         </v-dialog>
       </v-toolbar>
     </template>
-    <template v-slot:item.actions="{ item }">
+    <template v-slot:[`item.actions`]="{ item }">
       <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
@@ -252,8 +254,8 @@ export default {
     turmaRulesNome: [
       (v) => !!v || "Preenchimento Necessário",
       (v) =>
-        (v && v.length <= 20 && v.length >= 3) ||
-        "O campo deve ter pelo menos 3 e no maximo 20 letras",
+        (v && v.length <= 50 && v.length >= 3) ||
+        "O campo deve ter pelo menos 3 e no maximo 50 letras",
     ],
     turmaRulesVagas: [
       (v) => !!v || "Preenchimento Necessário",

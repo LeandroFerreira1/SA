@@ -4,6 +4,8 @@
     :items="lAtividadeAvaliativa"
     sort-by="id"
     class="elevation-1"
+    :loading="carregando" 
+    loading-text="Aguarde... Carregando"
   >
     <template v-slot:top>
       <v-toolbar flat>
@@ -14,7 +16,7 @@
         <v-dialog v-model="dialog" max-width="800px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on"
-              >Novo Item</v-btn
+              >Inserir Atividade Avaliativa</v-btn
             >
           </template>
           <v-card>
@@ -48,7 +50,7 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="3">
+                    <v-col cols="12" sm="6" md="4">
                       <v-text-field
                         v-model="editedItem.tipo"
                         label="Tipo"
@@ -57,7 +59,7 @@
                         :rules="atividadeAvaliativaRulesTipo"
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="12" sm="6" md="5">
                       <v-menu
                         ref="menuEntrada"
                         :close-on-content-click="false"
@@ -146,7 +148,7 @@
         </v-dialog>
       </v-toolbar>
     </template>
-    <template v-slot:item.actions="{ item }">
+    <template v-slot:[`item.actions`]="{ item }">
       <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
@@ -177,8 +179,8 @@ export default {
     atividadeAvaliativaRulesNome: [
       (v) => !!v || "Preenchimento Necessário",
       (v) =>
-        (v && v.length <= 20 && v.length >= 3) ||
-        "O campo deve ter pelo menos 3 e no maximo 20 letras",
+        (v && v.length <= 100 && v.length >= 3) ||
+        "O campo deve ter pelo menos 3 e no maximo 100 letras",
     ],
     atividadeAvaliativaRulesTipo: [
       (v) => !!v || "Preenchimento Necessário",
