@@ -64,5 +64,10 @@ public class AlunoService {
 			throw new DataIntegrityException("Não é possível excluir um item associado a outros!");
 		}
 	}
+	
+	
+	public Collection<Aluno> findByTurma(Integer id){
+		return repository.findAlunoByTurma(id);
+	}
 
 }

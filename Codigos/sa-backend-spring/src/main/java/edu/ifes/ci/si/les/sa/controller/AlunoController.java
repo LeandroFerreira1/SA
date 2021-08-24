@@ -35,6 +35,12 @@ public class AlunoController {
 		Collection<Aluno> collection = service.findAll();
 		return ResponseEntity.ok().body(collection);
 	}
+	
+	@RequestMapping(value = "/turma/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Collection<Aluno>> findByTurma(@PathVariable Integer id) {
+		Collection<Aluno> collection = service.findByTurma(id);
+		return ResponseEntity.ok().body(collection);
+	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Aluno> find(@PathVariable Integer id) {
