@@ -28,7 +28,7 @@ public class AvaliacaoAluno implements Serializable {
 	private AvaliacaoAlunoPK id = new AvaliacaoAlunoPK();
 
 	@NotNull(message = "A Nota Avaliativa deve ser preenchida")
-	@Digits(integer = 6, fraction = 2, message = "A Nota Avaliativa deve ser preenchida com dígitos")
+	@Digits(integer = 6, fraction = 2, message = "A Nota Avaliativa deve ser preenchida com números")
 	private Double nota;
 
 	@Builder

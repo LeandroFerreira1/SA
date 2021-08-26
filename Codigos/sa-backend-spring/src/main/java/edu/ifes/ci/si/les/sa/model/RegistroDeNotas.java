@@ -15,6 +15,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -55,5 +57,4 @@ public class RegistroDeNotas implements Serializable {
 	@JoinColumn(name = "aluno_id")
 	private Aluno aluno;
 
-	// ---------VALOR DA NOTA NÃO PODE ULTRAPASSAR O VALOR DA ATIVIDADE AVALIATIVA
 }
