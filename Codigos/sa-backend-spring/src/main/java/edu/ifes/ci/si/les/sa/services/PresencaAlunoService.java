@@ -12,6 +12,7 @@ import edu.ifes.ci.si.les.sa.model.PresencaAlunoPK;
 import edu.ifes.ci.si.les.sa.services.exceptions.DataIntegrityException;
 import edu.ifes.ci.si.les.sa.services.exceptions.ObjectNotFoundException;
 import edu.ifes.ci.si.les.sa.repositories.AlunoRepository;
+import edu.ifes.ci.si.les.sa.repositories.AlunoTurmaRepository;
 import edu.ifes.ci.si.les.sa.repositories.AulaRepository;
 import edu.ifes.ci.si.les.sa.repositories.PresencaAlunoRepository;
 import edu.ifes.ci.si.les.sa.repositories.TurmaRepository;
@@ -28,8 +29,10 @@ public class PresencaAlunoService {
 	@Autowired
 	private AlunoRepository alunoRepository;
 	@Autowired
-	private AulaRepository aulaRepository;
+	private AlunoTurmaService alunoTurmaService;
 	
+	@Autowired
+	private AlunoTurmaRepository alunoTurmaRepository;
 	
 	public PresencaAluno findById(PresencaAlunoPK id) {
 		PresencaAluno obj = repository.findById(id).get();
@@ -69,6 +72,31 @@ public class PresencaAlunoService {
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possível excluir um item associado a outros!");
 		}
+	}
+	
+	
+	public Double presencaAluno(Integer turmaId, Integer alunoId) {
+		Integer aulasPorTurma = turmaRepository.countAulaByTurma(turmaId);
+		Integer alunoPresenteTurma = alunoRepository.countPresencaAulaByTurma(turmaId, alunoId);
+		
+		double percentualPresenca = ( (double)alunoPresenteTurma / (double)aulasPorTurma);
+		
+		if(percentualPresenca < 0.4) {
+			alunoTurmaRepository.reprovaAluno(turmaId, alunoId);
+		}else if(percentualPresenca > 0.4) {
+			alunoTurmaRepository.alteraStatusAprovacaoPendente(turmaId, alunoId);
+		}
+		
+		
+		System.out.println("Aluno ID: "+alunoId);
+		System.out.println("Turma ID: "+turmaId);
+		
+		System.out.println("Valor BANCO AULA TURMA: " + (double) aulasPorTurma);
+		System.out.println("Valor BANCO AlunoPresente: " + (double) alunoPresenteTurma);
+		
+		System.out.println ((double) alunoPresenteTurma / (double) aulasPorTurma);
+		return (double) ( (double)alunoPresenteTurma / (double)aulasPorTurma);
+		
 	}
 
 }
