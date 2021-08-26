@@ -249,11 +249,11 @@ public class _DBService {
 		// ***************************PROCESSOS_DE_NEGÓCIO******************************
 
 		// REGISTRO DE PRESENÇA (Processo 01)
-		PresencaAlunoPK presencaAlunoPK1 = new PresencaAlunoPK(aula1, aluno4, turma5);
-		PresencaAlunoPK presencaAlunoPK2 = new PresencaAlunoPK(aula2, aluno4, turma5);
+		PresencaAlunoPK presencaAlunoPK1 = new PresencaAlunoPK(aula1, aluno1, turma5);
+		PresencaAlunoPK presencaAlunoPK2 = new PresencaAlunoPK(aula2, aluno2, turma5);
 		PresencaAlunoPK presencaAlunoPK3 = new PresencaAlunoPK(aula3, aluno3, turma5);
 		
-		PresencaAluno presencaAluno1 = new PresencaAluno(presencaAlunoPK1, 1, true);
+		PresencaAluno presencaAluno1 = new PresencaAluno(presencaAlunoPK1, 39, false);
 		PresencaAluno presencaAluno2 = new PresencaAluno(presencaAlunoPK2, 1, true);
 		PresencaAluno presencaAluno3 = new PresencaAluno(presencaAlunoPK3, 1, true);
 		
