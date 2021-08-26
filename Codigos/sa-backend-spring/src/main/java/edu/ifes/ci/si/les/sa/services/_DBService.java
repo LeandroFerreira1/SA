@@ -22,6 +22,8 @@ import edu.ifes.ci.si.les.sa.model.Cidade;
 import edu.ifes.ci.si.les.sa.model.Curso;
 import edu.ifes.ci.si.les.sa.model.Disciplina;
 import edu.ifes.ci.si.les.sa.model.PeriodoLetivo;
+import edu.ifes.ci.si.les.sa.model.PresencaAluno;
+import edu.ifes.ci.si.les.sa.model.PresencaAlunoPK;
 import edu.ifes.ci.si.les.sa.model.Professor;
 import edu.ifes.ci.si.les.sa.model.RegistroDeNotas;
 import edu.ifes.ci.si.les.sa.model.Turma;
