@@ -22,7 +22,8 @@ public class SaApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
 					.allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT")
-				    .allowedOrigins("http://localhost:8080");
+				    //.allowedOrigins("http://localhost:8080");
+					.allowedOrigins("http://localhost:8081");
 			}
 		};
 	}

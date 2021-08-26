@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import edu.ifes.ci.si.les.sa.model.AlunoTurma;
 import edu.ifes.ci.si.les.sa.model.Aula;
 import edu.ifes.ci.si.les.sa.model.PresencaAluno;
 import edu.ifes.ci.si.les.sa.model.PresencaAlunoPK;
@@ -30,8 +29,6 @@ public class PresencaAlunoService {
 	private AlunoRepository alunoRepository;
 	@Autowired
 	private AulaRepository aulaRepository;
-	@Autowired
-	private AlunoTurma alunoTurmaRepository;
 	
 	
 	public PresencaAluno findById(PresencaAlunoPK id) {
@@ -72,31 +69,6 @@ public class PresencaAlunoService {
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possível excluir um item associado a outros!");
 		}
-	}
-	
-	public AlunoTurma update(AlunoTurma obj) {
-		
-		return obj;
-	}
-	
-	public Double presencaAluno(Integer turmaId, Integer alunoId) {
-		Integer aulasPorTurma = turmaRepository.countAulaByTurma(turmaId);
-		Integer alunoPresenteTurma = alunoRepository.countPresencaAulaByTurma(turmaId, alunoId);
-		
-		double percentualPresenca = ( (double)alunoPresenteTurma / (double)aulasPorTurma);
-		
-		if(percentualPresenca < 0.4) {
-			
-		}
-		//System.out.println("Aluno ID: "+alunoId);
-		//System.out.println("Turma ID: "+turmaId);
-		
-		//System.out.println("Valor BANCO AULA TURMA: " + (double) aulasPorTurma);
-		//System.out.println("Valor BANCO AlunoPresente: " + (double) alunoPresenteTurma);
-		
-		//System.out.println ((double) alunoPresenteTurma / (double) aulasPorTurma);
-		return (double) ( (double)alunoPresenteTurma / (double)aulasPorTurma);
-		
 	}
 
 }

@@ -15,15 +15,12 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import net.bytebuddy.asm.Advice.Thrown;
 
 @Entity
 @Data
@@ -51,9 +48,8 @@ public class AtividadeAvaliativa implements Serializable {
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date dataAvaliacao;
 
-	@Column(length = 4)
-	@NotBlank(message = "O Valor da Atividade Avaliativa deve ser preenchida")
-	@Size(min = 1, max = 4, message = "O valor da Atividade Avaliativa deve ter entre 1 e 4 numeros")
+	@NotNull(message = "A data de início do Periodo Letivo deve ser preenchido")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Double valor;
 
 	@NotNull(message = "A disciplina da Atividade avaliativa deve ser preenchido")
@@ -61,8 +57,6 @@ public class AtividadeAvaliativa implements Serializable {
 	@JoinColumn(name = "disciplina_id")
 	private Disciplina disciplina;
 
-	
-	
 	// NÃO INSERIR ATIVIDADES CUJO A SOMA DE TODAS AS ATIVIDADES AVALIATIVAS DA
 	// DISCIPLINA TENHAM ULTRAPASSADO 100 PONTOS (REGRA DE NEGOCIO)
 }

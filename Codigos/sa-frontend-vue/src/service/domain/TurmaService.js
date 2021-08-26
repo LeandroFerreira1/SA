@@ -8,4 +8,5 @@ export default class TurmaService extends Rest {
      * @type {String}
      */
     static resource = '/turma'
+
 }

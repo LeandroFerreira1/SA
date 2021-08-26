@@ -59,10 +59,5 @@ public class PresencaAlunoController {
 	//	service.delete(id);
 	//	return ResponseEntity.noContent().build();
 	//}
-	@RequestMapping(value = "/percentualAlunoTurma/{turmaId}/{alunoId}", method = RequestMethod.GET)
-	public ResponseEntity<Double> percentualPresencaAluno(@PathVariable Integer turmaId, @PathVariable Integer alunoId) {
-		Double collection = service.presencaAluno(turmaId,alunoId);
-		return ResponseEntity.ok().body(collection);
-	}
-	
+
 }

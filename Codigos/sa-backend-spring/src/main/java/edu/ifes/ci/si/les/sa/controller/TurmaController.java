@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.ifes.ci.si.les.sa.model.Curso;
 import edu.ifes.ci.si.les.sa.model.Turma;
-import edu.ifes.ci.si.les.sa.services.CursoService;
 import edu.ifes.ci.si.les.sa.services.TurmaService;
 import edu.ifes.ci.si.les.sa.services.exceptions.ConstraintException;
 
@@ -36,6 +35,14 @@ public class TurmaController {
 	public ResponseEntity<Turma> find(@PathVariable Integer id) {
 		Turma obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
+	}
+	
+	@RequestMapping(value = "/findByCurso/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Collection<Turma>> findByCurso(@PathVariable Integer id) {
+		Curso curso = new Curso();
+		curso.setId(id);
+		Collection<Turma> collection = service.findByCurso(curso);
+		return ResponseEntity.ok().body(collection);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

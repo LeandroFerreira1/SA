@@ -30,6 +30,7 @@
                       <v-combobox
                         :items="lUf"
                         item-text="nome"
+                        item-value="id"
                         label="UF"
                         v-model="editedItem.uf"
                         outlined

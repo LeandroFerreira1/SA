@@ -8,19 +8,15 @@ import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 //Classe criada para representar a chave primária composta do objeto PresencaAluno
 @Embeddable
 @Data
 @EqualsAndHashCode(of = {"aula", "aluno", "turma"})
-@AllArgsConstructor
-@NoArgsConstructor
 public class PresencaAlunoPK implements Serializable{
 	private static final long serialVersionUID = 1L;
 

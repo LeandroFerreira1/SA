@@ -16,21 +16,29 @@
           <br />
           <v-row>
 
-          <v-combobox
-              item-text="curso"
+          <v-select
+              :items="lCurso"
+              item-text="nome"
               label="Curso"
-              clearable
+              default="SELECIONE"
+              v-model="curso"
               outlined
-              required>
-          </v-combobox>
+              required
+              item-value="id"
+              :rules="registroAprovacaoRulesCurso">
+          </v-select>
 
-          <v-combobox
-              item-text="turma"
+          <v-select
+              :items="lTurma"
+              item-text="nome"
               label="Turma"
-              clearable
+              default="SELECIONE"
+              v-model="turma"
               outlined
-              required >
-          </v-combobox>
+              required
+              item-value="id"
+              :rules="registroAprovacaoRulesTurma">
+          </v-select>
             
           </v-row>
         </v-spacer>
@@ -43,7 +51,7 @@
         :headers="headers"
         :items="alunos"
         :single-select="singleSelect"
-        item-key="aluno"
+        item-key=""
         show-select
         class="elevation-1">
 
@@ -73,65 +81,74 @@
 </template>
 
 <script>
+//import RegistroAprovacaoService from "../service/domain/RegistroAprovacaoService";
+
+import CursoService from "../service/domain/CursoService";
+const serviceCurso = CursoService.build();
+
+import TurmaService from "../service/domain/TurmaService";
+const serviceTurma = TurmaService.build();
+
+//const textos = {
+  //novo: "Registrar Aprovação",
+  //edicao: "Edição de Registro De Aprovação",
+  //exclusao: "Deseja mesmo remover estes Registrso De Aprovação?",
+//};
+
 export default {
-  data() {
-    return {
-      singleSelect: false,
-      cSel: 'Cursando',
-      selected: [],
-      alunos: [
-        {
-          aluno: "Ana da Silva",
-          matricula: "20181SI",
-          faltas: 0,
-          nota: 84,
-          provaFinal: '-',
-          notaFinal: 84,
-          status: ['Cursando', 'Aprovado'],
-        },
-        {
-          aluno: "Beatriz de Souza",
-          matricula: "2020SI60",
-          faltas: 2,
-          nota: 90,
-          provaFinal: '-',
-          notaFinal: 90,
-          status: ['Cursando', 'Aprovado'],
-        },
-        {
-          aluno: "Carlos Pereira",
-          matricula: "2019SI30",
-          faltas: 8,
-          nota: 88,
-          provaFinal: '-',
-          notaFinal: 88,
-          status: ['Cursando', 'Aprovado'],
-        },
-        {
-          aluno: "Danilo Silveira",
-          matricula: "2017SI30",
-          faltas: 4,
-          nota: 86,
-          provaFinal: '-',
-          notaFinal: 86,
-          status: ['Cursando', 'Aprovado'],
-        },
-      ],
+   data: () => ({
+    //service: RegistroDeNotasService.build(),
+    name: "lRegAprov",
+    components: {},
+    registroAprovacaoRulesCurso: [(v) => !!v || "Seleção Necessária"],
+    registroAprovacaoRulesTurma: [(v) => !!v || "Seleção Necessária"],
+      
       headers: [
-        { text: "Matrícula", align: "start", value: "matricula", width: "10%" },
+        { text: "Matrícula", align: "start", value: "", width: "10%" },
         {
           text: "Aluno",
           
-          value: "aluno",
+          value: "",
           width: "30%"
         },
-        { text: "Faltas", align: "center", value: "faltas", width: "10%" },
-        { text: "Nota", align: "center", value: "nota", width: "10%" },
-        { text: "Prova Final", align: "center", value: "provaFinal", width: "10%" },
-        { text: "Nota Final", align: "center", value: "notaFinal", width: "10%" },
-        { text: "Status", align: "center", value: "status", width: "20%" },
+        { text: "Faltas", align: "center", value: "", width: "10%" },
+        { text: "Nota", align: "center", value: "", width: "10%" },
+        { text: "Prova Final", align: "center", value: "", width: "10%" },
+        { text: "Nota Final", align: "center", value: "", width: "10%" },
+        { text: "Status", align: "center", value: "", width: "20%" },
       ],
-    };
+      lCurso: [],
+      lTurma: [],
+      editedItem: {},
+  }),
+  created() {
+    this.initialize();
+  },
+  methods: {
+    initialize() {
+      this.fetchRecordsCurso();
+      this.fetchRecordsTurma();
+    },
+    fetchRecordsCurso() {
+      serviceCurso.search({}).then(this.fetchRecordsSuccessCurso);
+    },
+    fetchRecordsSuccessCurso(response) {
+      if (Array.isArray(response.rows)) {
+        this.lCurso = response.rows;
+        return;
+      }
+      this.lCurso = [];
+    },
+    fetchRecordsTurma() {
+      serviceTurma.search({}).then(this.fetchRecordsSuccessTurma);
+    },
+    fetchRecordsSuccessTurma(response) {
+      if (Array.isArray(response.curso)) {
+        this.lTurma = response.curso;
+        return;
+      }
+      this.lTurma = [];
+    },
   },
 };
 </script>

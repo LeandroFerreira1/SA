@@ -6,16 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import edu.ifes.ci.si.les.sa.model.Aula;
-import edu.ifes.ci.si.les.sa.model.PresencaAluno;
-import edu.ifes.ci.si.les.sa.model.PresencaAlunoPK;
+import edu.ifes.ci.si.les.sa.model.Curso;
 import edu.ifes.ci.si.les.sa.model.Turma;
+import edu.ifes.ci.si.les.sa.repositories.TurmaRepository;
 import edu.ifes.ci.si.les.sa.services.exceptions.DataIntegrityException;
 import edu.ifes.ci.si.les.sa.services.exceptions.ObjectNotFoundException;
-import edu.ifes.ci.si.les.sa.repositories.AlunoRepository;
-import edu.ifes.ci.si.les.sa.repositories.AulaRepository;
-import edu.ifes.ci.si.les.sa.repositories.PresencaAlunoRepository;
-import edu.ifes.ci.si.les.sa.repositories.TurmaRepository;
 
 
 
@@ -39,6 +34,10 @@ public class TurmaService {
 		return repository.findAll();
 	}
 
+	public Collection<Turma> findByCurso(Curso curso) {
+		return repository.findByCurso(curso);
+	}
+	
 	public Turma insert(Turma obj) {
 		obj.setId(null);
 		try {

@@ -22,9 +22,8 @@ import edu.ifes.ci.si.les.sa.model.Cidade;
 import edu.ifes.ci.si.les.sa.model.Curso;
 import edu.ifes.ci.si.les.sa.model.Disciplina;
 import edu.ifes.ci.si.les.sa.model.PeriodoLetivo;
-import edu.ifes.ci.si.les.sa.model.PresencaAluno;
-import edu.ifes.ci.si.les.sa.model.PresencaAlunoPK;
 import edu.ifes.ci.si.les.sa.model.Professor;
+import edu.ifes.ci.si.les.sa.model.RegistroDeNotas;
 import edu.ifes.ci.si.les.sa.model.Turma;
 import edu.ifes.ci.si.les.sa.model.Uf;
 import edu.ifes.ci.si.les.sa.repositories.AdministradorRepository;
@@ -40,6 +39,7 @@ import edu.ifes.ci.si.les.sa.repositories.DisciplinaRepository;
 import edu.ifes.ci.si.les.sa.repositories.PeriodoLetivoRepository;
 import edu.ifes.ci.si.les.sa.repositories.PresencaAlunoRepository;
 import edu.ifes.ci.si.les.sa.repositories.ProfessorRepository;
+import edu.ifes.ci.si.les.sa.repositories.RegistroDeNotasRepository;
 import edu.ifes.ci.si.les.sa.repositories.TurmaRepository;
 import edu.ifes.ci.si.les.sa.repositories.UfRepository;
 
@@ -91,8 +91,8 @@ public class _DBService {
 	@Autowired
 	private UfRepository ufRepository;
 
-	//@Autowired
-	//private RegistroDeNotasRepository registroDeNotasRepository;
+	@Autowired
+	private RegistroDeNotasRepository registroDeNotasRepository;
 
 	public void instantiateTestDatabase() throws ParseException, IOException {
 
@@ -249,27 +249,18 @@ public class _DBService {
 		// ***************************PROCESSOS_DE_NEGÓCIO******************************
 
 		// REGISTRO DE PRESENÇA (Processo 01)
-		PresencaAlunoPK presencaAlunoPK1 = new PresencaAlunoPK(aula1, aluno4, turma5);
-		PresencaAlunoPK presencaAlunoPK2 = new PresencaAlunoPK(aula2, aluno4, turma5);
-		PresencaAlunoPK presencaAlunoPK3 = new PresencaAlunoPK(aula3, aluno3, turma5);
-		
-		PresencaAluno presencaAluno1 = new PresencaAluno(presencaAlunoPK1, 1, true);
-		PresencaAluno presencaAluno2 = new PresencaAluno(presencaAlunoPK2, 1, true);
-		PresencaAluno presencaAluno3 = new PresencaAluno(presencaAlunoPK3, 1, true);
-		
-		
-		presencaAlunoRepository.saveAll(Arrays.asList(presencaAluno1,presencaAluno2,presencaAluno3));
+
 		// REGISTRO DE NOTAS (Processo 02) - MárcioJr
 
-		//RegistroDeNotas registroDeNotas1 = new RegistroDeNotas(null, (float) 14.55, disciplina6, atividadeAvaliativa5,
-		//		aluno4);
-		//RegistroDeNotas registroDeNotas2 = new RegistroDeNotas(null, 15, disciplina6, atividadeAvaliativa5, aluno4);
-		//RegistroDeNotas registroDeNotas3 = new RegistroDeNotas(null, 15, disciplina6, atividadeAvaliativa6, aluno4);
-		//RegistroDeNotas registroDeNotas4 = new RegistroDeNotas(null, 15, disciplina6, atividadeAvaliativa7, aluno4);
-		//RegistroDeNotas registroDeNotas5 = new RegistroDeNotas(null, 15, disciplina6, atividadeAvaliativa8, aluno4);
-		//RegistroDeNotas registroDeNotas6 = new RegistroDeNotas(null, 15, disciplina2, atividadeAvaliativa3, aluno2);
-		//registroDeNotasRepository.saveAll(Arrays.asList(registroDeNotas1, registroDeNotas2, registroDeNotas3,
-		//		registroDeNotas4, registroDeNotas5, registroDeNotas6));
+		RegistroDeNotas registroDeNotas1 = new RegistroDeNotas(null, (float) 14.55, disciplina6, atividadeAvaliativa5,
+				aluno4);
+		RegistroDeNotas registroDeNotas2 = new RegistroDeNotas(null, 15, disciplina6, atividadeAvaliativa5, aluno4);
+		RegistroDeNotas registroDeNotas3 = new RegistroDeNotas(null, 15, disciplina6, atividadeAvaliativa6, aluno4);
+		RegistroDeNotas registroDeNotas4 = new RegistroDeNotas(null, 15, disciplina6, atividadeAvaliativa7, aluno4);
+		RegistroDeNotas registroDeNotas5 = new RegistroDeNotas(null, 15, disciplina6, atividadeAvaliativa8, aluno4);
+		RegistroDeNotas registroDeNotas6 = new RegistroDeNotas(null, 15, disciplina2, atividadeAvaliativa3, aluno2);
+		registroDeNotasRepository.saveAll(Arrays.asList(registroDeNotas1, registroDeNotas2, registroDeNotas3,
+				registroDeNotas4, registroDeNotas5, registroDeNotas6));
 
 		/*
 		 * RegistroDeNotas registroDeNotas1 = new RegistroDeNotas(null, (float) 14.5,
