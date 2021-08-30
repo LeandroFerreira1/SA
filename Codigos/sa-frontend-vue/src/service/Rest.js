@@ -79,6 +79,22 @@ export default class Rest extends Api {
     }
 
     /**
+     * @param {String} caminho
+     * @param {Object} parameters
+     * @returns {*|PromiseLike<T | never>|Promise<T | never>}
+     */
+     searchFiltro(caminho, parameters) {
+        let queryString = ''
+
+        //if (!(Object.keys(parameters).length === 0 && parameters.constructor === Object)) {
+            queryString =  queryString.concat(caminho, '/', parameters);
+        //}
+        return this.get(`${queryString}`).then(response => ({
+            rows: response
+        }))
+    }
+
+    /**
      * @param {String|Object} record
      * @returns {String}
      */

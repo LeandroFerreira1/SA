@@ -12,6 +12,7 @@ import edu.ifes.ci.si.les.sa.model.AlunoTurmaPK;
 import edu.ifes.ci.si.les.sa.model.Aula;
 import edu.ifes.ci.si.les.sa.model.PresencaAluno;
 import edu.ifes.ci.si.les.sa.model.PresencaAlunoPK;
+import edu.ifes.ci.si.les.sa.model.Turma;
 import edu.ifes.ci.si.les.sa.services.exceptions.DataIntegrityException;
 import edu.ifes.ci.si.les.sa.services.exceptions.ObjectNotFoundException;
 import edu.ifes.ci.si.les.sa.repositories.AlunoRepository;
@@ -41,6 +42,10 @@ public class AlunoTurmaService {
 		return repository.findAll();
 	}
 
+	public Collection<AlunoTurma> findByTurma(Integer turmaID){
+		return repository.findByTurma(turmaID);
+	}
+	
 	public AlunoTurma insert(AlunoTurma obj) {
 		obj.setId(null);
 		try {

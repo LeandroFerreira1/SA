@@ -222,10 +222,11 @@ public class _DBService {
 		AlunoTurmaPK alunoTurmaPK3 = new AlunoTurmaPK(aluno3, turma2);
 		AlunoTurmaPK alunoTurmaPK4 = new AlunoTurmaPK(aluno4, turma1);
 
-		AlunoTurma alunoTurma1 = new AlunoTurma(alunoTurmaPK1, "PENDENTE", 25.00, 18);
-		AlunoTurma alunoTurma2 = new AlunoTurma(alunoTurmaPK2, "PENDENTE", 16.00, 14);
-		AlunoTurma alunoTurma3 = new AlunoTurma(alunoTurmaPK3, "PENDENTE", 25.00, 16);
-		alunoTurmaRepository.saveAll(Arrays.asList(alunoTurma1, alunoTurma2, alunoTurma3));
+		AlunoTurma alunoTurma1 = new AlunoTurma(alunoTurmaPK1, "CURSANDO", 25.00, 18);
+		AlunoTurma alunoTurma2 = new AlunoTurma(alunoTurmaPK2, "CURSANDO", 16.00, 14);
+		AlunoTurma alunoTurma3 = new AlunoTurma(alunoTurmaPK3, "CURSANDO", 25.00, 16);
+		AlunoTurma alunoTurma4 = new AlunoTurma(alunoTurmaPK4, "APROVADO", 27.00, 12);
+		alunoTurmaRepository.saveAll(Arrays.asList(alunoTurma1, alunoTurma2, alunoTurma3, alunoTurma4));
 
 		// CADASTRO ALUNODISCIPLINA
 

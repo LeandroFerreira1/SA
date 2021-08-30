@@ -13,8 +13,6 @@ import edu.ifes.ci.si.les.sa.model.Turma;
 @Repository
 public interface TurmaRepository extends JpaRepository<Turma, Integer>{
 
-	
-	
 	@Transactional(readOnly = true)
     public Collection<Turma> findByCurso(Curso curso);
 

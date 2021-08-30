@@ -17,26 +17,26 @@
           <v-row>
 
           <v-select
-              :items="lCurso"
+              :items="lCursoRegApr"
               item-text="nome"
               label="Curso"
-              default="SELECIONE"
               v-model="curso"
+              item-value="id"
               outlined
               required
-              item-value="id"
+              @change="fetchRecordsTurma"
               :rules="registroAprovacaoRulesCurso">
           </v-select>
 
           <v-select
-              :items="lTurma"
+              :items="lTurmaRegApr"
               item-text="nome"
               label="Turma"
-              default="SELECIONE"
               v-model="turma"
+              item-value="id"
               outlined
               required
-              item-value="id"
+              @change="fetchRecordsAlunoTurma"
               :rules="registroAprovacaoRulesTurma">
           </v-select>
             
@@ -47,18 +47,17 @@
 
     <v-container>
       <v-data-table
-        v-model="selected"
         :headers="headers"
-        :items="alunos"
+        :items="lAlunoTurmaRegApr"
         :single-select="singleSelect"
-        item-key=""
+        item-key="alunoTurma"
         show-select
         class="elevation-1">
 
         <template v-slot:item.status="{ item }">
         <v-select
-          v-model="cSel"
-          :items="item.status"
+          v-model="item.status"
+          :items="cSel"
       ></v-select>
       </template> 
       </v-data-table>
@@ -89,6 +88,9 @@ const serviceCurso = CursoService.build();
 import TurmaService from "../service/domain/TurmaService";
 const serviceTurma = TurmaService.build();
 
+import AlunoTurmaService from "../service/domain/AlunoTurmaService";
+const serviceAlunoTurma = AlunoTurmaService.build();
+
 //const textos = {
   //novo: "Registrar Aprovação",
   //edicao: "Edição de Registro De Aprovação",
@@ -97,29 +99,23 @@ const serviceTurma = TurmaService.build();
 
 export default {
    data: () => ({
-    //service: RegistroDeNotasService.build(),
-    name: "lRegAprov",
     components: {},
     registroAprovacaoRulesCurso: [(v) => !!v || "Seleção Necessária"],
     registroAprovacaoRulesTurma: [(v) => !!v || "Seleção Necessária"],
-      
+    cSel: ['APROVADO', 'CURSANDO', 'REPROVADO'],
       headers: [
-        { text: "Matrícula", align: "start", value: "", width: "10%" },
-        {
-          text: "Aluno",
-          
-          value: "",
-          width: "30%"
+        { text: "Matrícula", align: "start", value: "aluno.matricula", width: "25%" },
+        { text: "Aluno", value: "aluno.nome", width: "25%"
         },
-        { text: "Faltas", align: "center", value: "", width: "10%" },
-        { text: "Nota", align: "center", value: "", width: "10%" },
-        { text: "Prova Final", align: "center", value: "", width: "10%" },
-        { text: "Nota Final", align: "center", value: "", width: "10%" },
-        { text: "Status", align: "center", value: "", width: "20%" },
+        { text: "Faltas", align: "center", value: "presencaFinal", width: "15%" },
+        { text: "Nota Final", align: "center", value: "notaFinal", width: "15%" },
+        { text: "Status", align: "center", value: "status", width: "20%" },
       ],
-      lCurso: [],
-      lTurma: [],
-      editedItem: {},
+      lCursoRegApr: [],
+      lTurmaRegApr: [],
+      lAlunoTurmaRegApr:[],
+      lAlunoRegApr:[],
+      i: 0,
   }),
   created() {
     this.initialize();
@@ -127,27 +123,36 @@ export default {
   methods: {
     initialize() {
       this.fetchRecordsCurso();
-      this.fetchRecordsTurma();
     },
     fetchRecordsCurso() {
       serviceCurso.search({}).then(this.fetchRecordsSuccessCurso);
     },
     fetchRecordsSuccessCurso(response) {
       if (Array.isArray(response.rows)) {
-        this.lCurso = response.rows;
+        this.lCursoRegApr = response.rows;
         return;
       }
-      this.lCurso = [];
+      this.lCursoRegApr = [];
     },
     fetchRecordsTurma() {
-      serviceTurma.search({}).then(this.fetchRecordsSuccessTurma);
+      serviceTurma.searchFiltro("findByCurso", this.curso).then(this.fetchRecordsSuccessTurma);
     },
     fetchRecordsSuccessTurma(response) {
-      if (Array.isArray(response.curso)) {
-        this.lTurma = response.curso;
+      if (Array.isArray(response.rows)) {
+        this.lTurmaRegApr = response.rows;
         return;
       }
-      this.lTurma = [];
+      this.lTurmaRegApr = [];
+    },
+    fetchRecordsAlunoTurma() {
+      serviceAlunoTurma.searchFiltro("findByTurma", this.turma).then(this.fetchRecordsSuccessAlunoTurma);
+    },
+    fetchRecordsSuccessAlunoTurma(response) {
+      if (Array.isArray(response.rows)) {
+        this.lAlunoTurmaRegApr = response.rows;
+        return;
+      }
+      this.lAlunoTurmaRegApr = [];
     },
   },
 };

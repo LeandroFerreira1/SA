@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.ifes.ci.si.les.sa.model.AlunoTurma;
 import edu.ifes.ci.si.les.sa.model.AlunoTurmaPK;
+import edu.ifes.ci.si.les.sa.model.Curso;
+import edu.ifes.ci.si.les.sa.model.Turma;
 import edu.ifes.ci.si.les.sa.services.AlunoTurmaService;
 import edu.ifes.ci.si.les.sa.services.exceptions.ConstraintException;
 
@@ -46,5 +48,9 @@ public class AlunoTurmaController {
 		return ResponseEntity.ok().body(obj);
 	}
 	
-
+	@RequestMapping(value = "/findByTurma/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Collection<AlunoTurma>> findByTurma(@PathVariable Integer id) {
+		Collection<AlunoTurma> collection = service.findByTurma(id);
+		return ResponseEntity.ok().body(collection);
+	}
 }
