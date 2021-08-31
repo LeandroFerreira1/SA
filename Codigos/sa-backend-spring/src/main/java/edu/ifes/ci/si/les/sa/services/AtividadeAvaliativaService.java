@@ -7,9 +7,10 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import edu.ifes.ci.si.les.sa.model.AtividadeAvaliativa;
+import edu.ifes.ci.si.les.sa.model.Disciplina;
+import edu.ifes.ci.si.les.sa.repositories.AtividadeAvaliativaRepository;
 import edu.ifes.ci.si.les.sa.services.exceptions.DataIntegrityException;
 import edu.ifes.ci.si.les.sa.services.exceptions.ObjectNotFoundException;
-import edu.ifes.ci.si.les.sa.repositories.AtividadeAvaliativaRepository;
 
 
 
@@ -30,6 +31,10 @@ public class AtividadeAvaliativaService {
 
 	public Collection<AtividadeAvaliativa> findAll() {
 		return repository.findAll();
+	}
+	
+	public Collection<AtividadeAvaliativa> findByDisciplina(Disciplina disciplina) {
+		return repository.findByDisciplina(disciplina);
 	}
 
 	public AtividadeAvaliativa insert(AtividadeAvaliativa obj) {

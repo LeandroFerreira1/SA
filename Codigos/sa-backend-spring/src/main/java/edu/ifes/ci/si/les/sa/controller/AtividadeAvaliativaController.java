@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.ifes.ci.si.les.sa.model.AtividadeAvaliativa;
+import edu.ifes.ci.si.les.sa.model.Disciplina;
 import edu.ifes.ci.si.les.sa.services.AtividadeAvaliativaService;
 import edu.ifes.ci.si.les.sa.services.exceptions.ConstraintException;
 
@@ -34,6 +35,14 @@ public class AtividadeAvaliativaController {
 	public ResponseEntity<AtividadeAvaliativa> find(@PathVariable Integer id) {
 		AtividadeAvaliativa obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
+	}
+	
+	@RequestMapping(value = "/findByDisciplina/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Collection<AtividadeAvaliativa>> findByDisciplina(@PathVariable Integer id) {
+		Disciplina disciplina = new Disciplina();
+		disciplina.setId(id);
+		Collection<AtividadeAvaliativa> collection = service.findByDisciplina(disciplina);
+		return ResponseEntity.ok().body(collection);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

@@ -55,7 +55,6 @@ public class AlunoTurma implements Serializable {
 		this.presencaFinal = presencaFinal;
 	}
 
-	@JsonIgnore
 	public Turma getTurma() {
 		return id.getTurma();
 	}

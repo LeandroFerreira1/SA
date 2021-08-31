@@ -168,13 +168,13 @@ public class _DBService {
 				atividadeAvaliativa3, atividadeAvaliativa4, atividadeAvaliativa5, atividadeAvaliativa6,
 				atividadeAvaliativa7, atividadeAvaliativa8, atividadeAvaliativa9));
 
-		// CADASTRO PROFESSOR
+		// CADASTRO PROFESSOR -- tipo usuário = 2
 		Professor professor1 = new Professor(null, "Mario da Silva", sdf.parse("1979-08-10"), "M", "147.2356.987-50",
-				"Ruas dos Braos Loics", 21, 1, bairro1, "Mestre", "mm@gmail.com", "123456", "(28) 99900-0000");
+				"Ruas dos Braos Loics", 21, 2, bairro1, "Mestre", "mm@gmail.com", "123456", "(28) 99900-0000");
 		Professor professor2 = new Professor(null, "Lorena Marcos", sdf.parse("1990-09-15"), "F", "000.748.962-71",
-				"Ruas Marcos Fonseca", 52, 1, bairro2, "Mestre", "lorena@gmail.com", "123456", "(28) 99900-0000");
+				"Ruas Marcos Fonseca", 52, 2, bairro2, "Mestre", "lorena@gmail.com", "123456", "(28) 99900-0000");
 		Professor professor3 = new Professor(null, "Sebastiao Santos", sdf.parse("1965-08-09"), "M", "951.232.741-32",
-				"Avenida Sambaio Dutra", 70, 1, bairro3, "Doutor", "sebastiao@gmail.com", "123456", "(28) 99900-0000");
+				"Avenida Sambaio Dutra", 70, 2, bairro3, "Doutor", "sebastiao@gmail.com", "123456", "(28) 99900-0000");
 		// professor1.getTelefones().addAll(Arrays.asList("273323-6333","273321-8600"));
 		professorRepository.saveAll(Arrays.asList(professor1, professor2, professor3));
 
@@ -200,18 +200,18 @@ public class _DBService {
 				sdf.parse("2021-10-15"), periodoLetivo1, aula1, atividadeAvaliativa1, professor1, disciplina1, curso1);
 		turmaRepository.saveAll(Arrays.asList(turma1, turma2, turma3, turma4, turma5));
 
-		// CADASTRO ALUNO
+		// CADASTRO ALUNO -- tipo usuário = 3
 		Aluno aluno1 = new Aluno(null, "Abrao Lincao", sdf.parse("1980-10-12"), "M", "154.145.025-96",
-				"Rua Canoi Carpado", 10, 2, bairro1, "20161SI0030", "3987412ES", "abraol@email.cpm", "123456", curso1,
+				"Rua Canoi Carpado", 10, 3, bairro1, "20161SI0030", "3987412ES", "abraol@email.cpm", "123456", curso1,
 				"(28) 99900-0000");
 		Aluno aluno2 = new Aluno(null, "Jovelha Nova", sdf.parse("1982-04-13"), "F", "003.134.543-96",
 				"Rua Tabata battat", 11, 3, bairro2, "20161MA0031", "8889542ES", "joana@email.cpm", "123456", curso2,
 				"(28) 99900-0000");
 		Aluno aluno3 = new Aluno(null, "Linara Barg", sdf.parse("1989-12-14"), "F", "111.532.004-96",
-				"Rua Macarena Barao", 12, 4, bairro3, "20161ME0032", "0005412ES", "magno@email.cpm", "123456", curso3,
+				"Rua Macarena Barao", 12, 3, bairro3, "20161ME0032", "0005412ES", "magno@email.cpm", "123456", curso3,
 				"(28) 99900-0000");
 		Aluno aluno4 = new Aluno(null, "Márcio Jr", sdf.parse("1995-03-1"), "M", "166.532.004-76",
-				"Rua Oliveira Sobrinho", 215, 5, bairro3, "20181SI027", "1946001ES", "marciojr028@email.cpm", "123456",
+				"Rua Oliveira Sobrinho", 215, 3, bairro3, "20181SI027", "1946001ES", "marciojr028@email.cpm", "123456",
 				curso1, "(28) 99900-0000");
 		// aluno1.getTelefones().addAll(Arrays.asList("2899910-1112","283027-1112"));
 		alunoRepository.saveAll(Arrays.asList(aluno1, aluno2, aluno3, aluno4));
@@ -225,7 +225,7 @@ public class _DBService {
 		AlunoTurma alunoTurma1 = new AlunoTurma(alunoTurmaPK1, "CURSANDO", 25.00, 18);
 		AlunoTurma alunoTurma2 = new AlunoTurma(alunoTurmaPK2, "CURSANDO", 16.00, 14);
 		AlunoTurma alunoTurma3 = new AlunoTurma(alunoTurmaPK3, "CURSANDO", 25.00, 16);
-		AlunoTurma alunoTurma4 = new AlunoTurma(alunoTurmaPK4, "APROVADO", 27.00, 12);
+		AlunoTurma alunoTurma4 = new AlunoTurma(alunoTurmaPK4, "CURSANDO", 60.00, 12);
 		alunoTurmaRepository.saveAll(Arrays.asList(alunoTurma1, alunoTurma2, alunoTurma3, alunoTurma4));
 
 		// CADASTRO ALUNODISCIPLINA
@@ -240,7 +240,7 @@ public class _DBService {
 		AvaliacaoAluno avaliacaoAluno3 = new AvaliacaoAluno(avaliacaoAlunoPK3, 25.00);
 		avaliacaoAlunoRepository.saveAll(Arrays.asList(avaliacaoAluno1, avaliacaoAluno2, avaliacaoAluno3));
 
-		// CADASTRO ADMINISTRADOR
+		// CADASTRO ADMINISTRADOR -- tipo usuário = 1
 		Administrador administrador1 = new Administrador(null, "João Paulo", sdf.parse("1980-02-05"), "M",
 				"865.132.132-14", "Rua das mangas amarelas", 20, 1, bairro1, "adm1@email.com", "123456");
 		Administrador administrador2 = new Administrador(null, "Paulo Mendonca", sdf.parse("1972-01-15"), "F",

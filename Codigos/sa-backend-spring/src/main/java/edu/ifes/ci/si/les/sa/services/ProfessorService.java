@@ -42,6 +42,7 @@ public class ProfessorService {
 
 	public Professor insert(Professor obj) {
 		obj.setId(null);
+		obj.setTipoUsuario(2); //professor é usuário 2
 		try {
 			return repository.save(obj);
 		} catch (DataIntegrityViolationException e) {
