@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import edu.ifes.ci.si.les.sa.model.Aluno;
 import edu.ifes.ci.si.les.sa.model.Aula;
+import edu.ifes.ci.si.les.sa.model.Disciplina;
 import edu.ifes.ci.si.les.sa.model.PresencaAluno;
 import edu.ifes.ci.si.les.sa.model.PresencaAlunoPK;
 import edu.ifes.ci.si.les.sa.model.RegistroDeNotas;
@@ -37,6 +39,10 @@ public class RegistroDeNotasService {
 
 	public Collection<RegistroDeNotas> findAll() {
 		return repository.findAll();
+	}
+	
+	public Collection<RegistroDeNotas> findByAlunoDisc(Integer alunoID, Integer disciplinaID) {
+		return repository.findByAlunoDisc(alunoID, disciplinaID);
 	}
 
 	public RegistroDeNotas insert(RegistroDeNotas obj) {

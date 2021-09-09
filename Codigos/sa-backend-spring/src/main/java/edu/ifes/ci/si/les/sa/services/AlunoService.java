@@ -40,6 +40,7 @@ public class AlunoService {
 
 	public Aluno insert(Aluno obj) {
 		obj.setId(null);
+		obj.setTipoUsuario(3); //aluno é usuário 3
 		try {
 			return repository.save(obj);
 		} catch (DataIntegrityViolationException e) {

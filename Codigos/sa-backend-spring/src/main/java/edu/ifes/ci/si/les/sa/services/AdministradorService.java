@@ -42,6 +42,7 @@ public class AdministradorService {
 
 	public Administrador insert(Administrador obj) {
 		obj.setId(null);
+		obj.setTipoUsuario(1); //administrador é usuário 1
 		try {
 			return repository.save(obj);
 		} catch (DataIntegrityViolationException e) {

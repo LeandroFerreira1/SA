@@ -46,6 +46,7 @@ public class PresencaAluno implements Serializable{
         this.presenca = presenca;
     }
 
+
 	  @JsonIgnore
 	    public Turma getTurma() {
 	        return id.getTurma();
