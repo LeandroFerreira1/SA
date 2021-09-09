@@ -141,8 +141,9 @@ public class _DBService {
 		Disciplina disciplina4 = new Disciplina(null, "Programação Orientada a Objetos 1", 60, "POO1", curso1);
 		Disciplina disciplina5 = new Disciplina(null, "Fundamentos de Hardware", 30, "FH", curso5);
 		Disciplina disciplina6 = new Disciplina(null, "Laboratório Engenharia de Software", 60, "LES", curso1);
+		Disciplina disciplina7 = new Disciplina(null, "Cálculo 2", 90, "CALC2", curso2);
 		disciplinaRepository
-				.saveAll(Arrays.asList(disciplina1, disciplina2, disciplina3, disciplina4, disciplina5, disciplina6));
+				.saveAll(Arrays.asList(disciplina1, disciplina2, disciplina3, disciplina4, disciplina5, disciplina6, disciplina7));
 
 		// CADASTRO ATIVIDADE AVALIATIVA (AVALIAÇÃO)
 		AtividadeAvaliativa atividadeAvaliativa1 = new AtividadeAvaliativa(null,
@@ -198,7 +199,9 @@ public class _DBService {
 				periodoLetivo1, aula1, atividadeAvaliativa1, professor1, disciplina1, curso1);
 		Turma turma5 = new Turma(null, "Banco de Dados I - 2021.1", 20, sdf.parse("2021-10-12"),
 				sdf.parse("2021-10-15"), periodoLetivo1, aula1, atividadeAvaliativa1, professor1, disciplina1, curso1);
-		turmaRepository.saveAll(Arrays.asList(turma1, turma2, turma3, turma4, turma5));
+		Turma turma6 = new Turma(null, "Calculo II - 2021.1", 20, sdf.parse("2021-10-12"), sdf.parse("2021-10-15"),
+				periodoLetivo1, aula1, atividadeAvaliativa1, professor1, disciplina7, curso2);
+		turmaRepository.saveAll(Arrays.asList(turma1, turma2, turma3, turma4, turma5, turma6));
 
 		// CADASTRO ALUNO -- tipo usuário = 3
 		Aluno aluno1 = new Aluno(null, "Abrao Lincao", sdf.parse("1980-10-12"), "M", "154.145.025-96",
@@ -208,25 +211,30 @@ public class _DBService {
 				"Rua Tabata battat", 11, 3, bairro2, "20161MA0031", "8889542ES", "joana@email.cpm", "123456", curso2,
 				"(28) 99900-0000");
 		Aluno aluno3 = new Aluno(null, "Linara Barg", sdf.parse("1989-12-14"), "F", "111.532.004-96",
-				"Rua Macarena Barao", 12, 3, bairro3, "20161ME0032", "0005412ES", "magno@email.cpm", "123456", curso3,
+				"Rua Macarena Barao", 12, 3, bairro3, "20161ME0032", "0005412ES", "magno@email.cpm", "123456", curso2,
 				"(28) 99900-0000");
 		Aluno aluno4 = new Aluno(null, "Márcio Jr", sdf.parse("1995-03-1"), "M", "166.532.004-76",
 				"Rua Oliveira Sobrinho", 215, 3, bairro3, "20181SI027", "1946001ES", "marciojr028@email.cpm", "123456",
 				curso1, "(28) 99900-0000");
+		Aluno aluno5 = new Aluno(null, "Irmão do Jorel", sdf.parse("1995-03-1"), "M", "166.532.004-76",
+				"Rua Oliveira Sobrinho", 215, 3, bairro3, "20181SI027", "1946001ES", "irmaodojorel028@email.cpm", "123456",
+				curso2, "(28) 99900-0000");
 		// aluno1.getTelefones().addAll(Arrays.asList("2899910-1112","283027-1112"));
-		alunoRepository.saveAll(Arrays.asList(aluno1, aluno2, aluno3, aluno4));
+		alunoRepository.saveAll(Arrays.asList(aluno1, aluno2, aluno3, aluno4, aluno5));
 
 		// CADASTRO ALUNOTURMA
 		AlunoTurmaPK alunoTurmaPK1 = new AlunoTurmaPK(aluno1, turma1);
-		AlunoTurmaPK alunoTurmaPK2 = new AlunoTurmaPK(aluno2, turma1);
-		AlunoTurmaPK alunoTurmaPK3 = new AlunoTurmaPK(aluno3, turma2);
+		AlunoTurmaPK alunoTurmaPK2 = new AlunoTurmaPK(aluno2, turma3);
+		AlunoTurmaPK alunoTurmaPK3 = new AlunoTurmaPK(aluno3, turma6);
 		AlunoTurmaPK alunoTurmaPK4 = new AlunoTurmaPK(aluno4, turma1);
+		AlunoTurmaPK alunoTurmaPK5 = new AlunoTurmaPK(aluno5, turma3);
 
-		AlunoTurma alunoTurma1 = new AlunoTurma(alunoTurmaPK1, "CURSANDO", 25.00, 18);
-		AlunoTurma alunoTurma2 = new AlunoTurma(alunoTurmaPK2, "CURSANDO", 16.00, 14);
-		AlunoTurma alunoTurma3 = new AlunoTurma(alunoTurmaPK3, "CURSANDO", 25.00, 16);
+		AlunoTurma alunoTurma1 = new AlunoTurma(alunoTurmaPK1, "APROVADO", 25.00, 18);
+		AlunoTurma alunoTurma2 = new AlunoTurma(alunoTurmaPK2, "APROV. CONSELHO", 16.00, 14);
+		AlunoTurma alunoTurma3 = new AlunoTurma(alunoTurmaPK3, "REPROV. FALTAS", 25.00, 16);
 		AlunoTurma alunoTurma4 = new AlunoTurma(alunoTurmaPK4, "CURSANDO", 60.00, 12);
-		alunoTurmaRepository.saveAll(Arrays.asList(alunoTurma1, alunoTurma2, alunoTurma3, alunoTurma4));
+		AlunoTurma alunoTurma5 = new AlunoTurma(alunoTurmaPK5, "APROV. ABONO FALTAS", 60.00, 12);
+		alunoTurmaRepository.saveAll(Arrays.asList(alunoTurma1, alunoTurma2, alunoTurma3, alunoTurma4, alunoTurma5));
 
 		// CADASTRO ALUNODISCIPLINA
 
@@ -252,16 +260,47 @@ public class _DBService {
 		// ***************************PROCESSOS_DE_NEGÓCIO******************************
 
 		// REGISTRO DE PRESENÇA (Processo 01)
-		PresencaAlunoPK presencaAlunoPK1 = new PresencaAlunoPK(aula1, aluno1, turma5);
-		PresencaAlunoPK presencaAlunoPK2 = new PresencaAlunoPK(aula2, aluno2, turma5);
-		PresencaAlunoPK presencaAlunoPK3 = new PresencaAlunoPK(aula3, aluno3, turma5);
+		/*
+		* PresencaAlunoPK presencaAlunoPK1 = new PresencaAlunoPK(aula1, aluno1,
+		* turma5); PresencaAlunoPK presencaAlunoPK2 = new PresencaAlunoPK(aula2,
+		* aluno2, turma5); PresencaAlunoPK presencaAlunoPK3 = new
+		* PresencaAlunoPK(aula3, aluno3, turma5);
+		*/
+
+//		PresencaAluno presencaAluno1 = new PresencaAluno(turma5,aluno1,aula1, 2, false);
+//		PresencaAluno presencaAluno2 = new PresencaAluno(turma5,aluno2,aula1, 2, true);
+//		PresencaAluno presencaAluno3 = new PresencaAluno(turma5,aluno3,aula1, 2, true);
+//		PresencaAluno presencaAluno4 = new PresencaAluno(turma5,aluno4,aula1, 2, true);
+//
+//		PresencaAluno presencaAluno5 = new PresencaAluno(turma5,aluno1,aula2, 2, false);
+//		PresencaAluno presencaAluno6 = new PresencaAluno(turma5,aluno2,aula2, 2, true);
+//		PresencaAluno presencaAluno7 = new PresencaAluno(turma5,aluno3,aula2, 2, true);
+//		PresencaAluno presencaAluno8 = new PresencaAluno(turma5,aluno4,aula2, 2, true);
+//
+//		PresencaAluno presencaAluno9 = new PresencaAluno(turma5,aluno1,aula3, 2, false);
+//		PresencaAluno presencaAluno10 = new PresencaAluno(turma5,aluno2,aula3, 2, true);
+//		PresencaAluno presencaAluno11 = new PresencaAluno(turma5,aluno3,aula3, 2, true);
+//		PresencaAluno presencaAluno12 = new PresencaAluno(turma5,aluno4,aula3, 2, true);
 		
-		PresencaAluno presencaAluno1 = new PresencaAluno(presencaAlunoPK1, 39, false);
-		PresencaAluno presencaAluno2 = new PresencaAluno(presencaAlunoPK2, 1, true);
-		PresencaAluno presencaAluno3 = new PresencaAluno(presencaAlunoPK3, 1, true);
+		PresencaAluno presencaAluno1 = new PresencaAluno(new PresencaAlunoPK(aula1, aluno1, turma5), 2, true);
+		PresencaAluno presencaAluno2 = new PresencaAluno(new PresencaAlunoPK(aula1, aluno2, turma5), 2, true);
+		PresencaAluno presencaAluno3 = new PresencaAluno(new PresencaAlunoPK(aula1, aluno3, turma5), 2, true);
+		PresencaAluno presencaAluno4 = new PresencaAluno(new PresencaAlunoPK(aula1, aluno4, turma5), 2, true);
 		
+		PresencaAluno presencaAluno5 = new PresencaAluno(new PresencaAlunoPK(aula2, aluno1, turma5), 2, false);
+		PresencaAluno presencaAluno6 = new PresencaAluno(new PresencaAlunoPK(aula2, aluno2, turma5), 2, true);
+		PresencaAluno presencaAluno7 = new PresencaAluno(new PresencaAlunoPK(aula2, aluno3, turma5), 2, true);
+		PresencaAluno presencaAluno8 = new PresencaAluno(new PresencaAlunoPK(aula2, aluno4, turma5), 2, true);
 		
-		presencaAlunoRepository.saveAll(Arrays.asList(presencaAluno1,presencaAluno2,presencaAluno3));
+		PresencaAluno presencaAluno9 = new PresencaAluno(new PresencaAlunoPK(aula3, aluno1, turma5), 2, false);
+		PresencaAluno presencaAluno10 = new PresencaAluno(new PresencaAlunoPK(aula3, aluno2, turma5), 2, true);
+		PresencaAluno presencaAluno11 = new PresencaAluno(new PresencaAlunoPK(aula3, aluno3, turma5), 2, true);
+		PresencaAluno presencaAluno12 = new PresencaAluno(new PresencaAlunoPK(aula3, aluno4, turma5), 2, true);
+
+
+		presencaAlunoRepository.saveAll(Arrays.asList(presencaAluno1,presencaAluno2,presencaAluno3,presencaAluno4,
+				presencaAluno5,presencaAluno6,presencaAluno7,presencaAluno8,presencaAluno9,presencaAluno10,presencaAluno11,
+					presencaAluno12));
 		// REGISTRO DE NOTAS (Processo 02) - MárcioJr
 
 		RegistroDeNotas registroDeNotas1 = new RegistroDeNotas(null, (float) 14.55, disciplina6, atividadeAvaliativa5,

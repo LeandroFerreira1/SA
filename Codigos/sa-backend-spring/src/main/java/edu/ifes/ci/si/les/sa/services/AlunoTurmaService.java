@@ -46,6 +46,22 @@ public class AlunoTurmaService {
 		return repository.findByTurma(turmaID);
 	}
 	
+	public Collection<AlunoTurma> findByCurso(Integer cursoID){
+		return repository.findByCurso(cursoID);
+	}
+	
+	public Collection<AlunoTurma> findQtdAlunoTotal(){
+		return repository.findQtdAlunoTotal();
+	}
+	
+	public Collection<AlunoTurma> findQtdAlunoTotalPorCurso(Integer cursoID){
+		return repository.findQtdAlunoTotalPorCurso(cursoID);
+	}
+	
+	public Collection<AlunoTurma> findQtdAlunoTotalPorTurma(Integer turmaID){
+		return repository.findQtdAlunoTotalPorTurma(turmaID);
+	}
+	
 	public AlunoTurma insert(AlunoTurma obj) {
 		obj.setId(null);
 		try {

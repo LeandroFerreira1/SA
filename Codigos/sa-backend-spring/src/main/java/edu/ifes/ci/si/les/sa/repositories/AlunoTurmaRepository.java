@@ -28,4 +28,37 @@ public interface AlunoTurmaRepository extends JpaRepository<AlunoTurma, AlunoTur
 	@Transactional(readOnly = true)
 	@Query(value = "SELECT * FROM aluno_turma WHERE turma_id = ?1", nativeQuery = true)
 	public Collection<AlunoTurma> findByTurma(Integer turmaID);
+	
+	@Transactional(readOnly = true)
+	@Query(value = "SELECT * FROM aluno_turma, "
+			     + "              turma"
+			     + "        WHERE aluno_turma.turma_id = turma.id"
+			     + "          AND turma.curso_id = ?1", nativeQuery = true)
+	public Collection<AlunoTurma> findByCurso(Integer cursoID);
+	
+	@Transactional(readOnly = true)
+	@Query(value = "SELECT aluno_turma.status, count(aluno_turma.aluno_id) AS qtd_aluno "
+			     + "  FROM aluno_turma, "
+			     + "       turma"
+			     + " WHERE turma.id = aluno_turma.turma_id"
+			     + " GROUP BY aluno_turma.status", nativeQuery = true)
+	public Collection findQtdAlunoTotal();
+	
+	@Transactional(readOnly = true)
+	@Query(value = "SELECT aluno_turma.status, count(aluno_turma.aluno_id) AS qtd_aluno "
+			     + "  FROM aluno_turma, "
+			     + "       turma"
+			     + " WHERE turma.id = aluno_turma.turma_id"
+			     + "   AND turma.curso_id = ?1"
+			     + " GROUP BY aluno_turma.status", nativeQuery = true)
+	public Collection findQtdAlunoTotalPorCurso(Integer cursoID);
+	
+	@Transactional(readOnly = true)
+	@Query(value = "SELECT aluno_turma.status, count(aluno_turma.aluno_id) AS qtd_aluno "
+			     + "  FROM aluno_turma, "
+			     + "       turma"
+			     + " WHERE turma.id = aluno_turma.turma_id"
+			     + "   AND aluno_turma.turma_id = ?1"
+			     + " GROUP BY aluno_turma.status", nativeQuery = true)
+	public Collection findQtdAlunoTotalPorTurma(Integer turmaID);
 }

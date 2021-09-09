@@ -53,4 +53,27 @@ public class AlunoTurmaController {
 		Collection<AlunoTurma> collection = service.findByTurma(id);
 		return ResponseEntity.ok().body(collection);
 	}
+	
+	@RequestMapping(value = "/findByCurso/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Collection<AlunoTurma>> findByCurso(@PathVariable Integer id) {
+		Collection<AlunoTurma> collection = service.findByCurso(id);
+		return ResponseEntity.ok().body(collection);
+	}
+	@RequestMapping(value = "/findQtdAlunoTotal", method = RequestMethod.GET)
+	public ResponseEntity<Collection<AlunoTurma>> findQtdAlunoTotal() {
+		Collection<AlunoTurma> collection = service.findQtdAlunoTotal();
+		return ResponseEntity.ok().body(collection);
+	}
+	
+	@RequestMapping(value = "/findQtdAlunoTotalPorCurso/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Collection<AlunoTurma>> findQtdAlunoTotalPorCurso(@PathVariable Integer id) {
+		Collection<AlunoTurma> collection = service.findQtdAlunoTotalPorCurso(id);
+		return ResponseEntity.ok().body(collection);
+	}
+	
+	@RequestMapping(value = "/findQtdAlunoTotalPorTurma/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Collection<AlunoTurma>> findQtdAlunoTotalPorTurma(@PathVariable Integer id) {
+		Collection<AlunoTurma> collection = service.findQtdAlunoTotalPorTurma(id);
+		return ResponseEntity.ok().body(collection);
+	}
 }

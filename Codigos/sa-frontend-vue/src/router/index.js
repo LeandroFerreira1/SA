@@ -96,6 +96,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "registroAprovacao" */ '../views/RegistroAprovacao.vue')
   },
   {
+    path: '/listagemAprovacoes',
+    name: 'Listagem de Registro de Aprovação',
+    component: () => import(/* webpackChunkName: "listagemAprovacoes" */ '../views/ListagemAprovacoes.vue')
+  },
+  {
     path: '/listagemNotas',
     name: 'ListagemNotas',
     component: () => import(/* webpackChunkName: "boletin" */ '../views/ListagemNotas.vue')

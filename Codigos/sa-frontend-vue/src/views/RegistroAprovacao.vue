@@ -58,7 +58,7 @@
         <v-select
           v-model="item.status"
           :items="cSel"
-          :disabled="disableComboboxStatus"
+          
       ></v-select>
       </template> 
       </v-data-table>
@@ -110,7 +110,7 @@ export default {
     components: {},
     registroAprovacaoRulesCurso: [(v) => !!v || "Seleção Necessária"],
     registroAprovacaoRulesTurma: [(v) => !!v || "Seleção Necessária"],
-    cSel: ['APROVADO', 'APROV. CONSELHO', 'APROV. ABONO FALTAS', 'CURSANDO', 'REPROVADO'], // setando manualmente porque esse atributo deveria ser um enum
+    cSel: ['APROVADO', 'APROV. CONSELHO', 'APROV. ABONO FALTAS', 'CURSANDO', 'REPROVADO', 'REPROV. FALTAS'], // setando manualmente porque esse atributo deveria ser um enum
       headers: [
         { text: "Matrícula", align: "start", value: "aluno.matricula", width: "25%" },
         { text: "Aluno", value: "aluno.nome", width: "25%"
@@ -128,6 +128,7 @@ export default {
       disableComboboxStatus: true,
       usuario: 1, //por enquanto setando manualmente o usuário
       i: 0,
+      teste: null,
   }),
   created() {
     this.initialize();
@@ -167,10 +168,12 @@ export default {
           this.disableComboboxStatus = false;
         }
         for(this.i = 0; this.i < this.lAlunoTurmaRegApr.length; this.i++){
-          if(this.lAlunoTurmaRegApr[this.i].notaFinal >= 60){
-            this.lAlunoTurmaRegApr[this.i].status = "APROVADO";
-          }else{
-            this.lAlunoTurmaRegApr[this.i].status = "REPROVADO";
+          if(this.lAlunoTurmaRegApr[this.i].status == "CURSANDO"){
+            if(this.lAlunoTurmaRegApr[this.i].notaFinal >= 60){
+              this.lAlunoTurmaRegApr[this.i].status = "APROVADO";
+            }else{
+              this.lAlunoTurmaRegApr[this.i].status = "REPROVADO";
+            }
           }
         }
         return;
@@ -178,7 +181,7 @@ export default {
       this.lAlunoTurmaRegApr = [];
     },
     save(){
-      this.service.create(this.lAlunoTurmaRegApr).then((response) => this.lAlunoTurmaRegApr.push(response));
+        this.service.create(this.lAlunoTurmaRegApr).then((response) => this.lAlunoTurmaRegApr.push(response));
     },
   },
 };
